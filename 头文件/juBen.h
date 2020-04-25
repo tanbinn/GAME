@@ -23,6 +23,7 @@ void color(short x)	//自定义函根据参数改变颜色
 struct _renwushuju{//用于定义人物数据的结构体
 //人物数据
 	string name;
+	bool panduan_duiwu;
 	int tiLi_D;
 	int tiLi_G;
 	int jingLi_D;
@@ -83,16 +84,14 @@ struct _renwushuju{//用于定义人物数据的结构体
 string zhangJie;
 
 int year_quanju = 0; int hour_quanju = 8; int min_quanju = 30; int day_quanju = 20; int month_quanju = 11;//这行为时间的全局变量 
-int year_tianqi = 0; int hour_tianqi = 9; int min_tianqi = 30; int day_tianqi = 20; int month_tianqi = 11; bool puanduan_tianqi = false;//用于天气函数来判定时间间隔 
+int year_tianqi = 0; int hour_tianqi = 9; int min_tianqi = 30; int day_tianqi = 20; int month_tianqi = 11; bool panduan_tianqi = false;//用于天气函数来判定时间间隔 
 
 string tianqi_jiaojiedian;
 
-vector <string> duiWu;//这个动态数组是用来存储队伍中的人物名称的
 string kongBai_shuju[28];
 string kongbai_daoju[16];
 vector <_renwushuju> _renwu;
-vector <string> dangDiRenWu_other_weizhi, dangDiRenWu_other_xiaoweizhi, dangDiRenWu_other_zhongweizhi, dangDiRenWu_other_daweizhi;
-vector <string> dangDiRenWu_all_weizhi, dangDiRenWu_all_xiaoweizhi, dangDiRenWu_all_zhongweizhi, dangDiRenWu_all_daweizhi;
+vector <_renwushuju> _team;
 struct _renwushuju siJi; struct _renwushuju zhuRenGong;
 string _NAME = "我";
 

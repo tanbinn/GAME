@@ -25,7 +25,7 @@ void ParseIn() {
 		daoju >> kongbai_daoju[i];
 	}
 	//位号0
-	shuju >> zhuRenGong.name >> zhuRenGong.tiLi_D >> zhuRenGong.tiLi_G >> zhuRenGong.jingLi_D >> zhuRenGong.jingLi_G >> zhuRenGong.jingYan
+	shuju >> zhuRenGong.name >> zhuRenGong.panduan_duiwu >>  zhuRenGong.tiLi_D >> zhuRenGong.tiLi_G >> zhuRenGong.jingLi_D >> zhuRenGong.jingLi_G >> zhuRenGong.jingYan
 		>> zhuRenGong.liLiang_D >> zhuRenGong.liLiang_G >> zhuRenGong.fangYu_D >> zhuRenGong.fangYu_G >> zhuRenGong.suDu_D >> zhuRenGong.suDu_G 
 		>> zhuRenGong.faShu_D >> zhuRenGong.faShu_G >> zhuRenGong.moKang_D >> zhuRenGong.moKang_G >> zhuRenGong.zhiLi_D >> zhuRenGong.zhiLi_G 
 		>> zhuRenGong.baoShiDu_D >> zhuRenGong.baoShiDu_G >> zhuRenGong.wenDu >> zhuRenGong.xinQing >> zhuRenGong.haoGan >> zhuRenGong.daweizhi 
@@ -41,7 +41,7 @@ void ParseIn() {
 	_renwu.push_back(zhuRenGong);
 
 	//位号1
-	shuju >> siJi.name >> siJi.tiLi_D >> siJi.tiLi_G >> siJi.jingLi_D >> siJi.jingLi_G >> siJi.jingYan >> siJi.liLiang_D >> siJi.liLiang_G 
+	shuju >> siJi.name >> siJi.panduan_duiwu >>  siJi.tiLi_D >> siJi.tiLi_G >> siJi.jingLi_D >> siJi.jingLi_G >> siJi.jingYan >> siJi.liLiang_D >> siJi.liLiang_G 
 		>> siJi.fangYu_D >> siJi.fangYu_G >> siJi.suDu_D >> siJi.suDu_G >> siJi.faShu_D >> siJi.faShu_G >> siJi.moKang_D >> siJi.moKang_G 
 		>> siJi.zhiLi_D >> siJi.zhiLi_G >> siJi.baoShiDu_D >> siJi.baoShiDu_G >> siJi.wenDu >> siJi.xinQing >> siJi.haoGan >> siJi.daweizhi 
 		>> siJi.zhongweizhi >> siJi.xiaoweizhi >> siJi.weizhi >> siJi.zhuangtai_num;
@@ -55,12 +55,14 @@ void ParseIn() {
 
 	shuju.close();
 }
+short num_dangdirenwu_other;
 
 void bianDui() {
+	ChongZhi("全局");
 	cout << endl << endl;
 	int n = 0;
 	while (true) {
-		ChongZhi();
+		ChongZhi("全局");
 		char zhongji1;
 		cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
 		cout << "请输入界面所对应的数字。" << endl;
@@ -70,56 +72,95 @@ void bianDui() {
 			while (true) {
 				cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
 				cout << "您的队伍成员： ";
-				for (int i = 0; i < duiWu.size(); i++) {
-					cout << i + 1 << "[" << duiWu[i] << "] ";
+				vector <_renwushuju> zhongji_shuzu_other;
+				vector <_renwushuju> zhongji_shuzu_all;
+				for (int i = 0; i < _team.size(); i++) {
+					cout << i + 1 << "[" << _team[i].name << "] ";
 				}
 				cout << endl << "目前位置未在队伍中的人物: ";
-				for (int i = 0; i < dangDiRenWu_other_weizhi.size(); i++) {
-					cout << i + duiWu.size() + 1 << "[" << dangDiRenWu_other_weizhi[i] << "] ";
+				for (int i = 0; i < _renwu.size(); i++) {
+					if (_renwu[i].weizhi == _renwu[0].weizhi) {
+						zhongji_shuzu_all.push_back(_renwu[i]);
+						if (_renwu[i].panduan_duiwu == false) {
+							zhongji_shuzu_other.push_back(_renwu[i]);
+						}
+					}
+				}
+				for (int i = 0; i < zhongji_shuzu_other.size(); i++) {
+					cout << i + _team.size() + 1 << "[" << zhongji_shuzu_other[i].name << "] ";
 				}
 				cout << endl << "请选择欲查看的人物的编号。" << endl;
 				short zhongji2;
 				cin >> zhongji2;
 				cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
 				for (int i = 0; i < _renwu.size(); i++) {
-					if (_renwu[i].name == dangDiRenWu_all_weizhi[zhongji2 - 1]) {
-						if (_renwu[i].name == "你") {//列表原则：单条数据场宽定为14。由于是直接输出字符串和数字的组合，所以具体场宽必须随着字符串的大小进行相应变动
+					if (_renwu[i].name == zhongji_shuzu_all[zhongji2 - 1].name) {
+						if (_renwu[i].name == "你") {//列表原则：没有固定场宽，但是第一行必须排齐，以下的行列根据第一行手动控制场宽进行对齐（fucking场宽格式）
 							color(3);
 							cout << "姓名：" << _NAME << endl;
 							color(2);
 							cout <<"体力值:" << zhuRenGong.tiLi_D << setw(19) << "体力值线:" << zhuRenGong.tiLi_G << setw(18) << "精力:" << zhuRenGong.jingLi_D << setw(20) << "精力值线:" << zhuRenGong.jingLi_G << endl;
-							cout <<"等级:未定,暂存" << setw(16) << "力量值:" << zhuRenGong.liLiang_D << setw(19) << "力量值线:" << zhuRenGong.liLiang_G << setw(18) << "防御值:" << zhuRenGong.fangYu_D << endl;
-							cout << "防御值线:" << zhuRenGong.fangYu_G << setw(18) << "速度:" << zhuRenGong.suDu_D << setw(20) << "速度线:" << zhuRenGong.suDu_G << setw(19) << "法术:" << zhuRenGong.faShu_D << endl;
-							cout << "法术线:" << zhuRenGong.faShu_G << setw(19) << "魔抗:" << zhuRenGong.moKang_D << setw(20) << "魔抗线:" << zhuRenGong.moKang_G << setw(19) << "智力:" << zhuRenGong.zhiLi_D << endl;
-							cout << "智力线:" << zhuRenGong.zhiLi_G << setw(19) << "饱食度:" << zhuRenGong.baoShiDu_D << setw(19) << "饱食度线:" << zhuRenGong.baoShiDu_G << setw(18) << "温度:" << zhuRenGong.wenDu << endl;
+							cout <<"等级:未定,暂存" << setw(15) << "力量值:" << zhuRenGong.liLiang_D << setw(24) << "力量值线:" << zhuRenGong.liLiang_G << setw(19) << "防御值:" << zhuRenGong.fangYu_D << endl;
+							cout << "防御值线:" << zhuRenGong.fangYu_G << setw(18) << "速度:" << zhuRenGong.suDu_D << setw(22) << "速度线:" << zhuRenGong.suDu_G << setw(19) << "法术:" << zhuRenGong.faShu_D << endl;
+							cout << "法术线:" << zhuRenGong.faShu_G << setw(19) << "魔抗:" << zhuRenGong.moKang_D << setw(24) << "魔抗线:" << zhuRenGong.moKang_G << setw(19) << "智力:" << zhuRenGong.zhiLi_D << endl;
+							cout << "智力线:" << zhuRenGong.zhiLi_G << setw(19) << "饱食度:" << zhuRenGong.baoShiDu_D << setw(22) << "饱食度线:" << zhuRenGong.baoShiDu_G << setw(18) << "温度:" << zhuRenGong.wenDu << endl;
 							cout << "状态:";
 							for (int i = 0; i < zhuRenGong.zhuangtai.size(); i++) {
 								cout << zhuRenGong.zhuangtai[i] << setw(16) << " ";
 							}
 							color(7);
 							_getch();
-							/*姓名：我
-								体力值 : 1000          体力值线 : 1000             精力 : 1000           精力值线 : 1000
-								等级 : 未定, 暂存         力量值 : 20          力量值线 : 20           防御值 : 10
-								防御值线 : 10             速度 : 10             速度线 : 10              法术 : 10
-								法术线 : 10              魔抗 : 5             魔抗线 : 5              智力 : 10
-								智力线 : 10            饱食度 : 100          饱食度线 : 100             温度 : 50
-								状态 : <精神抖擞>*/
+							cout << endl;
+							//姓名：我
+							//	体力值 : 1000          体力值线 : 1000             精力 : 1000           精力值线 : 1000
+							//	等级 : 未定, 暂存        力量值 : 20               力量值线 : 20            防御值 : 10
+							//	防御值线 : 10             速度 : 10               速度线 : 10              法术 : 10
+							//	法术线 : 10              魔抗 : 5                 魔抗线 : 5              智力 : 10
+							//	智力线 : 10            饱食度 : 100             饱食度线 : 100             温度 : 50
+							//	状态 : <精神抖擞>
+							//内容仅供参考，事实上控制台中的输出格式与IDE中的不同
+						}
+						else if (_renwu[i].name == "司机") {
+							color(3);
+							cout << "姓名：" << _NAME << endl;
+							color(2);
+							cout << "体力值:" << siJi.tiLi_D << setw(19) << "体力值线:" << siJi.tiLi_G << setw(18) << "精力:" << siJi.jingLi_D << setw(20) << "精力值线:" << siJi.jingLi_G << endl;
+							cout << "等级:未定,暂存" << setw(15) << "力量值:" << siJi.liLiang_D << setw(24) << "力量值线:" << siJi.liLiang_G << setw(19) << "防御值:" << siJi.fangYu_D << endl;
+							cout << "防御值线:" << siJi.fangYu_G << setw(18) << "速度:" << siJi.suDu_D << setw(22) << "速度线:" << siJi.suDu_G << setw(19) << "法术:" << siJi.faShu_D << endl;
+							cout << "法术线:" << siJi.faShu_G << setw(19) << "魔抗:" << siJi.moKang_D << setw(24) << "魔抗线:" << siJi.moKang_G << setw(19) << "智力:" << siJi.zhiLi_D << endl;
+							cout << "智力线:" << siJi.zhiLi_G << setw(19) << "饱食度:" << siJi.baoShiDu_D << setw(22) << "饱食度线:" << siJi.baoShiDu_G << setw(18) << "温度:" << siJi.wenDu << endl;
+							cout << "状态:";
+							for (int i = 0; i < siJi.zhuangtai.size(); i++) {
+								cout << siJi.zhuangtai[i] << setw(16) << " ";
+							}
+							color(7);
+							_getch();
+							cout << endl;
 						}
 					}
 				}
 			}
 		}
 		else if (zhongji1 == '2') {
+			vector <_renwushuju> zhongji_shuzu;
+			for (int i = 0; i < _renwu.size(); i++) {
+				if (_renwu[i].weizhi == _renwu[0].weizhi and _renwu[i].panduan_duiwu == false) {
+					num_dangdirenwu_other++;
+					zhongji_shuzu.push_back(_renwu[i]);
+				}
+			}
 			while (true) {
+				ChongZhi("全局");
 				cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
 				cout << "您的队伍成员： ";
-				for (int i = 0; i < duiWu.size(); i++) {
-					cout << i + 1 << "[" << duiWu[i] << "] ";
+				for (int i = 0; i < _team.size(); i++) {
+					cout << i + 1 << "[" << _team[i].name << "] ";
 				}
 				cout << endl << "目前位置未在队伍中的人物: ";
-				for (int i = 0; i < dangDiRenWu_other_weizhi.size(); i++) {
-					cout << i + duiWu.size() + 1 << "[" << dangDiRenWu_other_weizhi[i] << "] ";
+				for (int i = 0; i < _renwu.size(); i++) {
+					if (_renwu[i].panduan_duiwu == false and _renwu[i].weizhi == zhuRenGong.weizhi) {
+						cout << i + _team.size() + 1 << "[" << _renwu[i].name << "] ";
+					}
 				}
 				cout << endl << "0[返回]" << endl;
 				cout << endl << "请选择编入或踢出成员。" << endl << "------------------------------------------------------------------------------------------------------------------------" << endl ;
@@ -133,17 +174,21 @@ void bianDui() {
 					_getch();
 					cout << endl << endl;
 				}
-				else if (n > 1 && n <= duiWu.size()) {
-					dangDiRenWu_other_weizhi.push_back(duiWu[n - 1]);
-					duiWu.erase(duiWu.begin() + n - 1);
+				else if (n > 1 && n <= _team.size()) {
+					_team[n - 1].panduan_duiwu = false;
+					if (_team[n - 1].name == "司机") {//记得以后添加新人物时在这里进行补充
+						_renwu[1].panduan_duiwu = false;
+					}
+					_team.erase(_team.begin() + n - 1);
 					cout << endl << endl;
 					_getch();
 				}
-				else if (n > duiWu.size() && n <= duiWu.size() + dangDiRenWu_other_weizhi.size()) {
-					if (dangDiRenWu_other_weizhi.size() != 0) {
-						int zhongji2 = n - (duiWu.size() + 1);
-						duiWu.push_back(dangDiRenWu_other_weizhi[zhongji2]);
-						dangDiRenWu_other_weizhi.erase(dangDiRenWu_other_weizhi.begin() + zhongji2);
+				else if (n > _team.size() and n <= (_team.size() + num_dangdirenwu_other)) {
+					if (num_dangdirenwu_other != 0) {
+						int zhongji2 = n - (_team.size() + 1);
+						if (zhongji_shuzu[zhongji2].name == "司机") {
+							_renwu[1].panduan_duiwu = true;
+						}
 						cout << endl << endl;
 					}
 				}
@@ -184,18 +229,18 @@ int kaiShiJieMian() {
 
 void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散到其他函数后最终必须返回到一般界面中去！！！！！！！！
 	while (true) {
-		ChongZhi();
+		ChongZhi("全局");
 		char zhongji1 = 0;
 		cout << "_______________________________________________________________________________________________________________________" << endl;
 		cout << "地点:" << zhuRenGong.xiaoweizhi << "   位置：" << zhuRenGong.weizhi << "   天气：" <<  tianqi_jiaojiedian <<"   时间：" << month_quanju << "月" << day_quanju << "日 " << hour_quanju << ":" << min_quanju << endl;
-		for (int i = 0; i < duiWu.size(); i++) {//临时想了一下，我最好还是对人物数据分别创建 两个数组，一个用来进行动态计算，另一个用来固定显示。 
-			if (duiWu[i] == "你") {
-				cout << "姓名：你   体力【" << zhuRenGong.tiLi_D << "/" << zhuRenGong.tiLi_G << "】  " << "精力【" << zhuRenGong.jingLi_D << "/" << zhuRenGong.jingLi_G << "】   饱食度【" << zhuRenGong.baoShiDu_D << "/" << zhuRenGong.baoShiDu_G << "】  ";
+		for (int i = 0; i < _team.size(); i++) {//临时想了一下，我最好还是对人物数据分别创建 两个数组，一个用来进行动态计算，另一个用来固定显示。 
+			if (_team[i].name == "你") {
+				cout << "姓名：" << _NAME << "  体力【" << _renwu[0].tiLi_D << "/" << _renwu[0].tiLi_G << "】  " << "精力【" << _renwu[0].jingLi_D << "/" << _renwu[0].jingLi_G << "】   饱食度【" << _renwu[0].baoShiDu_D << "/" << _renwu[0].baoShiDu_G << "】  ";
 				cout << "   状态: "; zhuangtai("输出", "你", ""); cout << endl;
 			}
-			else if (duiWu[i] == "司机") {
-				cout << "姓名：司机  体力【" << siJi.tiLi_D << "/" << siJi.tiLi_G << "】  " << "精力【" << siJi.jingLi_D << "/" << siJi.jingLi_G << "】   饱食度【" << siJi.baoShiDu_D << "/" << siJi.baoShiDu_G << "】  ";
-				cout << "   状态: "; zhuangtai("输出", "司机", ""); cout << endl;
+			else{
+				cout << "姓名：" << _team[i].name << "  体力【" << _renwu[i].tiLi_D << "/" << _renwu[i].tiLi_G << "】  " << "精力【" << _renwu[i].jingLi_D << "/" << _renwu[i].jingLi_G << "】   饱食度【" << _renwu[i].baoShiDu_D << "/" << _renwu[i].baoShiDu_G << "】  ";
+				cout << "   状态: "; zhuangtai("输出", _team[i].name, ""); cout << endl;
 			}
 		}
 		map(1000);
@@ -226,12 +271,12 @@ int main() {
 	if (kaiShiJieMian() == 1) {//等所有的界面内容设计完毕后，再开始做存档功能
 		cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 		zhangJie = "开篇";
-		duiWu.push_back("你");
+		_renwu[0].panduan_duiwu = true;
 		tianqi_jiaojiedian = "晴";
 		ZhangJie0();
 	}
 	ParseIn();
-	ChongZhi();
+	ChongZhi("全局");
 	yiBanJieMian();
 	return 0;
 }
@@ -241,4 +286,11 @@ int main() {
 //规划：再制作一个背包结构体（可以给每个人都定义一份，用不上大不了放着，有用的时候可以丰富系统），结构体里面要包括游戏里所有会出现的道具
 //武器防具之类的。。。也可以算进去！就这样决定了。加油
 //2020.4.14记录：请立即修改如下结构：1.编队系统：这玩意你在前期不可能用得上，给我卸了。（不过可以存下来用以以后的特殊游戏模式，好歹我写了那么久……）
-//								   2.道具系统：别真的给每个人都分配一个
+//								   2.道具系统：别真的给每个人都分配一个背包，即没用又烦人
+//2020.4.18记录：已完成的数据修改：1.道具系统重新设置，具体道具只有主人公和一些商人类NPC拥有，不过，如果以后要配置掉落系统，或许可以顺便用上。
+//								 2.将编队系统变成“队伍”系统的子项，并新增人物查看系统。或许，编队系统在一些地方会有意想不到的作用。
+//				接下来的规划任务：1.编队系统直接留着吧，会有用的，如果嫌写口上麻烦，直接写个“先判定是否符合编入踢出的条件，然后才进行操作，否则直接返回”的算法即可。
+//								2.然后这边框架差不多该有的都有了，可以开始着手于编写战斗系统了。
+//                                                       
+//紧急规划：迅速将所有的直接调用或赋值结构体的算法全部换成全局数组renwu和team!
+                                                                                                                                      
