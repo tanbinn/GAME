@@ -564,7 +564,7 @@ void zhandoujiemian(string leixing,string diren) {
 
 			if (diren == "测试用NPC") {
 
-				int danmu[1][3][8][7];
+				int danmu[1][3][9][7];
 
 				for (short q = 0; q < 1; q++) {
 					for (short p = 0; p < 3; p++) {
@@ -596,6 +596,7 @@ void zhandoujiemian(string leixing,string diren) {
 				danmu[0][0][6][1] = 0;//danmu_zheng_zijiju_xiaoyu
 				danmu[0][0][7][1] = 0;//danmu_zheng_zijiju_zhadan
 				danmu[0][0][8][1] = 0;//danmu_zheng_zijiju_zhongyu
+				danmu[0][0][9][1] = 0;//danmu_zheng_zijiju_lindan
 
 				//弹幕类型注释
 				danmu[0][0][0][2] = 0;//danmu_zheng_zijiju
@@ -991,6 +992,7 @@ void zhandoujiemian(string leixing,string diren) {
 							if (_team[zhongji1_short - 1].name == "你") {
 								if (zhongji2_string == "1") {
 									int zhongji3_int;
+									short zhongji4_short;
 									while (true) {
 										cout << "1[随机弹]  2[自机狙]  3[偏向狙]  0[返回]" << endl;
 										cin >> zhongji2_string;
@@ -1014,6 +1016,10 @@ void zhandoujiemian(string leixing,string diren) {
 													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 													zhongji0.danmu[2][0][0] = zhongji3_int * 5;
 												}
+												else {
+													cout << "power值不足。" << endl;
+													_getch();
+												}
 											}
 											else if (zhongji2_string == "2") {
 												cout << "请输入弹幕数量（每4枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D;
@@ -1022,6 +1028,10 @@ void zhandoujiemian(string leixing,string diren) {
 												if (powerzhi_zheng_D >= zhongji3_int) {
 													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 													zhongji0.danmu[2][6][0] = zhongji3_int * 4;
+												}
+												else {
+													cout << "power值不足。" << endl;
+													_getch();
 												}
 											}
 											else if (zhongji2_string == "3") {
@@ -1032,17 +1042,38 @@ void zhandoujiemian(string leixing,string diren) {
 													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 													zhongji0.danmu[2][8][0] = zhongji3_int * 3;
 												}
+												else {
+													cout << "power值不足。" << endl;
+													_getch();
+												}
 											}
 											fightarrey.push_back(zhongji0);
 										}
 										else if (zhongji2_string == "2") {
 											zhandoushuju zhongji0;
 											zhongji0.leixing = "攻击";
-											zhongji0.name = "小规模随机弹";
+											zhongji0.name = "自机狙";
 											zhongji0.S.push_back(_team[zhongji1_short - 1].name);
 											zhongji0.left = 1;
+											if (team_fu.size() > 1) {
+												cout << "请选择锁定的对象：";
+												for (int i = 0; i < team_fu.size(); i++) {
+													cout << "  " << i + 1 << "[" << team_fu[i].name << "]";
+												}
+												cout << "  0[返回]" << endl;
+												cin >> zhongji4_short;
+												if (zhongji4_short <= team_fu.size()) {
+													zhongji0.M.push_back(team_fu[zhongji4_short - 1].name);
+												}
+												else {
+													continue;
+												}
+											}
+											else {
+												zhongji0.M.push_back(team_fu[0].name);
+											}
 											cout << "请选择弹幕样式。" << endl;
-											cout << "1[刀弹]  2[小玉]  3[中玉]" << endl;
+											cout << "1[刀弹]  2[小玉]  3[中玉]  4[激光弹]" << endl;
 											cin >> zhongji2_string;
 											if (zhongji2_string == "1") {
 												zhongji0.danmu[2][0][0] = 10;
