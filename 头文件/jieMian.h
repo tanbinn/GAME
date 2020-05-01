@@ -613,8 +613,8 @@ void zhandoujiemian(string leixing,string diren) {
 					powerzhi_zheng_G = powerzhi_zheng_G + _team[i].zhiLi_D;
 					xingdongzhi_zheng_G = xingdongzhi_zheng_G + _team[i].suDu_D;
 				}
-				struct _renwushuju NPC_1 = {"NPC_1", 0,1000,1000,1000,1000,0,20,20,10,10,10,10,10,10,5,5,10,10,100,100,50,50,0,"交接点","山脚","入口","入口",0};
-				struct _renwushuju NPC_2 = {"NPC_2", 0,1000,1000,1000,1000,0,20,20,10,10,10,10,10,10,5,5,10,10,100,100,50,50,0,"交接点","山脚","入口","入口",0};
+				struct _renwushuju NPC_1 = {"NPC_1", 0,1000,1000,1000,1000,0,20,20,10,10,10,10,10,10,5,5,10,10,100,100,50,50,0,"交接点","山脚","入口","入口",3};
+				struct _renwushuju NPC_2 = {"NPC_2", 0,1000,1000,1000,1000,0,20,20,10,10,10,10,10,10,5,5,10,10,100,100,50,50,0,"交接点","山脚","入口","入口",3};
 				vector <_renwushuju> team_fu;
 				team_fu.push_back(NPC_1);
 				team_fu.push_back(NPC_2);
@@ -986,11 +986,11 @@ void zhandoujiemian(string leixing,string diren) {
 					if (zhongji1_short > 0 and zhongji1_short <= _team.size()) {
 						string zhongji2_string;
 						while (true) {
-							cout << "已选中人物：" << _team[zhongji1_short - 1].name;
+							cout << "已选中人物：" << _team[zhongji1_short - 1].name << endl;
 							cout << "1[攻击]  2[闪避]  3[掩护]  4[符卡]  5[查看]  0[返回]" << endl;
 							cin >> zhongji2_string;
 							if (_team[zhongji1_short - 1].name == "你") {
-								if (zhongji2_string == "1") {
+								if (zhongji2_string == "1") {//攻击
 									int zhongji3_int;
 									short zhongji4_short;
 									while (true) {
@@ -1009,29 +1009,79 @@ void zhandoujiemian(string leixing,string diren) {
 											cout << "1[刀弹]  2[小玉]  3[中玉]" << endl;
 											cin >> zhongji2_string;
 											if (zhongji2_string == "1") {
-												cout << "请输入弹幕数量(每5枚一点power值，若不足则去掉多余的值)。		当前剩余power值：" << powerzhi_zheng_D;
+												cout << "请输入弹幕数量(每5枚一点power值，若不足则去掉多余的值)。		当前剩余power值：" << powerzhi_zheng_D << endl;
 												cin >> zhongji3_int;
 												zhongji3_int = zhongji3_int / 5;
-												if (powerzhi_zheng_D >= zhongji3_int) {
+												if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
 													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 													zhongji0.danmu[2][0][0] = zhongji3_int * 5;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
 												}
-												else {
+												else if(powerzhi_zheng_D < zhongji3_int) {
 													cout << "power值不足。" << endl;
 													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" <<endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
 												}
 											}
 											else if (zhongji2_string == "2") {
-												cout << "请输入弹幕数量（每4枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D;
+												cout << "请输入弹幕数量（每4枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 												cin >> zhongji3_int;
 												zhongji3_int = zhongji3_int / 4;
 												if (powerzhi_zheng_D >= zhongji3_int) {
 													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 													zhongji0.danmu[2][6][0] = zhongji3_int * 4;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
 												}
-												else {
+												else if (powerzhi_zheng_D < zhongji3_int) {
 													cout << "power值不足。" << endl;
 													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
 												}
 											}
 											else if (zhongji2_string == "3") {
@@ -1041,13 +1091,37 @@ void zhandoujiemian(string leixing,string diren) {
 												if (powerzhi_zheng_D >= zhongji3_int) {
 													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 													zhongji0.danmu[2][8][0] = zhongji3_int * 3;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
 												}
-												else {
+												else if (powerzhi_zheng_D < zhongji3_int) {
 													cout << "power值不足。" << endl;
 													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
 												}
 											}
-											fightarrey.push_back(zhongji0);
 										}
 										else if (zhongji2_string == "2") {
 											zhandoushuju zhongji0;
@@ -1062,10 +1136,15 @@ void zhandoujiemian(string leixing,string diren) {
 												}
 												cout << "  0[返回]" << endl;
 												cin >> zhongji4_short;
-												if (zhongji4_short <= team_fu.size()) {
+												if (zhongji4_short <= team_fu.size() and zhongji4_short >= 1) {
 													zhongji0.M.push_back(team_fu[zhongji4_short - 1].name);
 												}
+												else if (zhongji4_short == 0) {
+													continue;
+												}
 												else {
+													cout << "请输入有效选项对应的数字。" << endl;
+													_getch();
 													continue;
 												}
 											}
@@ -1076,17 +1155,311 @@ void zhandoujiemian(string leixing,string diren) {
 											cout << "1[刀弹]  2[小玉]  3[中玉]  4[激光弹]" << endl;
 											cin >> zhongji2_string;
 											if (zhongji2_string == "1") {
-												zhongji0.danmu[2][0][0] = 10;
+												cout << "请输入弹幕数量(每5枚一点power值，若不足则去掉多余的值)。		当前剩余power值：" << powerzhi_zheng_D << endl;
+												cin >> zhongji3_int;
+												zhongji3_int = zhongji3_int / 5;
+												if (powerzhi_zheng_D >= zhongji3_int) {
+													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
+													zhongji0.danmu[0][0][0] = zhongji3_int * 5;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
+												}
+												else if (powerzhi_zheng_D < zhongji3_int) {
+													cout << "power值不足。" << endl;
+													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
+												}
 											}
 											else if (zhongji2_string == "2") {
-												zhongji0.danmu[2][6][0] = 8;
+												cout << "请输入弹幕数量（每4枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
+												cin >> zhongji3_int;
+												zhongji3_int = zhongji3_int / 4;
+												if (powerzhi_zheng_D >= zhongji3_int) {
+													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
+													zhongji0.danmu[0][6][0] = zhongji3_int * 4;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
+												}
+												else if (powerzhi_zheng_D < zhongji3_int) {
+													cout << "power值不足。" << endl;
+													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
+												}
 											}
 											else if (zhongji2_string == "3") {
-												zhongji0.danmu[2][8][0] = 4;
+												cout << "请输入弹幕数量（每3枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
+												cin >> zhongji3_int;
+												zhongji3_int = zhongji3_int / 3;
+												if (powerzhi_zheng_D >= zhongji3_int) {
+													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
+													zhongji0.danmu[0][8][0] = zhongji3_int * 3;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
+												}
+												else if (powerzhi_zheng_D < zhongji3_int) {
+													cout << "power值不足。" << endl;
+													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
+												}
 											}
-											fightarrey.push_back(zhongji0);
+											else if (zhongji2_string == "4") {
+												cout << "请输入弹幕数量（每2枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
+												cin >> zhongji3_int;
+												zhongji3_int = zhongji3_int / 2;
+												if (powerzhi_zheng_D >= zhongji3_int) {
+													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
+													zhongji0.danmu[0][4][0] = zhongji3_int * 2;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
+												}
+												else if (powerzhi_zheng_D < zhongji3_int) {
+													cout << "power值不足。" << endl;
+													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
+												}
+											}
+										}
+										else if (zhongji2_string == "3") {
+											zhandoushuju zhongji0;
+											zhongji0.leixing = "攻击";
+											zhongji0.name = "偏向狙";
+											zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+											zhongji0.left = 1;
+											if (team_fu.size() > 1) {
+												cout << "请选择锁定的对象：";
+												for (int i = 0; i < team_fu.size(); i++) {
+													cout << "  " << i + 1 << "[" << team_fu[i].name << "]";
+												}
+												cout << "  0[返回]" << endl;
+												cin >> zhongji4_short;
+												if (zhongji4_short <= team_fu.size() and zhongji4_short >= 1) {
+													zhongji0.M.push_back(team_fu[zhongji4_short - 1].name);
+												}
+												else if (zhongji4_short == 0) {
+													continue;
+												}
+												else {
+													cout << "请输入有效选项对应的数字。" << endl;
+													_getch();
+													continue;
+												}
+											}
+											else {
+												zhongji0.M.push_back(team_fu[0].name);
+											}
+											cout << "请选择弹幕样式。" << endl;
+											cout << "1[刀弹]  2[鳞弹]  3[小米弹]" << endl;
+											cin >> zhongji2_string;
+											if (zhongji2_string == "1") {
+												cout << "请输入弹幕数量(每5枚一点power值，若不足则去掉多余的值)。		当前剩余power值：" << powerzhi_zheng_D << endl;
+												cin >> zhongji3_int;
+												zhongji3_int = zhongji3_int / 5;
+												if (powerzhi_zheng_D >= zhongji3_int) {
+													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
+													zhongji0.danmu[1][0][0] = zhongji3_int * 5;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
+												}
+												else if (powerzhi_zheng_D < zhongji3_int) {
+													cout << "power值不足。" << endl;
+													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
+												}
+
+											}
+											else if (zhongji2_string == "2") {
+												cout << "请输入弹幕数量（每5枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
+												cin >> zhongji3_int;
+												zhongji3_int = zhongji3_int / 5;
+												if (powerzhi_zheng_D >= zhongji3_int) {
+													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
+													zhongji0.danmu[1][9][0] = zhongji3_int * 5;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
+												}
+												else if (powerzhi_zheng_D < zhongji3_int) {
+													cout << "power值不足。" << endl;
+													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
+												}
+
+											}
+											else if (zhongji2_string == "3") {
+												cout << "请输入弹幕数量（每8枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
+												cin >> zhongji3_int;
+												zhongji3_int = zhongji3_int / 8;
+												if (powerzhi_zheng_D >= zhongji3_int) {
+													powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
+													zhongji0.danmu[1][5][0] = zhongji3_int * 8;
+													fightarrey.push_back(zhongji0);
+													_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+													break;
+												}
+												else if (powerzhi_zheng_D < zhongji3_int) {
+													cout << "power值不足。" << endl;
+													_getch();
+													continue;
+												}
+												else {
+													cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+													for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
+														cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+													}
+													cout << "	0[返回]" << endl;
+													short zhongji5_short;
+													cin >> zhongji5_short;
+													if (zhongji5_short == 0) {
+														break;
+													}
+													else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
+														_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+														break;
+													}
+													else {
+														cout << "请输入有效选项对应的数字。" << endl;
+														_getch();
+														continue;
+													}
+												}
+
+											}
 										}
 									}
+								}
+								else if (zhongji2_string == "2") {//闪避
+									
 								}
 								else if (zhongji2_string == "0") {
 									break;

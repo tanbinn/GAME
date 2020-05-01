@@ -21,6 +21,17 @@ void color(short x)	//自定义函根据参数改变颜色
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
+
+struct zhandoushuju {
+	string leixing;
+	string name;
+	vector <string> S;
+	int danmu[3][8][6];
+	vector <string> M;
+	short left;
+};
+
+
 struct _renwushuju {//用于定义人物数据的结构体
 //人物数据
 	string name;
@@ -53,9 +64,11 @@ struct _renwushuju {//用于定义人物数据的结构体
 	string weizhi;
 	int zhuangtai_num;
 	vector <string> zhuangtai;
+	int xingdongcao_num;
+	vector <zhandoushuju> xingdongcao;
+
 	//——————————————————————————————————————
 	//道具还是分这几种吧：钱币（泛指用于交易的货币）、素材和道具（两者没有明显界定，道具本身也可以成为素材，主要是把基础素材区分出来）、符卡、配方
-
 	int huobi_money;//钱
 	//（标头是用于后期添置新数据时进行辅助区分的）
 	//素材标头为0
@@ -82,14 +95,6 @@ struct _renwushuju {//用于定义人物数据的结构体
 	int peifang_yinghuo;//3 1 营火（配方）
 };
 
-struct zhandoushuju {
-	string leixing;
-	string name;
-	vector <string> S;
-	int danmu[3][8][6];
-	vector <string> M;
-	short left;
-};
 string zhangJie;
 string nandu;
 
@@ -98,7 +103,7 @@ int year_tianqi = 0; int hour_tianqi = 9; int min_tianqi = 30; int day_tianqi = 
 
 string tianqi_jiaojiedian;
 
-string kongBai_shuju[31];
+string kongBai_shuju[30];
 string kongbai_daoju[16];
 vector <_renwushuju> _renwu;
 vector <_renwushuju> _team;
