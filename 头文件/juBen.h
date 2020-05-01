@@ -26,7 +26,7 @@ struct zhandoushuju {
 	string leixing;
 	string name;
 	vector <string> S;
-	int danmu[3][8][6];
+	int danmu[3][8][6];//如果是闪避类型，直接在danmu[0][0][0]里面装着就行了
 	vector <string> M;
 	short left;
 };
