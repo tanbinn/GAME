@@ -275,6 +275,7 @@ void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散
 		else {
 			cout << "请输入有效选项对应的数字" << endl;
 			_getch();
+			break;
 		}
 	}
 }
@@ -288,13 +289,13 @@ int main() {
 		cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 		zhangJie = "开篇";
 		nandu = "普通";
-		//tianqi_jiaojiedian = '晴';
-		ZhangJie0();
+		tianqi_jiaojiedian = '晴';
+		ParseIn();
+		ChongZhi("全局");
+		JuBen("剧情", 1);
 	}
-	ParseIn();
-	ChongZhi("全局");
-	zhandoujiemian("弹幕战", "测试用NPC");
 	yiBanJieMian();
+	zhandoujiemian("弹幕战", "测试用NPC");
 	return 0;
 }
 

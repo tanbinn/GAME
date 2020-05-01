@@ -389,9 +389,7 @@ void JuBen(string gongneng, int bianhao) {
 	}
 }
 
-void ZhangJie0() {
-	//	JuBen("¾çÇé",1);
-}
+
 
 #endif
 
