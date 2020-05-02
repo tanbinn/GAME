@@ -30,7 +30,7 @@ void ParseIn() {
 		>> zhuRenGong.liLiang_D >> zhuRenGong.liLiang_G >> zhuRenGong.fangYu_D >> zhuRenGong.fangYu_G >> zhuRenGong.suDu_D >> zhuRenGong.suDu_G
 		>> zhuRenGong.faShu_D >> zhuRenGong.faShu_G >> zhuRenGong.moKang_D >> zhuRenGong.moKang_G >> zhuRenGong.zhiLi_D >> zhuRenGong.zhiLi_G
 		>> zhuRenGong.baoShiDu_D >> zhuRenGong.baoShiDu_G >> zhuRenGong.wenDu >> zhuRenGong.xinQing >> zhuRenGong.haoGan >> zhuRenGong.daweizhi
-		>> zhuRenGong.zhongweizhi >> zhuRenGong.xiaoweizhi >> zhuRenGong.weizhi;
+		>> zhuRenGong.zhongweizhi >> zhuRenGong.xiaoweizhi >> zhuRenGong.weizhi >> zhuRenGong.xingdongcao_num;
 	//重要标注：有些结构体中的数据是不需要在这里载入的，就比如说状态数组可以直接在重置函数中进行重置。同类的行动槽也只是在战斗函数中用得上
 	string kongbai;
 	daoju >> kongbai >> zhuRenGong.huobi_money >> zhuRenGong.sucai_shuzhi >> zhuRenGong.sucai_muchai >> zhuRenGong.sucai_gancao
@@ -43,7 +43,7 @@ void ParseIn() {
 	shuju >> siJi.name >> siJi.panduan_duiwu >> siJi.tiLi_D >> siJi.tiLi_G >> siJi.jingLi_D >> siJi.jingLi_G >> siJi.jingYan >> siJi.liLiang_D >> siJi.liLiang_G
 		>> siJi.fangYu_D >> siJi.fangYu_G >> siJi.suDu_D >> siJi.suDu_G >> siJi.faShu_D >> siJi.faShu_G >> siJi.moKang_D >> siJi.moKang_G
 		>> siJi.zhiLi_D >> siJi.zhiLi_G >> siJi.baoShiDu_D >> siJi.baoShiDu_G >> siJi.wenDu >> siJi.xinQing >> siJi.haoGan >> siJi.daweizhi
-		>> siJi.zhongweizhi >> siJi.xiaoweizhi >> siJi.weizhi;
+		>> siJi.zhongweizhi >> siJi.xiaoweizhi >> siJi.weizhi >> zhuRenGong.xingdongcao_num;
 	daoju >> kongbai >> siJi.huobi_money >> siJi.sucai_shuzhi >> siJi.sucai_muchai >> siJi.sucai_gancao >> siJi.sucai_shitou >> siJi.sucai_mogu
 		>> siJi.sucai_yecai >> siJi.sucai_yegu >> siJi.daoju_pingguo >> siJi.daoju_li >> siJi.daoju_suishi >> siJi.daoju_shui >> siJi.fuka_kongbai
 		>> siJi.fuka_qiluruo_weiding >> siJi.peifang_yinghuo;
