@@ -154,6 +154,7 @@
     <ClInclude Include="头文件\jieMian.h" />
     <ClInclude Include="头文件\juBen.h" />
     <ClInclude Include="头文件\kaiPian.h" />
+    <ClInclude Include="renWuShuJu_jineng" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GAME.rc" />

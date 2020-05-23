@@ -14,9 +14,11 @@ using namespace std;
 
 
 void ParseIn() {
+	
 
 	ifstream shuju("renWuShuJu_shuju");
 	ifstream daoju("renWuShuJu_daoju");
+	ifstream jineng("renWuShuJu_jineng");
 
 	//空白组
 	for (int i = 0; i < 30; i++) {//空白数组0 
@@ -24,6 +26,9 @@ void ParseIn() {
 	}
 	for (int i = 0; i < 16; i++) {
 		daoju >> kongbai_daoju[i];
+	}
+	for (int i = 0; i < 6; i++) {
+		jineng >> kongbai_jineng[i];
 	}
 	//位号0
 	shuju >> zhuRenGong.name >> zhuRenGong.panduan_duiwu >> zhuRenGong.tiLi_D >> zhuRenGong.tiLi_G >> zhuRenGong.jingLi_D >> zhuRenGong.jingLi_G >> zhuRenGong.jingYan
@@ -37,8 +42,18 @@ void ParseIn() {
 		>> zhuRenGong.sucai_shitou >> zhuRenGong.sucai_mogu >> zhuRenGong.sucai_yecai >> zhuRenGong.sucai_yegu >> zhuRenGong.daoju_pingguo
 		>> zhuRenGong.daoju_li >> zhuRenGong.daoju_suishi >> zhuRenGong.daoju_shui >> zhuRenGong.fuka_kongbai >> zhuRenGong.fuka_qiluruo_weiding
 		>> zhuRenGong.peifang_yinghuo;
-	_renwu.push_back(zhuRenGong);
 
+	for (int i = 0; i < 6; i++) {
+		if (i == 0) {
+			jineng >> kongbai;
+		}
+		else {
+			if (i >= 1 and i <= 2) {
+				//zhuRenGong.zhandou_gongji_danmu.push_back(quanju_danmu[i - 1]);
+			}
+		}
+	}
+	_renwu.push_back(zhuRenGong);
 	//位号1
 	shuju >> siJi.name >> siJi.panduan_duiwu >> siJi.tiLi_D >> siJi.tiLi_G >> siJi.jingLi_D >> siJi.jingLi_G >> siJi.jingYan >> siJi.liLiang_D >> siJi.liLiang_G
 		>> siJi.fangYu_D >> siJi.fangYu_G >> siJi.suDu_D >> siJi.suDu_G >> siJi.faShu_D >> siJi.faShu_G >> siJi.moKang_D >> siJi.moKang_G

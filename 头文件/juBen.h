@@ -21,6 +21,41 @@ void color(short x)	//自定义函根据参数改变颜色
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
+struct zhandou_gongji_danmu {//测试功能，主要是想利用结构体来给每种弹幕定义倍率和消耗量
+	//内容可以从头写起，比如随机弹中囊括多种弹幕样式，那你可以针对每种弹幕样式写一个升级树，然后通过弹幕类型结构体进行指针形式的调用
+	string toubiao;//头标
+	short leixing;//弹幕类型
+	short yangshi;//弹幕样式		//实际要调用的只是样式这一层，但定义弹幕类型和头标是方便遍历（反正多写几个量又不会有多大事）
+	short shuxing;//弹幕属性
+	short xiaohao_power;//单位弹幕所需的power值
+	short xiaohao_xingdongzhi;//单位弹幕所需要的行动值
+	short gongji;//伤害倍率
+	short sudu;//弹速值
+	vector <string> xiaoguo;
+};
+
+//因为要用文件流进行数据存储和调用，所以需要给每个技能定义一个头标和脚标，格式参照人物数据的读入方式
+zhandou_gongji_danmu suijidan_daodan_level1 = {"弹幕样式",2,0,0,5,0,2,10};//00
+zhandou_gongji_danmu suijidan_xiaoyu_level1 = { "弹幕样式",2,6,0,4,0,3,8};//01
+
+struct zhandou_yidong {
+	string toubiao;//头标
+	string leixing;//移动类型
+	short xiaohao_power;//所需的power值
+	short xiaohao_xingdongzhi;//所需的行动值
+	short sudu;//移动强度
+	zhandou_gongji_danmu* danmu;//少数的移动形式可以边闪避边进行弹幕输出，这里是有备无患
+};
+
+zhandou_yidong weiyi_level1 = { "移动","位移",0,3,2};//10
+zhandou_yidong zhongfuyidong_level1 = { "移动","中幅移动",0,5,4,&suijidan_daodan_level1};//11				记得到时候把这个指针删掉（我只是为了调试一下移动时发射弹幕的功能）
+zhandou_yidong gaosuchuanxing_level1 = { "移动","高速穿行",0,7,6};//12
+
+struct quanju_jineng_dingyi {
+	vector <zhandou_yidong>* yidong;//这是一个用于存储全局的弹幕攻击类型的动态数组，载入数据需要在parsein函数中进行（对应的移动类型也是）
+	vector <zhandou_gongji_danmu>* danmu;//用于全局存储移动技能信息的数组
+};
+quanju_jineng_dingyi quanju_jineng;//以后直接通过这个数组进行调用和遍历即可，且里面的数据全是指针型的，不用担心数据流失
 
 struct zhandoushuju {
 	string leixing;
@@ -30,7 +65,6 @@ struct zhandoushuju {
 	vector <string> M;
 	short left;
 };
-
 
 struct _renwushuju {//用于定义人物数据的结构体
 //人物数据
@@ -93,6 +127,10 @@ struct _renwushuju {//用于定义人物数据的结构体
 
 	//配方标头为3
 	int peifang_yinghuo;//3 1 营火（配方）
+
+
+	vector <zhandou_gongji_danmu> zhandou_gongji_danmu;
+	vector <zhandou_yidong> zhandou_yidong;
 };
 
 string zhangJie;
@@ -105,6 +143,7 @@ string tianqi_jiaojiedian;
 
 string kongBai_shuju[30];
 string kongbai_daoju[16];
+string kongbai_jineng[6];
 vector <_renwushuju> _renwu;
 vector <_renwushuju> _team;
 struct _renwushuju siJi; struct _renwushuju zhuRenGong;
