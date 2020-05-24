@@ -549,6 +549,9 @@ void daoju(string gongneng) {
 	}
 }
 
+
+
+
 void zhandoujiemian(string leixing,string diren) {
 	if (nandu == "普通") {
 		if (leixing == "弹幕战") {
@@ -993,9 +996,64 @@ void zhandoujiemian(string leixing,string diren) {
 							cin >> zhongji2_string;
 							if (_team[zhongji1_short - 1].name == "你") {
 								if (zhongji2_string == "1") {//攻击
+									bool danmuleixing_bool[4] = { 0,0,0,0 };
+									for (int i = 0; i < _team[zhongji1_short - 1].jineng.gongji.size(); i++) {
+										switch (_team[zhongji1_short - 1].jineng.gongji[i].leixing) {
+										case 0:
+											danmuleixing_bool[0] = true;
+											break;
+										case 1:
+											danmuleixing_bool[1] = true;
+											break;
+										case 2:
+											danmuleixing_bool[2] = true;
+											break;
+										case 3:
+											danmuleixing_bool[3] = true;
+											break;
+										default:
+											//不可能的事情~
+											break;
+										}
+									}
+									vector <short> danmuleixing_xuanze;
+									for (int i = 0; i < 3; i++) {
+										if (danmuleixing_bool[i] == true) {
+											if (i == 0) {
+												danmuleixing_xuanze.push_back(0);
+											}
+											else if (i == 1) {
+												danmuleixing_xuanze.push_back(1);
+											}
+											else if (i == 2) {
+												danmuleixing_xuanze.push_back(2);
+											}
+											else if (i == 3) {
+												danmuleixing_xuanze.push_back(3);
+											}
+										}
+									}
 									int zhongji3_int;
 									short zhongji4_short;
 									while (true) {
+										short a = 1;
+										for (int i = 0; i < danmuleixing_xuanze.size(); i++) {
+											switch(danmuleixing_xuanze[i]) {
+												case 0:
+													cout << a << "[自机狙]  ";
+													break;
+												case 1:
+													cout << a << "[偏向狙]  ";
+													break;
+												case 2:
+													cout << a << "[随机弹]  ";
+													break;
+												case 3:
+													cout << a << "[限位弹]  ";
+													break;
+											}
+											a++;
+										}
 										cout << "1[随机弹]  2[自机狙]  3[偏向狙]  0[返回]" << endl;
 										cin >> zhongji2_string;
 										if (zhongji2_string == "0") {

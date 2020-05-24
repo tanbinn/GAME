@@ -14,7 +14,12 @@ using namespace std;
 
 
 void ParseIn() {
-	
+	quanju_jineng.gongji.push_back(suijidan_daodan_level1);
+	quanju_jineng.gongji.push_back(suijidan_xiaoyu_level1);
+
+	quanju_jineng.yidong.push_back(weiyi_level1);
+	quanju_jineng.yidong.push_back(zhongfuyidong_level1);
+	quanju_jineng.yidong.push_back(gaosuchuanxing_level1);
 
 	ifstream shuju("renWuShuJu_shuju");
 	ifstream daoju("renWuShuJu_daoju");
@@ -30,7 +35,7 @@ void ParseIn() {
 	for (int i = 0; i < 6; i++) {
 		jineng >> kongbai_jineng[i];
 	}
-	//位号0
+//位号0
 	shuju >> zhuRenGong.name >> zhuRenGong.panduan_duiwu >> zhuRenGong.tiLi_D >> zhuRenGong.tiLi_G >> zhuRenGong.jingLi_D >> zhuRenGong.jingLi_G >> zhuRenGong.jingYan
 		>> zhuRenGong.liLiang_D >> zhuRenGong.liLiang_G >> zhuRenGong.fangYu_D >> zhuRenGong.fangYu_G >> zhuRenGong.suDu_D >> zhuRenGong.suDu_G
 		>> zhuRenGong.faShu_D >> zhuRenGong.faShu_G >> zhuRenGong.moKang_D >> zhuRenGong.moKang_G >> zhuRenGong.zhiLi_D >> zhuRenGong.zhiLi_G
@@ -43,18 +48,32 @@ void ParseIn() {
 		>> zhuRenGong.daoju_li >> zhuRenGong.daoju_suishi >> zhuRenGong.daoju_shui >> zhuRenGong.fuka_kongbai >> zhuRenGong.fuka_qiluruo_weiding
 		>> zhuRenGong.peifang_yinghuo;
 
+	string zhongji1_string;
+	stringstream ss;
+	short zhongji1_short;
+
 	for (int i = 0; i < 6; i++) {
 		if (i == 0) {
 			jineng >> kongbai;
 		}
 		else {
-			if (i >= 1 and i <= 2) {
-				//zhuRenGong.zhandou_gongji_danmu.push_back(quanju_danmu[i - 1]);
+			jineng >> zhongji1_string;
+			if (zhongji1_string[0] == '0') {
+				ss << zhongji1_string.substr(1);
+				ss >> zhongji1_short;
+				cout << zhongji1_short;
+				zhuRenGong.jineng.gongji.push_back(quanju_jineng.gongji[zhongji1_short]);
+			}
+			else if (zhongji1_string[0] == '1') {
+				ss << zhongji1_string.substr(1);
+				ss >> zhongji1_short;
+				zhuRenGong.jineng.yidong.push_back(quanju_jineng.yidong[zhongji1_short]);
 			}
 		}
 	}
 	_renwu.push_back(zhuRenGong);
-	//位号1
+
+//位号1
 	shuju >> siJi.name >> siJi.panduan_duiwu >> siJi.tiLi_D >> siJi.tiLi_G >> siJi.jingLi_D >> siJi.jingLi_G >> siJi.jingYan >> siJi.liLiang_D >> siJi.liLiang_G
 		>> siJi.fangYu_D >> siJi.fangYu_G >> siJi.suDu_D >> siJi.suDu_G >> siJi.faShu_D >> siJi.faShu_G >> siJi.moKang_D >> siJi.moKang_G
 		>> siJi.zhiLi_D >> siJi.zhiLi_G >> siJi.baoShiDu_D >> siJi.baoShiDu_G >> siJi.wenDu >> siJi.xinQing >> siJi.haoGan >> siJi.daweizhi
@@ -63,6 +82,25 @@ void ParseIn() {
 		>> siJi.sucai_yecai >> siJi.sucai_yegu >> siJi.daoju_pingguo >> siJi.daoju_li >> siJi.daoju_suishi >> siJi.daoju_shui >> siJi.fuka_kongbai
 		>> siJi.fuka_qiluruo_weiding >> siJi.peifang_yinghuo;
 	_renwu.push_back(siJi);
+
+	for (int i = 0; i < 6; i++) {
+		if (i == 0) {
+			jineng >> kongbai;
+		}
+		else {
+			jineng >> zhongji1_string;
+			if (zhongji1_string[0] == '0') {
+				ss << zhongji1_string.substr(2);
+				ss >> zhongji1_short;
+				siJi.jineng.gongji.push_back(quanju_jineng.gongji[zhongji1_short]);
+			}
+			else if (zhongji1_string[0] == '1') {
+				ss << zhongji1_string.substr(2);
+				ss >> zhongji1_short;
+				siJi.jineng.yidong.push_back(quanju_jineng.yidong[zhongji1_short]);
+			}
+		}
+	}
 
 	for (int i = 0; i < _renwu.size(); i++) {
 		if (_renwu[i].panduan_duiwu == true) {
