@@ -12,14 +12,34 @@
 #include"头文件/kaiPian.h"
 using namespace std;
 
+void ParseIn_jinengzhuangzai(_renwushuju &name, string jineng) {
+	if (jineng[0] == 'A') {
+		for (int j = 0; j < quanju_jineng.gongji.size(); j++) {
+			if (quanju_jineng.gongji[j].jiaobiao == jineng) {
+				name.jineng.gongji.push_back(quanju_jineng.gongji[j]);
+			}
+		}
+	}
+	else if (jineng[0] == 'B') {
+		for (int j = 0; j < quanju_jineng.yidong.size(); j++) {
+			if (quanju_jineng.yidong[j].jiaobiao == jineng) {
+				name.jineng.yidong.push_back(quanju_jineng.yidong[j]);
+			}
+		}
+	}
 
-void ParseIn() {
+}
+
+void ParseIn() {//载入函数
+	//攻击：随机弹
 	quanju_jineng.gongji.push_back(suijidan_daodan_level1);
 	quanju_jineng.gongji.push_back(suijidan_xiaoyu_level1);
 
+	//移动
 	quanju_jineng.yidong.push_back(weiyi_level1);
 	quanju_jineng.yidong.push_back(zhongfuyidong_level1);
 	quanju_jineng.yidong.push_back(gaosuchuanxing_level1);
+	quanju_jineng.yidong.push_back(ceshi_yidongsheji);
 
 	ifstream shuju("renWuShuJu_shuju");
 	ifstream daoju("renWuShuJu_daoju");
@@ -32,7 +52,7 @@ void ParseIn() {
 	for (int i = 0; i < 16; i++) {
 		daoju >> kongbai_daoju[i];
 	}
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 7; i++) {
 		jineng >> kongbai_jineng[i];
 	}
 //位号0
@@ -49,28 +69,19 @@ void ParseIn() {
 		>> zhuRenGong.peifang_yinghuo;
 
 	string zhongji1_string;
-	stringstream ss;
 	short zhongji1_short;
 
-	for (int i = 0; i < 6; i++) {
-		if (i == 0) {
-			jineng >> kongbai;
+	jineng >> kongbai;
+
+	while (jineng >> zhongji1_string) {
+		if (zhongji1_string[0] >= 'A' and zhongji1_string[0] <= 'Z') {
+			ParseIn_jinengzhuangzai(zhuRenGong, zhongji1_string);
 		}
 		else {
-			jineng >> zhongji1_string;
-			if (zhongji1_string[0] == '0') {
-				ss << zhongji1_string.substr(1);
-				ss >> zhongji1_short;
-				cout << zhongji1_short;
-				zhuRenGong.jineng.gongji.push_back(quanju_jineng.gongji[zhongji1_short]);
-			}
-			else if (zhongji1_string[0] == '1') {
-				ss << zhongji1_string.substr(1);
-				ss >> zhongji1_short;
-				zhuRenGong.jineng.yidong.push_back(quanju_jineng.yidong[zhongji1_short]);
-			}
+			break;
 		}
 	}
+
 	_renwu.push_back(zhuRenGong);
 
 //位号1
@@ -81,27 +92,17 @@ void ParseIn() {
 	daoju >> kongbai >> siJi.huobi_money >> siJi.sucai_shuzhi >> siJi.sucai_muchai >> siJi.sucai_gancao >> siJi.sucai_shitou >> siJi.sucai_mogu
 		>> siJi.sucai_yecai >> siJi.sucai_yegu >> siJi.daoju_pingguo >> siJi.daoju_li >> siJi.daoju_suishi >> siJi.daoju_shui >> siJi.fuka_kongbai
 		>> siJi.fuka_qiluruo_weiding >> siJi.peifang_yinghuo;
-	_renwu.push_back(siJi);
 
-	for (int i = 0; i < 6; i++) {
-		if (i == 0) {
-			jineng >> kongbai;
+	while (jineng >> zhongji1_string) {
+		if (zhongji1_string[0] >= 'A' and zhongji1_string[0] <= 'Z') {
+			ParseIn_jinengzhuangzai(siJi, zhongji1_string);
 		}
 		else {
-			jineng >> zhongji1_string;
-			if (zhongji1_string[0] == '0') {
-				ss << zhongji1_string.substr(2);
-				ss >> zhongji1_short;
-				siJi.jineng.gongji.push_back(quanju_jineng.gongji[zhongji1_short]);
-			}
-			else if (zhongji1_string[0] == '1') {
-				ss << zhongji1_string.substr(2);
-				ss >> zhongji1_short;
-				siJi.jineng.yidong.push_back(quanju_jineng.yidong[zhongji1_short]);
-			}
+			break;
 		}
 	}
 
+	_renwu.push_back(siJi);
 	for (int i = 0; i < _renwu.size(); i++) {
 		if (_renwu[i].panduan_duiwu == true) {
 			_team.push_back(_renwu[i]);
@@ -333,19 +334,29 @@ void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散
 }
 
 
+void Display() {
+	for (int i = 0; i < zhuRenGong.jineng.yidong.size(); i++) {
+		cout << zhuRenGong.jineng.yidong[i].name << endl;
+	}
+	for (int i = 0; i < siJi.jineng.gongji.size(); i++) {
+		cout << siJi.jineng.gongji[i].name << endl;
+	}
+}
+
 int main() {
 	cout << "试作品，很多功能日后加以完善" << endl;
 	_getch();
-	hello();
-	if (kaiShiJieMian() == 1) {//等所有的界面内容设计完毕后，再开始做存档功能
-		cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
-		zhangJie = "开篇";
-		nandu = "普通";
-		//tianqi_jiaojiedian = '晴';
-		ZhangJie0();
-	}
+	//hello();
+	//if (kaiShiJieMian() == 1) {//等所有的界面内容设计完毕后，再开始做存档功能
+	//	cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
+	//	zhangJie = "开篇";
+	//	nandu = "普通";
+	//	//tianqi_jiaojiedian = '晴';
+	//	ZhangJie0();
+	//}
 	ParseIn();
 	ChongZhi("全局");
+	Display();
 	zhandoujiemian("弹幕战", "测试用NPC");
 	yiBanJieMian();
 	return 0;
