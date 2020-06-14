@@ -1,18 +1,10 @@
-﻿
-//程序准则：不要嫌麻烦！可以简洁，不可以减料！没有一万个if还好意思说这是大型程序？
-//行为准则：编程是爱好，学业是现实！你可以加很多东方群用以收集资料，但是，在一天的作业完成之前，你的QQ不允许打开！此外，希望你能再向外拓展点知识，不要整天
-//		   都蒙在你这个技术肤浅的菜鸡程序上！
-//只要你能遵循这两点，我想你会找到幻想与现实的平衡点的。
+﻿//程序准则：不要嫌麻烦！可以简洁，不可以减料！没有一万个if还好意思说这是大型程序？
 
 #include"头文件/jieMian.h"
-#include"conio.h"
 #include"头文件/jieMian.h"
-#include<fstream>
-#include<string>
 #include"头文件/kaiPian.h"
-using namespace std;
 
-void ParseIn_jinengzhuangzai(_renwushuju &name, string jineng) {
+void ParseIn_jinengzhuangzai(_renwushuju& name, string jineng) {
 	if (jineng[0] == 'A') {
 		for (int j = 0; j < quanju_jineng.gongji.size(); j++) {
 			if (quanju_jineng.gongji[j].jiaobiao == jineng) {
@@ -46,7 +38,7 @@ void ParseIn() {//载入函数
 	ifstream jineng("renWuShuJu_jineng");
 
 	//空白组
-	for (int i = 0; i < 30; i++) {//空白数组0 
+	for (int i = 0; i < 30; i++) {
 		shuju >> kongBai_shuju[i];
 	}
 	for (int i = 0; i < 16; i++) {
@@ -55,7 +47,7 @@ void ParseIn() {//载入函数
 	for (int i = 0; i < 7; i++) {
 		jineng >> kongbai_jineng[i];
 	}
-//位号0
+	//位号0
 	shuju >> zhuRenGong.name >> zhuRenGong.panduan_duiwu >> zhuRenGong.tiLi_D >> zhuRenGong.tiLi_G >> zhuRenGong.jingLi_D >> zhuRenGong.jingLi_G >> zhuRenGong.jingYan
 		>> zhuRenGong.liLiang_D >> zhuRenGong.liLiang_G >> zhuRenGong.fangYu_D >> zhuRenGong.fangYu_G >> zhuRenGong.suDu_D >> zhuRenGong.suDu_G
 		>> zhuRenGong.faShu_D >> zhuRenGong.faShu_G >> zhuRenGong.moKang_D >> zhuRenGong.moKang_G >> zhuRenGong.zhiLi_D >> zhuRenGong.zhiLi_G
@@ -69,7 +61,6 @@ void ParseIn() {//载入函数
 		>> zhuRenGong.peifang_yinghuo;
 
 	string zhongji1_string;
-	short zhongji1_short;
 
 	jineng >> kongbai;
 
@@ -84,7 +75,7 @@ void ParseIn() {//载入函数
 
 	_renwu.push_back(zhuRenGong);
 
-//位号1
+	//位号1
 	shuju >> siJi.name >> siJi.panduan_duiwu >> siJi.tiLi_D >> siJi.tiLi_G >> siJi.jingLi_D >> siJi.jingLi_G >> siJi.jingYan >> siJi.liLiang_D >> siJi.liLiang_G
 		>> siJi.fangYu_D >> siJi.fangYu_G >> siJi.suDu_D >> siJi.suDu_G >> siJi.faShu_D >> siJi.faShu_G >> siJi.moKang_D >> siJi.moKang_G
 		>> siJi.zhiLi_D >> siJi.zhiLi_G >> siJi.baoShiDu_D >> siJi.baoShiDu_G >> siJi.wenDu >> siJi.xinQing >> siJi.haoGan >> siJi.daweizhi
@@ -112,7 +103,24 @@ void ParseIn() {//载入函数
 	shuju.close();
 }
 
-short num_dangdirenwu_other;
+void bianDui_chakan(_renwushuju& name) {
+	short zhongji_setw = 15;
+	color(3);
+	cout << "姓名：" << name.name << endl;
+	color(1);
+	cout << setw_quanjiao("体力值：" + banjiao_quanjiao(name.tiLi_D), zhongji_setw) << setw_quanjiao("体力值线：" + banjiao_quanjiao(name.tiLi_G), zhongji_setw) << setw_quanjiao("精力：" + banjiao_quanjiao(name.jingLi_D), zhongji_setw) << setw_quanjiao("精力值线：" + banjiao_quanjiao(name.jingLi_G), zhongji_setw) << endl;
+	cout << setw_quanjiao("等级：未定，暂存", zhongji_setw) << setw_quanjiao("力量值：" + banjiao_quanjiao(name.liLiang_D), zhongji_setw) << setw_quanjiao("力量值线：" + banjiao_quanjiao(name.liLiang_G), zhongji_setw) << setw_quanjiao("防御值：" + banjiao_quanjiao(name.fangYu_D), zhongji_setw) << endl;
+	cout << setw_quanjiao("防御值线：" + banjiao_quanjiao(name.fangYu_G), zhongji_setw) << setw_quanjiao("速度：" + banjiao_quanjiao(name.suDu_D), zhongji_setw) << setw_quanjiao("速度线：" + banjiao_quanjiao(name.suDu_G), zhongji_setw) << setw_quanjiao("法术：" + banjiao_quanjiao(name.faShu_D), zhongji_setw) << endl;
+	cout << setw_quanjiao("法术线：" + banjiao_quanjiao(name.faShu_G),zhongji_setw) << setw_quanjiao("魔抗：" + banjiao_quanjiao(name.moKang_D),zhongji_setw) << setw_quanjiao("魔抗线：" + banjiao_quanjiao(name.moKang_G),zhongji_setw) << setw_quanjiao("智力：" + banjiao_quanjiao(name.zhiLi_D),zhongji_setw) << endl;
+	cout << setw_quanjiao("智力线：" + banjiao_quanjiao(name.zhiLi_G),zhongji_setw) << setw_quanjiao("饱食度：" + banjiao_quanjiao(name.baoShiDu_D),zhongji_setw) << setw_quanjiao("饱食度线：" + banjiao_quanjiao(name.baoShiDu_G),zhongji_setw) << setw_quanjiao("温度：" + banjiao_quanjiao(name.wenDu),zhongji_setw) << endl;
+	cout << "状态：";
+	for (int i = 0; i < name.zhuangtai.size(); i++) {
+		cout << name.zhuangtai[i] << setw(16) << " ";
+	}
+	color(7);
+	_getch();
+	cout << endl;
+}
 
 void bianDui() {
 	ChongZhi("全局");
@@ -156,47 +164,11 @@ void bianDui() {
 				else if (zhongji2 > 0 and zhongji2 <= (zhongji_shuzu_all.size() + 1)) {
 					for (int i = 0; i < _renwu.size(); i++) {
 						if (_renwu[i].name == zhongji_shuzu_all[zhongji2 - 1].name) {
-							if (_renwu[i].name == "你") {//列表原则：没有固定场宽，但是第一行必须排齐，以下的行列根据第一行手动控制场宽进行对齐（fucking场宽格式）
-								color(3);
-								cout << "姓名：" << _NAME << endl;
-								color(2);
-								cout << "体力值:" << zhuRenGong.tiLi_D << setw(19) << "体力值线:" << zhuRenGong.tiLi_G << setw(18) << "精力:" << zhuRenGong.jingLi_D << setw(20) << "精力值线:" << zhuRenGong.jingLi_G << endl;
-								cout << "等级:未定,暂存" << setw(15) << "力量值:" << zhuRenGong.liLiang_D << setw(24) << "力量值线:" << zhuRenGong.liLiang_G << setw(19) << "防御值:" << zhuRenGong.fangYu_D << endl;
-								cout << "防御值线:" << zhuRenGong.fangYu_G << setw(18) << "速度:" << zhuRenGong.suDu_D << setw(22) << "速度线:" << zhuRenGong.suDu_G << setw(19) << "法术:" << zhuRenGong.faShu_D << endl;
-								cout << "法术线:" << zhuRenGong.faShu_G << setw(19) << "魔抗:" << zhuRenGong.moKang_D << setw(24) << "魔抗线:" << zhuRenGong.moKang_G << setw(19) << "智力:" << zhuRenGong.zhiLi_D << endl;
-								cout << "智力线:" << zhuRenGong.zhiLi_G << setw(19) << "饱食度:" << zhuRenGong.baoShiDu_D << setw(22) << "饱食度线:" << zhuRenGong.baoShiDu_G << setw(18) << "温度:" << zhuRenGong.wenDu << endl;
-								cout << "状态:";
-								for (int i = 0; i < zhuRenGong.zhuangtai.size(); i++) {
-									cout << zhuRenGong.zhuangtai[i] << setw(16) << " ";
-								}
-								color(7);
-								_getch();
-								cout << endl;
-								//姓名：我
-								//	体力值 : 1000          体力值线 : 1000             精力 : 1000           精力值线 : 1000
-								//	等级 : 未定, 暂存        力量值 : 20               力量值线 : 20            防御值 : 10
-								//	防御值线 : 10             速度 : 10               速度线 : 10              法术 : 10
-								//	法术线 : 10              魔抗 : 5                 魔抗线 : 5              智力 : 10
-								//	智力线 : 10            饱食度 : 100             饱食度线 : 100             温度 : 50
-								//	状态 : <精神抖擞>
-								//内容仅供参考，事实上控制台中的输出格式与IDE中的不同
+							if (_renwu[i].name == "你") {
+								bianDui_chakan(zhuRenGong);
 							}
 							else if (_renwu[i].name == "司机") {
-								color(3);
-								cout << "姓名：" << _NAME << endl;
-								color(2);
-								cout << "体力值:" << siJi.tiLi_D << setw(19) << "体力值线:" << siJi.tiLi_G << setw(18) << "精力:" << siJi.jingLi_D << setw(20) << "精力值线:" << siJi.jingLi_G << endl;
-								cout << "等级:未定,暂存" << setw(15) << "力量值:" << siJi.liLiang_D << setw(24) << "力量值线:" << siJi.liLiang_G << setw(19) << "防御值:" << siJi.fangYu_D << endl;
-								cout << "防御值线:" << siJi.fangYu_G << setw(18) << "速度:" << siJi.suDu_D << setw(22) << "速度线:" << siJi.suDu_G << setw(19) << "法术:" << siJi.faShu_D << endl;
-								cout << "法术线:" << siJi.faShu_G << setw(19) << "魔抗:" << siJi.moKang_D << setw(24) << "魔抗线:" << siJi.moKang_G << setw(19) << "智力:" << siJi.zhiLi_D << endl;
-								cout << "智力线:" << siJi.zhiLi_G << setw(19) << "饱食度:" << siJi.baoShiDu_D << setw(22) << "饱食度线:" << siJi.baoShiDu_G << setw(18) << "温度:" << siJi.wenDu << endl;
-								cout << "状态:";
-								for (int i = 0; i < siJi.zhuangtai.size(); i++) {
-									cout << siJi.zhuangtai[i] << setw(16) << " ";
-								}
-								color(7);
-								_getch();
-								cout << endl;
+								bianDui_chakan(siJi);
 							}
 						}
 					}
@@ -208,6 +180,7 @@ void bianDui() {
 			}
 		}
 		else if (zhongji1 == '2') {
+			short num_dangdirenwu_other = 0;
 			vector <_renwushuju> zhongji_shuzu;
 			for (int i = 0; i < _renwu.size(); i++) {
 				if (_renwu[i].weizhi == _renwu[0].weizhi and _renwu[i].panduan_duiwu == false) {
@@ -299,16 +272,16 @@ void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散
 		char zhongji1 = 0;
 		cout << "_______________________________________________________________________________________________________________________" << endl;
 		cout << "地点:" << _renwu[0].xiaoweizhi << "   位置：" << _renwu[0].weizhi << "   天气：" << tianqi_jiaojiedian << "   时间：" << month_quanju << "月" << day_quanju << "日 " << hour_quanju << ":" << min_quanju << endl;
-		for (int i = 0; i < _team.size(); i++) { 
+		for (int i = 0; i < _team.size(); i++) {
 			if (_team[i].name == "你") {
-				cout << "姓名：" << _NAME << "  体力【" << _team[0].tiLi_D << "/" << _team[0].tiLi_G << "】  " << "精力【" 
-					<< _team[0].jingLi_D << "/" << _team[0].jingLi_G << "】   饱食度【" << _team[0].baoShiDu_D << "/" 
+				cout << "姓名：" << _NAME << "  体力【" << _team[0].tiLi_D << "/" << _team[0].tiLi_G << "】  " << "精力【"
+					<< _team[0].jingLi_D << "/" << _team[0].jingLi_G << "】   饱食度【" << _team[0].baoShiDu_D << "/"
 					<< _team[0].baoShiDu_G << "】  ";
 				cout << "   状态: "; zhuangtai("输出", "你", ""); cout << endl;
 			}
 			else {
-				cout << "姓名：" << _team[i].name << "  体力【" << _team[i].tiLi_D << "/" << _team[i].tiLi_G << "】  " << "精力【" 
-					<< _team[i].jingLi_D << "/" << _team[i].jingLi_G << "】   饱食度【" << _team[i].baoShiDu_D << "/" 
+				cout << "姓名：" << _team[i].name << "  体力【" << _team[i].tiLi_D << "/" << _team[i].tiLi_G << "】  " << "精力【"
+					<< _team[i].jingLi_D << "/" << _team[i].jingLi_G << "】   饱食度【" << _team[i].baoShiDu_D << "/"
 					<< _team[i].baoShiDu_G << "】  ";
 				cout << "   状态: "; zhuangtai("输出", _team[i].name, ""); cout << endl;
 			}
@@ -334,14 +307,6 @@ void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散
 }
 
 
-void Display() {
-	for (int i = 0; i < zhuRenGong.jineng.yidong.size(); i++) {
-		cout << zhuRenGong.jineng.yidong[i].name << endl;
-	}
-	for (int i = 0; i < siJi.jineng.gongji.size(); i++) {
-		cout << siJi.jineng.gongji[i].name << endl;
-	}
-}
 
 int main() {
 	cout << "试作品，很多功能日后加以完善" << endl;
@@ -356,7 +321,6 @@ int main() {
 	//}
 	ParseIn();
 	ChongZhi("全局");
-	Display();
 	zhandoujiemian("弹幕战", "测试用NPC");
 	yiBanJieMian();
 	return 0;

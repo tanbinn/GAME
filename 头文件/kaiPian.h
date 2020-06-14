@@ -1,8 +1,6 @@
-
 #ifndef _KAIPIAN_H_
 #define _KAIPIAN_H_
 #include"jieMian.h"
-using namespace std;
 
 int jiaojiedian_shanjiao2 = 0; int jiaojiedian_shanjiao3 = 0; int jiaojiedian_shanjiao4 = 0; int jiaojiedian_shanjiao6 = 0; int jiaojiedian_shanjiao7 = 0; int jiaojiedian_shanjiao5 = 0;
 int jiaojiedian_shanjiao_ruko4 = 0;//隐藏地点的判定点

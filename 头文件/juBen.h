@@ -9,9 +9,59 @@
 #include<algorithm>
 #include<iomanip>
 #include<Windows.h>
+#include<direct.h>
 #include<sstream>
 using namespace std;
 
+string setw_quanjiao(string cnt,short length) {
+	string res;
+	length *= 2;
+	res = cnt;
+	if (cnt.size() < length) {
+		for (int i = 0; i < (length - cnt.size()) / 2;i++) {
+			res = res + "  ";
+		}
+	}
+	return res;
+}
+
+std::string banjiao_quanjiao(int num)//¸ÄÔì¹ı£¬ÓÃÀ´°ÑÊı×Ö×ª»»³ÉÈ«½ÇµÄ×Ö·û´®ĞÎÊ½
+{
+	stringstream ss;
+	ss << num;
+	string str;
+	ss >> str;
+	std::string result = "";
+	unsigned char tmp; unsigned char tmp1;
+	for (unsigned int i = 0; i < str.length(); i++)
+	{
+		tmp = str[i];
+		tmp1 = str[i + 1];
+		//cout << "uchar:" << (int) tmp << endl;   
+		if (tmp > 32 && tmp < 128)
+		{//ÊÇ°ë½Ç×Ö·û
+			result += 163;//µÚÒ»¸ö×Ö½ÚÉèÖÃÎª163
+			result += (unsigned char)str[i] + 128;//µÚ¶ş¸ö×Ö½Ú+128;   
+		}
+		else if (tmp >= 163)
+		{//ÊÇÈ«½Ç×Ö·û   
+			result += str.substr(i, 2);
+			i++;
+			continue;
+		}
+		else if (tmp == 32)
+		{//´¦Àí°ë½Ç¿Õ¸ñ   
+			result += 161;
+			result += 161;
+		}
+		else
+		{
+			result += str.substr(i, 2);
+			i++;
+		}
+	}
+	return result;
+}
 
 void color(short x)	//×Ô¶¨Òåº¯¸ù¾İ²ÎÊı¸Ä±äÑÕÉ« 
 {
@@ -30,15 +80,16 @@ struct zhandou_gongji {//²âÊÔ¹¦ÄÜ£¬Ö÷ÒªÊÇÏëÀûÓÃ½á¹¹ÌåÀ´¸øÃ¿ÖÖµ¯Ä»¶¨Òå±¶ÂÊºÍÏûºÄÁ
 	short shuxing;//µ¯Ä»ÊôĞÔ
 	short xiaohao_power;//µ¥Î»µ¯Ä»ËùĞèµÄpowerÖµ
 	short xiaohao_xingdongzhi;//µ¥Î»µ¯Ä»ËùĞèÒªµÄĞĞ¶¯Öµ
-	short gongji;//ÉËº¦±¶ÂÊ
-	short sudu;//µ¯ËÙÖµ
+	short shanghai_beilv;//£¨»»ËãÈËÎï¹¥»÷ÖµµÄ£©ÉËº¦±¶ÂÊ
+	int shanghai_shuzhi;//(¼¼ÄÜ±¾Éí×Ô´øµÄ)»ù´¡ÉËº¦
+	short sudu;//»ù´¡µ¯ËÙ
 	string jiaobiao;//½Å±ê
 	vector <string> beizhu;
 };
 
 //ÒòÎªÒªÓÃÎÄ¼şÁ÷½øĞĞÊı¾İ´æ´¢ºÍµ÷ÓÃ£¬ËùÒÔĞèÒª¸øÃ¿¸ö¼¼ÄÜ¶¨ÒåÒ»¸öÍ·±êºÍ½Å±ê£¬¸ñÊ½²ÎÕÕÈËÎïÊı¾İµÄ¶ÁÈë·½Ê½
-zhandou_gongji suijidan_daodan_level1 = {"Ëæ»úµ¯","µ¶µ¯lv1",2,0,0,5,0,2,10,"A0"};//A0
-zhandou_gongji suijidan_xiaoyu_level1 = {"Ëæ»úµ¯","Ğ¡Óñlv1",2,6,0,4,0,3,8,"A1"};//A1
+zhandou_gongji suijidan_daodan_level1 = { "Ëæ»úµ¯","µ¶µ¯lv1",2,0,0,5,0,10,2,10,"A0" };//A0
+zhandou_gongji suijidan_xiaoyu_level1 = { "Ëæ»úµ¯","Ğ¡Óñlv1",2,6,0,4,0,10,3,8,"A1" };//A1
 
 struct zhandou_yidong {
 	string toubiao;//Í·±ê
