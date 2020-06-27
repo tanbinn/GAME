@@ -546,15 +546,19 @@ void daoju(string gongneng) {
 }
 
 
-void zhandoujiemian_xingDongZhuangZai() {
-	
+void zhandoujiemian_xingDongZhuangZai(zhandou_gongji& ParseIn_gongji,zhandou_yidong& ParseIn_yidong,vector <zhandoushuju_save>& fightarray) {//string name,int danmu,int beilv,short use_power,short use_xingdongzhi	名称（必须注明类型），弹幕，倍率(多用)，power值和行动值的单位消耗量
+	zhandoushuju_save res;
+	res.save.gongji = &ParseIn_gongji;
+	if (ParseIn_gongji.toubiao != "空白") {
+
+	}
 }
 
 void zhandoujiemian(string leixing,string diren) {
 	if (nandu == "普通") {
 		if (leixing == "弹幕战") {
 
-			vector <zhandoushuju> fightarrey;
+			vector <zhandoushuju_save> fightarrey;
 
 			int totalblood_zheng = 0;
 			int totalblood_fu = 0;
@@ -1043,7 +1047,7 @@ void zhandoujiemian(string leixing,string diren) {
 										cout << danmuleixing_xuanze.size() + 1 << "[返回]" << endl;
 										cin >> zhongji3_int;
 										if (zhongji3_int > 0 and zhongji3_int <= danmuleixing_xuanze.size()) {
-											zhandoujiemian_xingDongZhuangZai();
+											zhandoujiemian_xingDongZhuangZai(_team[zhongji1_short - 1].jineng.gongji[danmuleixing_xuanze[zhongji3_int - 1]],NULL_yidong,fightarrey);
 										}
 										else if (zhongji3_int == 0) {
 											break;
@@ -1060,8 +1064,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			break;
 								//		}
 								//		else if (zhongji2_string == "1") {
-								//			zhandoushuju zhongji0;
-								//			zhongji0.leixing = "攻击";
+								//			zhandoushuju_save zhongji0;
+								//			zhongji0.toubiao = "攻击";
 								//			zhongji0.name = "随机弹";
 								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
 								//			zhongji0.left = 1;
@@ -1196,8 +1200,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//		}
 								//		else if (zhongji2_string == "2") {
-								//			zhandoushuju zhongji0;
-								//			zhongji0.leixing = "攻击";
+								//			zhandoushuju_save zhongji0;
+								//			zhongji0.toubiao = "攻击";
 								//			zhongji0.name = "自机狙";
 								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
 								//			zhongji0.left = 1;
@@ -1396,8 +1400,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//		}
 								//		else if (zhongji2_string == "3") {
-								//			zhandoushuju zhongji0;
-								//			zhongji0.leixing = "攻击";
+								//			zhandoushuju_save zhongji0;
+								//			zhongji0.toubiao = "攻击";
 								//			zhongji0.name = "偏向狙";
 								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
 								//			zhongji0.left = 1;
@@ -1567,8 +1571,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			break;
 								//		}
 								//		else if (zhongji2_string == "1") {
-								//			zhandoushuju zhongji0;
-								//			zhongji0.leixing = "移动";
+								//			zhandoushuju_save zhongji0;
+								//			zhongji0.toubiao = "移动";
 								//			zhongji0.name = "微移";
 								//			zhongji0.left = 1;
 								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
@@ -1614,8 +1618,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//		}
 								//		else if (zhongji2_string == "2") {
-								//			zhandoushuju zhongji0;
-								//			zhongji0.leixing = "闪避";
+								//			zhandoushuju_save zhongji0;
+								//			zhongji0.toubiao = "闪避";
 								//			zhongji0.name = "中幅移动";
 								//			zhongji0.left = 1;
 								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
@@ -1661,8 +1665,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//		}
 								//		else if (zhongji2_string == "3") {
-								//			zhandoushuju zhongji0;
-								//			zhongji0.leixing = "闪避";
+								//			zhandoushuju_save zhongji0;
+								//			zhongji0.toubiao = "闪避";
 								//			zhongji0.name = "高速穿行";
 								//			zhongji0.left = 1;
 								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
@@ -1719,8 +1723,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			break;
 								//		}
 								//		else if (zhongji2_string == "1") {
-								//			zhandoushuju zhongji0;
-								//			zhongji0.leixing = "掩护";
+								//			zhandoushuju_save zhongji0;
+								//			zhongji0.toubiao = "掩护";
 								//			zhongji0.name = "防御";
 								//			zhongji0.left = 1;
 								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
@@ -1893,8 +1897,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//		}
 								//		else if (zhongji2_string == "2") {//写到的位置
-								//			zhandoushuju zhongji0;
-								//			zhongji0.leixing = "掩护";
+								//			zhandoushuju_save zhongji0;
+								//			zhongji0.toubiao = "掩护";
 								//			zhongji0.name = "弹幕防御";
 								//			zhongji0.left = 1;
 								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);

@@ -43,11 +43,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GAME.rc">
-      <Filter>资源文件</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="renWuShuJu_daoju">
       <Filter>存档\save0</Filter>
     </None>

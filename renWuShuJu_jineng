@@ -1,3 +1,3 @@
 类型		随机弹_刀弹_level1(A0)	随机弹_小玉_level1(A1)	位移_微移_level(B0)		位移_中幅移动_level1(B1)		位移_高速穿行_level1(B2)		测试——移动射击（B1000）
-你			A0						A1						B0						B1							B2							B1000
-司机			A0						A1						B0						B1							B2							B1000
+你			A0l1					A1l1						B0l1						B1l1					B2l1					B1000
+司机			A0l1					A1l1						B0l1						B1l1					B2l1					B1000

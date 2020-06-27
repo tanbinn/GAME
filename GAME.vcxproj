@@ -157,9 +157,6 @@
     <ClInclude Include="renWuShuJu_jineng" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GAME.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="renWuShuJu_daoju" />
     <None Include="renWuShuJu_shuju" />
   </ItemGroup>
