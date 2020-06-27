@@ -123,13 +123,21 @@ struct zhanoushuju_save_beifen {
 	zhandou_yidong* yidong = NULL;
 };
 
+struct zhandoushuju_danmu {
+	unsigned short team;//立场： 0：己方  1：为敌方
+	unsigned short type;//类型： 0:自机狙  1：偏向狙  2：随机弹  3：限位弹
+	unsigned short object;//样式： 0:刀弹  1：札弹  2：蝶弹  3：箭弹  4：鳞弹  5：激光弹  6：小米弹  7：小玉  8：中玉  9：大玉
+	unsigned short attribute;//属性： 0：无属性  1：火  2：水  3：金  4：木  5：土  6：日  7：月
+
+};
+
 struct zhandoushuju_save {
 	string toubiao;
 	string name;
 	vector <string> S;
 	vector <int> danmu[3][8][6];
-	short left;
-	zhanoushuju_save_beifen save;
+	short left = 1;
+	zhanoushuju_save_beifen save;//直接导入技能的数据
 };
 
 struct _renwushuju {//用于定义人物数据的结构体
@@ -209,8 +217,8 @@ string tianqi_jiaojiedian;
 string kongBai_shuju[30];
 string kongbai_daoju[16];
 string kongbai_jineng[7];
-vector <_renwushuju> _renwu;
-vector <_renwushuju> _team;
+vector <_renwushuju*> _renwu;
+vector <_renwushuju*> _team;
 _renwushuju siJi;_renwushuju zhuRenGong;
 string _NAME = "我";
 

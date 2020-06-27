@@ -250,7 +250,7 @@ void yidong(int point) {
 						_getch();
 						return yidong(2000);
 					}
-					if (zhuRenGong.zhongweizhi == _renwu[0].zhongweizhi && zhuRenGong.xiaoweizhi == _renwu[0].xiaoweizhi) {
+					if (zhuRenGong.zhongweizhi == _renwu[0]->zhongweizhi && zhuRenGong.xiaoweizhi == _renwu[0]->xiaoweizhi) {
 						cout << "你在原地踏步哦" << endl;
 						_getch();
 						return yidong(2000);
@@ -268,14 +268,14 @@ void yidong(int point) {
 		}
 	}
 	else if (point == 1000) {
-		cout << endl << endl << endl << "地点:" << _renwu[0].xiaoweizhi << "   位置：" << _renwu[0].weizhi << "   天气：(尚在开发中)   时间：" << month_quanju << "月" << day_quanju << "日 " << hour_quanju << ":" << min_quanju << endl;
+		cout << endl << endl << endl << "地点:" << _renwu[0]->xiaoweizhi << "   位置：" << _renwu[0]->weizhi << "   天气：(尚在开发中)   时间：" << month_quanju << "月" << day_quanju << "日 " << hour_quanju << ":" << min_quanju << endl;
 		map(1000);
 		cout << "2000[中地图] 3000[大地图] 4000[全局地图] 0[返回]" << endl;
 		cout << "输入你想要前去的地方" << endl;
 		cin >> zhongji;
-		if (_renwu[0].daweizhi == "交接点") {
-			if (_renwu[0].zhongweizhi == "山脚") {
-				if (_renwu[0].xiaoweizhi == "入口") {
+		if (_renwu[0]->daweizhi == "交接点") {
+			if (_renwu[0]->zhongweizhi == "山脚") {
+				if (_renwu[0]->xiaoweizhi == "入口") {
 					if (zhongji == 2000 or zhongji == 3000 or zhongji == 4000) {
 						return yidong(zhongji);
 					}
@@ -283,25 +283,25 @@ void yidong(int point) {
 						return;
 					}
 					else if (zhongji == 1) {
-						_renwu[0].weizhi = "入口";
+						_renwu[0]->weizhi = "入口";
 					}
 					else if (zhongji == 2) {
-						_renwu[0].weizhi = "岔口";
+						_renwu[0]->weizhi = "岔口";
 					}
 					else if (zhongji == 3) {
-						_renwu[0].weizhi = "木牌";
+						_renwu[0]->weizhi = "木牌";
 					}
 					else if (zhongji == 5) {
-						_renwu[0].weizhi = "小道";
-						_renwu[0].zhongweizhi = "小路1";
+						_renwu[0]->weizhi = "小道";
+						_renwu[0]->zhongweizhi = "小路1";
 					}
 					else if (zhongji == 4) {
-						_renwu[0].weizhi = "树";
+						_renwu[0]->weizhi = "树";
 						jiaojiedian_shanjiao_ruko4++;
 					}
 					else if (zhongji == 6 && jiaojiedian_shanjiao_ruko4 > 0) {
-						_renwu[0].weizhi = "小道";
-						_renwu[0].xiaoweizhi = "大石块";
+						_renwu[0]->weizhi = "小道";
+						_renwu[0]->xiaoweizhi = "大石块";
 						jiaojiedian_shanjiao5++;
 					}
 					else {
@@ -309,13 +309,13 @@ void yidong(int point) {
 						_getch();
 						return yidong(1000);
 					}
-					if (_renwu[0].xiaoweizhi == _renwu[0].xiaoweizhi && _renwu[0].weizhi == _renwu[0].weizhi) {
+					if (_renwu[0]->xiaoweizhi == _renwu[0]->xiaoweizhi && _renwu[0]->weizhi == _renwu[0]->weizhi) {
 						cout << "你在原地踏步哦" << endl;
 						_getch();
 						return yidong(1000);
 					}
 					else {
-						cout << "移动到了" << _renwu[0].weizhi;
+						cout << "移动到了" << _renwu[0]->weizhi;
 						_getch();
 						shiJianJieMian(2, "全局");
 						return yidong(1000);

@@ -73,7 +73,7 @@ void ParseIn() {//载入函数
 		}
 	}
 
-	_renwu.push_back(zhuRenGong);
+	_renwu.push_back(&zhuRenGong);
 
 	//位号1
 	shuju >> siJi.name >> siJi.panduan_duiwu >> siJi.tiLi_D >> siJi.tiLi_G >> siJi.jingLi_D >> siJi.jingLi_G >> siJi.jingYan >> siJi.liLiang_D >> siJi.liLiang_G
@@ -93,9 +93,9 @@ void ParseIn() {//载入函数
 		}
 	}
 
-	_renwu.push_back(siJi);
+	_renwu.push_back(&siJi);
 	for (int i = 0; i < _renwu.size(); i++) {
-		if (_renwu[i].panduan_duiwu == true) {
+		if (_renwu[i]->panduan_duiwu == true) {
 			_team.push_back(_renwu[i]);
 		}
 	}
@@ -137,22 +137,22 @@ void bianDui() {
 			while (true) {
 				cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
 				cout << "您的队伍成员： ";
-				vector <_renwushuju> zhongji_shuzu_other;
-				vector <_renwushuju> zhongji_shuzu_all;
+				vector <_renwushuju*> zhongji_shuzu_other;
+				vector <_renwushuju*> zhongji_shuzu_all;
 				for (int i = 0; i < _team.size(); i++) {
-					cout << i + 1 << "[" << _team[i].name << "] ";
+					cout << i + 1 << "[" << _team[i]->name << "] ";
 				}
 				cout << endl << "目前位置未在队伍中的人物: ";
 				for (int i = 0; i < _renwu.size(); i++) {
-					if (_renwu[i].weizhi == _renwu[0].weizhi) {
+					if (_renwu[i]->weizhi == _renwu[0]->weizhi) {
 						zhongji_shuzu_all.push_back(_renwu[i]);
-						if (_renwu[i].panduan_duiwu == false) {
+						if (_renwu[i]->panduan_duiwu == false) {
 							zhongji_shuzu_other.push_back(_renwu[i]);
 						}
 					}
 				}
 				for (int i = 0; i < zhongji_shuzu_other.size(); i++) {
-					cout << i + _team.size() + 1 << "[" << zhongji_shuzu_other[i].name << "] ";
+					cout << i + _team.size() + 1 << "[" << zhongji_shuzu_other[i]->name << "] ";
 				}
 				cout << endl << "请选择欲查看的人物的编号。" << endl;
 				short zhongji2;
@@ -163,11 +163,11 @@ void bianDui() {
 				}
 				else if (zhongji2 > 0 and zhongji2 <= (zhongji_shuzu_all.size() + 1)) {
 					for (int i = 0; i < _renwu.size(); i++) {
-						if (_renwu[i].name == zhongji_shuzu_all[zhongji2 - 1].name) {
-							if (_renwu[i].name == "你") {
+						if (_renwu[i]->name == zhongji_shuzu_all[zhongji2 - 1]->name) {
+							if (_renwu[i]->name == "你") {
 								bianDui_chakan(zhuRenGong);
 							}
-							else if (_renwu[i].name == "司机") {
+							else if (_renwu[i]->name == "司机") {
 								bianDui_chakan(siJi);
 							}
 						}
@@ -181,9 +181,9 @@ void bianDui() {
 		}
 		else if (zhongji1 == '2') {
 			short num_dangdirenwu_other = 0;
-			vector <_renwushuju> zhongji_shuzu;
+			vector <_renwushuju*> zhongji_shuzu;
 			for (int i = 0; i < _renwu.size(); i++) {
-				if (_renwu[i].weizhi == _renwu[0].weizhi and _renwu[i].panduan_duiwu == false) {
+				if (_renwu[i]->weizhi == _renwu[0]->weizhi and _renwu[i]->panduan_duiwu == false) {
 					num_dangdirenwu_other++;
 					zhongji_shuzu.push_back(_renwu[i]);
 				}
@@ -193,12 +193,12 @@ void bianDui() {
 				cout << "-----------------------------------------------------------------------------------------------------------------------" << endl;
 				cout << "您的队伍成员： ";
 				for (int i = 0; i < _team.size(); i++) {
-					cout << i + 1 << "[" << _team[i].name << "] ";
+					cout << i + 1 << "[" << _team[i]->name << "] ";
 				}
 				cout << endl << "目前位置未在队伍中的人物: ";
 				for (int i = 0; i < _renwu.size(); i++) {
-					if (_renwu[i].panduan_duiwu == false and _renwu[i].weizhi == zhuRenGong.weizhi) {
-						cout << i + _team.size() << "[" << _renwu[i].name << "] ";
+					if (_renwu[i]->panduan_duiwu == false and _renwu[i]->weizhi == zhuRenGong.weizhi) {
+						cout << i + _team.size() << "[" << _renwu[i]->name << "] ";
 					}
 				}
 				cout << endl << "0[返回]" << endl;
@@ -214,9 +214,9 @@ void bianDui() {
 					cout << endl << endl;
 				}
 				else if (n > 1 && n <= _team.size()) {
-					_team[n - 1].panduan_duiwu = false;
-					if (_team[n - 1].name == "司机") {//记得以后添加新人物时在这里进行补充
-						_renwu[1].panduan_duiwu = false;
+					_team[n - 1]->panduan_duiwu = false;
+					if (_team[n - 1]->name == "司机") {//记得以后添加新人物时在这里进行补充
+						_renwu[1]->panduan_duiwu = false;
 					}
 					_team.erase(_team.begin() + n - 1);
 					cout << endl << endl;
@@ -224,8 +224,8 @@ void bianDui() {
 				else if (n > _team.size() and n <= (_team.size() + num_dangdirenwu_other)) {
 					if (num_dangdirenwu_other != 0) {
 						int zhongji2 = n - (_team.size() + 1);
-						if (zhongji_shuzu[zhongji2].name == "司机") {
-							_renwu[1].panduan_duiwu = true;
+						if (zhongji_shuzu[zhongji2]->name == "司机") {
+							_renwu[1]->panduan_duiwu = true;
 							_team.push_back(_renwu[1]);
 						}
 						cout << endl << endl;
@@ -271,19 +271,19 @@ void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散
 		ChongZhi("全局");
 		char zhongji1 = 0;
 		cout << "_______________________________________________________________________________________________________________________" << endl;
-		cout << "地点:" << _renwu[0].xiaoweizhi << "   位置：" << _renwu[0].weizhi << "   天气：" << tianqi_jiaojiedian << "   时间：" << month_quanju << "月" << day_quanju << "日 " << hour_quanju << ":" << min_quanju << endl;
+		cout << "地点:" << _renwu[0]->xiaoweizhi << "   位置：" << _renwu[0]->weizhi << "   天气：" << tianqi_jiaojiedian << "   时间：" << month_quanju << "月" << day_quanju << "日 " << hour_quanju << ":" << min_quanju << endl;
 		for (int i = 0; i < _team.size(); i++) {
-			if (_team[i].name == "你") {
-				cout << "姓名：" << _NAME << "  体力【" << _team[0].tiLi_D << "/" << _team[0].tiLi_G << "】  " << "精力【"
-					<< _team[0].jingLi_D << "/" << _team[0].jingLi_G << "】   饱食度【" << _team[0].baoShiDu_D << "/"
-					<< _team[0].baoShiDu_G << "】  ";
+			if (_team[i]->name == "你") {
+				cout << "姓名：" << _NAME << "  体力【" << _team[0]->tiLi_D << "/" << _team[0]->tiLi_G << "】  " << "精力【"
+					<< _team[0]->jingLi_D << "/" << _team[0]->jingLi_G << "】   饱食度【" << _team[0]->baoShiDu_D << "/"
+					<< _team[0]->baoShiDu_G << "】  ";
 				cout << "   状态: "; zhuangtai("输出", "你", ""); cout << endl;
 			}
 			else {
-				cout << "姓名：" << _team[i].name << "  体力【" << _team[i].tiLi_D << "/" << _team[i].tiLi_G << "】  " << "精力【"
-					<< _team[i].jingLi_D << "/" << _team[i].jingLi_G << "】   饱食度【" << _team[i].baoShiDu_D << "/"
-					<< _team[i].baoShiDu_G << "】  ";
-				cout << "   状态: "; zhuangtai("输出", _team[i].name, ""); cout << endl;
+				cout << "姓名：" << _team[i]->name << "  体力【" << _team[i]->tiLi_D << "/" << _team[i]->tiLi_G << "】  " << "精力【"
+					<< _team[i]->jingLi_D << "/" << _team[i]->jingLi_G << "】   饱食度【" << _team[i]->baoShiDu_D << "/"
+					<< _team[i]->baoShiDu_G << "】  ";
+				cout << "   状态: "; zhuangtai("输出", _team[i]->name, ""); cout << endl;
 			}
 		}
 		map(1000);

@@ -7,8 +7,8 @@
 void zhuangtai(string gongneng, string name, string zhuangtai) {//ÔÚ×´Ì¬ÉÏ£¬ÎÒÏë¸øÈËÎïµ¥¶À´´ÔìÒ»Ì×ÊıÁĞ£¬ÒÔ×Ö·û´®µÄĞÎÊ½ÏòÄÚ´æ´¢¡£È»ºóÏò¸Ãº¯ÊıÊäÈëÊı¾İÊ±£¬·Ö±ğÖ¸Ã÷ÈËÎï¡¢¹¦ÄÜ¡¢ Ôö¼õ×´Ì¬£¨¸ù¾İÇé¿ö¿ÉÒÔÑ¡ÔñÊÇ·ñ¿Õ×Å£© 
 	if (gongneng == "Êä³ö") {
 		if (name == "Äã") {
-			for (int i = 0; i < _renwu[0].zhuangtai.size(); i++) {
-				cout << _renwu[0].zhuangtai[i] << " ";
+			for (int i = 0; i < _renwu[0]->zhuangtai.size(); i++) {
+				cout << _renwu[0]->zhuangtai[i] << " ";
 			}
 		}
 		if (name == "Ë¾»ú") {
@@ -20,87 +20,87 @@ void zhuangtai(string gongneng, string name, string zhuangtai) {//ÔÚ×´Ì¬ÉÏ£¬ÎÒÏë
 	else if (gongneng == "ÖØÖÃ") {//ÒòÎªÃ»Ïëµ½¸üºÃµÄÅĞ¶¨·½·¨£¬ËùÒÔÃ¿´ÎÒªÖØÖÃÒ»±éÈËÎïµÄ×´Ì¬Êı×é£¨×¢ÒâÊÇÃ¿´Î£¬¼´ÈÎºÎÓë×´Ì¬ÓĞ¹ØµÄÖ¸ÁîÇ°£¡£©£¬ ÅĞ¶ÏÇ°ÌáÎª¸ÃÈËÎïÊÇ·ñÔÚÏÖ³¡£¨Ğ¡Î»ÖÃ£©,ÁíÍâÌáÒ»¾ä£¬ÔÚ×´Ì¬º¯ÊıÀï¾ÍĞ´Óë×´Ì¬ÓĞ¹ØÏµµÄ´úÂë£¬±ğÏë×ÅÔÚÕâÀïË³Â·°ÑNPCÎ»ÒÆ¸øĞ´ÁË
 		//ÏÈÇå¿ÕËùÓĞÈËµÄ×´Ì¬Êı×éÖĞµÄÊı¾İ£¬È»ºó¸ù¾İ²»Í¬µÄ²ÎÊı·Ö±ğ¸øÃ¿¸öÈË¼ÓÉÏ×´Ì¬Êı¾İ
 		for (int i = 0; i < _renwu.size(); i++) {
-			_renwu[i].zhuangtai.clear();
+			_renwu[i]->zhuangtai.clear();
 		}
 		for (int i = 0; i < _renwu.size(); i++) {//ËãÁË£¬»¹ÊÇ·Ö²»Í¬µÄÇøÓòÀ´ÖØÖÃºÃÁË£¨ÒÔ´óÎ»ÖÃÎªµ¥Ôª£©
-			if (_renwu[i].daweizhi == _renwu[0].daweizhi) {
-				if (_renwu[i].name == "Äã") {
-					if (_renwu[0].baoShiDu_D <= 50 && _renwu[0].baoShiDu_D > 20) {
-						_renwu[0].zhuangtai.push_back("<ÂÔ¶ö>");
+			if (_renwu[i]->daweizhi == _renwu[0]->daweizhi) {
+				if (_renwu[i]->name == "Äã") {
+					if (_renwu[0]->baoShiDu_D <= 50 && _renwu[0]->baoShiDu_D > 20) {
+						_renwu[0]->zhuangtai.push_back("<ÂÔ¶ö>");
 					}
-					if (_renwu[0].baoShiDu_D <= 20 && _renwu[0].baoShiDu_D > 0) {
-						_renwu[0].zhuangtai.push_back("<¼¢¶ö>");
+					if (_renwu[0]->baoShiDu_D <= 20 && _renwu[0]->baoShiDu_D > 0) {
+						_renwu[0]->zhuangtai.push_back("<¼¢¶ö>");
 					}
-					if (_renwu[0].baoShiDu_D == 0) {
-						_renwu[0].zhuangtai.push_back("<¼¢³¦ê¤ê¤>");
+					if (_renwu[0]->baoShiDu_D == 0) {
+						_renwu[0]->zhuangtai.push_back("<¼¢³¦ê¤ê¤>");
 					}
-					if (_renwu[0].jingLi_D >= (0.8 * _renwu[0].jingLi_G) && _renwu[0].tiLi_D >= (0.8 * _renwu[0].tiLi_G)) {
-						_renwu[0].zhuangtai.push_back("<¾«Éñ¶¶ËÓ>");
+					if (_renwu[0]->jingLi_D >= (0.8 * _renwu[0]->jingLi_G) && _renwu[0]->tiLi_D >= (0.8 * _renwu[0]->tiLi_G)) {
+						_renwu[0]->zhuangtai.push_back("<¾«Éñ¶¶ËÓ>");
 					}
-					if (_renwu[0].jingLi_D < (0.1 * _renwu[0].jingLi_G)) {
-						_renwu[0].zhuangtai.push_back("<ÀÍÀÛ>");
+					if (_renwu[0]->jingLi_D < (0.1 * _renwu[0]->jingLi_G)) {
+						_renwu[0]->zhuangtai.push_back("<ÀÍÀÛ>");
 					}
-					if (_renwu[0].tiLi_D < (0.5 * _renwu[0].tiLi_G) && _renwu[0].tiLi_D >= (0.2 * _renwu[0].tiLi_G)) {
-						_renwu[0].zhuangtai.push_back("<ĞéÈõ>");
+					if (_renwu[0]->tiLi_D < (0.5 * _renwu[0]->tiLi_G) && _renwu[0]->tiLi_D >= (0.2 * _renwu[0]->tiLi_G)) {
+						_renwu[0]->zhuangtai.push_back("<ĞéÈõ>");
 					}
-					if (_renwu[0].wenDu >= 75 && _renwu[0].wenDu < 100) {
-						_renwu[0].zhuangtai.push_back("<½ÏÈÈ>");
+					if (_renwu[0]->wenDu >= 75 && _renwu[0]->wenDu < 100) {
+						_renwu[0]->zhuangtai.push_back("<½ÏÈÈ>");
 					}
-					if (_renwu[0].wenDu == 100) {
-						_renwu[0].zhuangtai.push_back("<¸ßÎÂ>");
+					if (_renwu[0]->wenDu == 100) {
+						_renwu[0]->zhuangtai.push_back("<¸ßÎÂ>");
 					}
-					if (_renwu[0].wenDu == 0) {
-						_renwu[0].zhuangtai.push_back("<±ù¶³>");
+					if (_renwu[0]->wenDu == 0) {
+						_renwu[0]->zhuangtai.push_back("<±ù¶³>");
 					}
-					if (_renwu[0].wenDu > 0 && _renwu[0].wenDu <= 25) {
-						_renwu[0].zhuangtai.push_back("<½ÏÀä>");
+					if (_renwu[0]->wenDu > 0 && _renwu[0]->wenDu <= 25) {
+						_renwu[0]->zhuangtai.push_back("<½ÏÀä>");
 					}
-					sort(_renwu[0].zhuangtai.begin(), _renwu[0].zhuangtai.end());
-					for (int o = 1; o < _renwu[0].zhuangtai.size(); o++) {
-						if (_renwu[0].zhuangtai[o] == _renwu[0].zhuangtai[o - 1]) {
-							_renwu[0].zhuangtai.erase(_renwu[0].zhuangtai.begin() + o);
+					sort(_renwu[0]->zhuangtai.begin(), _renwu[0]->zhuangtai.end());
+					for (int o = 1; o < _renwu[0]->zhuangtai.size(); o++) {
+						if (_renwu[0]->zhuangtai[o] == _renwu[0]->zhuangtai[o - 1]) {
+							_renwu[0]->zhuangtai.erase(_renwu[0]->zhuangtai.begin() + o);
 						}
 					}
-					_renwu[0].zhuangtai_num = _renwu[0].zhuangtai.size();
+					_renwu[0]->zhuangtai_num = _renwu[0]->zhuangtai.size();
 				}
-				if (_renwu[i].name == "Ë¾»ú") {
-					if (_renwu[1].baoShiDu_D <= 50 && _renwu[1].baoShiDu_D > 20) {
-						_renwu[1].zhuangtai.push_back("<ÂÔ¶ö>");
+				if (_renwu[i]->name == "Ë¾»ú") {
+					if (_renwu[1]->baoShiDu_D <= 50 && _renwu[1]->baoShiDu_D > 20) {
+						_renwu[1]->zhuangtai.push_back("<ÂÔ¶ö>");
 					}
-					if (_renwu[1].baoShiDu_D <= 20 && _renwu[1].baoShiDu_D > 0) {
-						_renwu[1].zhuangtai.push_back("<¼¢¶ö>");
+					if (_renwu[1]->baoShiDu_D <= 20 && _renwu[1]->baoShiDu_D > 0) {
+						_renwu[1]->zhuangtai.push_back("<¼¢¶ö>");
 					}
-					if (_renwu[1].baoShiDu_D == 0) {
-						_renwu[1].zhuangtai.push_back("<¼¢³¦ê¤ê¤>");
+					if (_renwu[1]->baoShiDu_D == 0) {
+						_renwu[1]->zhuangtai.push_back("<¼¢³¦ê¤ê¤>");
 					}
-					if (_renwu[1].jingLi_D >= (0.8 * _renwu[1].jingLi_G) && _renwu[1].tiLi_D >= (0.8 * _renwu[1].tiLi_G)) {
-						_renwu[1].zhuangtai.push_back("<¾«Éñ¶¶ËÓ>");
+					if (_renwu[1]->jingLi_D >= (0.8 * _renwu[1]->jingLi_G) && _renwu[1]->tiLi_D >= (0.8 * _renwu[1]->tiLi_G)) {
+						_renwu[1]->zhuangtai.push_back("<¾«Éñ¶¶ËÓ>");
 					}
-					if (_renwu[1].jingLi_D < (0.1 * _renwu[1].jingLi_D)) {
-						_renwu[1].zhuangtai.push_back("<ÀÍÀÛ>");
+					if (_renwu[1]->jingLi_D < (0.1 * _renwu[1]->jingLi_D)) {
+						_renwu[1]->zhuangtai.push_back("<ÀÍÀÛ>");
 					}
-					if (_renwu[1].tiLi_D < (0.5 * _renwu[1].tiLi_G) && _renwu[1].tiLi_D >= (0.2 * _renwu[1].tiLi_G)) {
-						_renwu[1].zhuangtai.push_back("<ĞéÈõ>");
+					if (_renwu[1]->tiLi_D < (0.5 * _renwu[1]->tiLi_G) && _renwu[1]->tiLi_D >= (0.2 * _renwu[1]->tiLi_G)) {
+						_renwu[1]->zhuangtai.push_back("<ĞéÈõ>");
 					}
-					if (_renwu[1].wenDu >= 75 && _renwu[1].wenDu < 100) {
-						_renwu[1].zhuangtai.push_back("<½ÏÈÈ>");
+					if (_renwu[1]->wenDu >= 75 && _renwu[1]->wenDu < 100) {
+						_renwu[1]->zhuangtai.push_back("<½ÏÈÈ>");
 					}
-					if (_renwu[1].wenDu == 100) {
-						_renwu[1].zhuangtai.push_back("<¸ßÎÂ>");
+					if (_renwu[1]->wenDu == 100) {
+						_renwu[1]->zhuangtai.push_back("<¸ßÎÂ>");
 					}
-					if (_renwu[1].wenDu == 0) {
-						_renwu[1].zhuangtai.push_back("<±ù¶³>");
+					if (_renwu[1]->wenDu == 0) {
+						_renwu[1]->zhuangtai.push_back("<±ù¶³>");
 					}
-					if (_renwu[1].wenDu > 0 && _renwu[1].wenDu <= 25) {
-						_renwu[1].zhuangtai.push_back("<½ÏÀä>");
+					if (_renwu[1]->wenDu > 0 && _renwu[1]->wenDu <= 25) {
+						_renwu[1]->zhuangtai.push_back("<½ÏÀä>");
 					}
-					sort(_renwu[1].zhuangtai.begin(), _renwu[1].zhuangtai.end());
-					for (int o = 1; o < _renwu[1].zhuangtai.size(); o++) {
-						if (_renwu[1].zhuangtai[o] == _renwu[1].zhuangtai[o - 1]) {
-							_renwu[1].zhuangtai.erase(_renwu[1].zhuangtai.begin() + o);
+					sort(_renwu[1]->zhuangtai.begin(), _renwu[1]->zhuangtai.end());
+					for (int o = 1; o < _renwu[1]->zhuangtai.size(); o++) {
+						if (_renwu[1]->zhuangtai[o] == _renwu[1]->zhuangtai[o - 1]) {
+							_renwu[1]->zhuangtai.erase(_renwu[1]->zhuangtai.begin() + o);
 						}
 					}
-					_renwu[1].zhuangtai_num = _renwu[1].zhuangtai.size();
+					_renwu[1]->zhuangtai_num = _renwu[1]->zhuangtai.size();
 				}
 			}
 		}
@@ -152,9 +152,9 @@ void tianqi() {//ÌìÆøº¯Êı¿ÉÒÔ³õ²½×öÍêÉÆÒ»µã¡£ÌìÆø±ä¶¯ÊÇÒÔ´óµØÍ¼ÎªÒ»¸öÖØÖÃµ¥Î»£¬Ò
 	}
 
 	if (panduan_tianqi == true) {
-		srand(time(0));
+		srand((unsigned)time(NULL));//Ëæ»úÊıµÄÖÖ×ÓÉèÖÃÒ»´Î¼´¿É
 		int suijinum = 0;
-		if (_renwu[0].daweizhi == "½»½Óµã") {
+		if (_renwu[0]->daweizhi == "½»½Óµã") {
 			string zhongji;
 			shiJianJieMian(180, "ÖØÖÃÌìÆø");
 			if (tianqi_jiaojiedian == "Çç") {
@@ -264,25 +264,12 @@ void tianqi() {//ÌìÆøº¯Êı¿ÉÒÔ³õ²½×öÍêÉÆÒ»µã¡£ÌìÆø±ä¶¯ÊÇÒÔ´óµØÍ¼ÎªÒ»¸öÖØÖÃµ¥Î»£¬Ò
 }
 
 
-void ChongZhi(string gongneng) {//ÉèÖÃÁ½ÖÖ²ÎÊı£¬Ò»ÊÇÈ«¾Ö£¬¶şÊÇ·´À¡£¬·´À¡ÊÇ×¨ÃÅÓÃÓÚ½«duiwuÊı×éÖĞµÄÊı¾İ¸²¸Çµ½renwuÊı×éÖĞµÄ
-	//ÒÔrenwuÊı×éÎªÊı¾İÖĞĞÄ£¬¿ÉÒÔÖ±½Óµ÷ÓÃºÍĞŞ¸Ä£¬Ò²¿ÉÒÔÍ¨¹ıteamÊı×é¼ä½ÓĞŞ¸Ä£¨¼´teamÊı×é¿ÉÒÔ¸²¸ÇrenwuÊı×é£©
-	if (gongneng == "¶ÓÎé¸²¸Ç") {
-		for (int i = 0; i < _team.size(); i++) {
-			if (_team[i].name == "Äã") {
-				_renwu[0] = _team[i];
-			}
-			else if (_team[i].name == "Ë¾»ú") {
-				_renwu[1] = _team[i];
-			}
-		}
-		shiJianJieMian(0, "ÌìÆøÖØÖÃ");
-		zhuangtai("ÖØÖÃ", ".", ".");
-	}
-	else if (gongneng == "È«¾Ö") {
+void ChongZhi(string gongneng) {
+	if (gongneng == "È«¾Ö") {
 		for (int i = 0; i < _renwu.size(); i++) {
-			if (_renwu[i].panduan_duiwu == true) {
+			if (_renwu[i]->panduan_duiwu == true) {
 				for (int o = 0; o < _team.size(); o++) {
-					if (_team[o].name == _renwu[i].name) {
+					if (_team[o]->name == _renwu[i]->name) {
 						_team[o] = _renwu[i];
 					}
 				}
@@ -291,6 +278,18 @@ void ChongZhi(string gongneng) {//ÉèÖÃÁ½ÖÖ²ÎÊı£¬Ò»ÊÇÈ«¾Ö£¬¶şÊÇ·´À¡£¬·´À¡ÊÇ×¨ÃÅÓÃ
 		shiJianJieMian(0, "ÌìÆøÖØÖÃ");
 		zhuangtai("ÖØÖÃ", ".", ".");
 	}
+	//if (gongneng == "¶ÓÎé¸²¸Ç") {
+	//	for (int i = 0; i < _team.size(); i++) {
+	//		if (_team[i]->name == "Äã") {
+	//			_renwu[0] = _team[i];
+	//		}
+	//		else if (_team[i]->name == "Ë¾»ú") {
+	//			_renwu[1] = _team[i];
+	//		}
+	//	}
+	//	shiJianJieMian(0, "ÌìÆøÖØÖÃ");
+	//	zhuangtai("ÖØÖÃ", ".", ".");
+	//}
 }
 
 void daoju(string gongneng) {
@@ -299,67 +298,67 @@ void daoju(string gongneng) {
 		if (gongneng == "±³°ü") {
 			double zongzhong_dongtai = 0;
 			int zongzhong_guding = 0;
-			zongzhong_dongtai = zongzhong_dongtai + _renwu[0].sucai_shuzhi * 0.2 + _renwu[0].sucai_muchai * 0.5 + _renwu[0].sucai_gancao * 0.1 + _renwu[0].sucai_shitou * 0.5 +
-				_renwu[0].sucai_mogu * 0.1 + _renwu[0].sucai_yecai * 0.2 + _renwu[0].sucai_yegu * 0.1 + _renwu[0].daoju_pingguo * 0.5 +
-				_renwu[0].daoju_li * 0.5 + _renwu[0].daoju_suishi * 0.5 + _renwu[0].daoju_shui * 0.5 + _renwu[0].fuka_kongbai * 1 +
-				_renwu[0].fuka_qiluruo_weiding * 1;
+			zongzhong_dongtai = zongzhong_dongtai + _renwu[0]->sucai_shuzhi * 0.2 + _renwu[0]->sucai_muchai * 0.5 + _renwu[0]->sucai_gancao * 0.1 + _renwu[0]->sucai_shitou * 0.5 +
+				_renwu[0]->sucai_mogu * 0.1 + _renwu[0]->sucai_yecai * 0.2 + _renwu[0]->sucai_yegu * 0.1 + _renwu[0]->daoju_pingguo * 0.5 +
+				_renwu[0]->daoju_li * 0.5 + _renwu[0]->daoju_suishi * 0.5 + _renwu[0]->daoju_shui * 0.5 + _renwu[0]->fuka_kongbai * 1 +
+				_renwu[0]->fuka_qiluruo_weiding * 1;
 			for (int i = 0; i < _team.size(); i++) {
-				zongzhong_guding = zongzhong_guding + _team[i].liLiang_D;
+				zongzhong_guding = zongzhong_guding + _team[i]->liLiang_D;
 			}
 			cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 			cout << "ÄúËùÓĞµÄÎïÆ·:" << endl;
 			cout << "ËØ²Ä£º";
 			int zhongji1 = 0;
-			if (_renwu[0].sucai_shuzhi > 0) {
-				cout << "   01[Ê÷Ö¦]£º" << _renwu[0].sucai_shuzhi;
+			if (_renwu[0]->sucai_shuzhi > 0) {
+				cout << "   01[Ê÷Ö¦]£º" << _renwu[0]->sucai_shuzhi;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].sucai_muchai > 0) {
-				cout << "   02[Ä¾²ñ]£º" << _renwu[0].sucai_muchai;
+			if (_renwu[0]->sucai_muchai > 0) {
+				cout << "   02[Ä¾²ñ]£º" << _renwu[0]->sucai_muchai;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].sucai_gancao > 0) {
-				cout << "   03[¸É²İ]£º" << _renwu[0].sucai_gancao;
+			if (_renwu[0]->sucai_gancao > 0) {
+				cout << "   03[¸É²İ]£º" << _renwu[0]->sucai_gancao;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].sucai_shitou > 0) {
-				cout << "   04[Ê¯Í·]£º" << _renwu[0].sucai_shitou;
+			if (_renwu[0]->sucai_shitou > 0) {
+				cout << "   04[Ê¯Í·]£º" << _renwu[0]->sucai_shitou;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].sucai_mogu > 0) {
-				cout << "   05[Ä¢¹½]£º" << _renwu[0].sucai_mogu;
+			if (_renwu[0]->sucai_mogu > 0) {
+				cout << "   05[Ä¢¹½]£º" << _renwu[0]->sucai_mogu;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].sucai_yecai > 0) {
-				cout << "   06[Ò°²Ë]£º" << _renwu[0].sucai_yecai;
+			if (_renwu[0]->sucai_yecai > 0) {
+				cout << "   06[Ò°²Ë]£º" << _renwu[0]->sucai_yecai;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].sucai_yegu > 0) {
-				cout << "   07[Ò°¹È]£º" << _renwu[0].sucai_yegu;
+			if (_renwu[0]->sucai_yegu > 0) {
+				cout << "   07[Ò°¹È]£º" << _renwu[0]->sucai_yegu;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
@@ -367,32 +366,32 @@ void daoju(string gongneng) {
 				}
 			}
 			cout << endl << "µÀ¾ß";
-			if (_renwu[0].daoju_pingguo > 0) {
-				cout << "   11[Æ»¹û]£º" << _renwu[0].daoju_pingguo;
+			if (_renwu[0]->daoju_pingguo > 0) {
+				cout << "   11[Æ»¹û]£º" << _renwu[0]->daoju_pingguo;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].daoju_li > 0) {
-				cout << "   12[Àæ]£º" << _renwu[0].daoju_li;
+			if (_renwu[0]->daoju_li > 0) {
+				cout << "   12[Àæ]£º" << _renwu[0]->daoju_li;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].daoju_suishi > 0) {
-				cout << "   13[ìİÊ¯]£º" << _renwu[0].daoju_suishi;
+			if (_renwu[0]->daoju_suishi > 0) {
+				cout << "   13[ìİÊ¯]£º" << _renwu[0]->daoju_suishi;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].daoju_shui > 0) {
-				cout << "   14[Ë®]£º" << _renwu[0].daoju_shui;
+			if (_renwu[0]->daoju_shui > 0) {
+				cout << "   14[Ë®]£º" << _renwu[0]->daoju_shui;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
@@ -400,16 +399,16 @@ void daoju(string gongneng) {
 				}
 			}
 			cout << endl << "·û¿¨";
-			if (_renwu[0].fuka_kongbai > 0) {
-				cout << "   21[¿Õ°×·û¿¨]£º" << _renwu[0].fuka_kongbai;
+			if (_renwu[0]->fuka_kongbai > 0) {
+				cout << "   21[¿Õ°×·û¿¨]£º" << _renwu[0]->fuka_kongbai;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
 					cout << endl;
 				}
 			}
-			if (_renwu[0].fuka_qiluruo_weiding > 0) {
-				cout << "   22[(bakaµÄ)Î´¶¨Ä£°å·û¿¨]£º" << _renwu[0].fuka_qiluruo_weiding;
+			if (_renwu[0]->fuka_qiluruo_weiding > 0) {
+				cout << "   22[(bakaµÄ)Î´¶¨Ä£°å·û¿¨]£º" << _renwu[0]->fuka_qiluruo_weiding;
 				zhongji1++;
 				if (zhongji1 >= 4) {
 					zhongji1 = 0;
@@ -417,7 +416,7 @@ void daoju(string gongneng) {
 				}
 			}
 			cout << endl << "Åä·½";
-			if (_renwu[0].peifang_yinghuo > 0) {
+			if (_renwu[0]->peifang_yinghuo > 0) {
 				cout << "   31[Óª»ğ]";
 				zhongji1++;
 				if (zhongji1 >= 4) {
@@ -442,8 +441,8 @@ void daoju(string gongneng) {
 						string weiding;
 						if (weiding == "ÕâÀï»¹Ã»ÓĞ¿Éµ÷ÓÃµÄº¯Êı£¬·ÅÔÚÕâÀï×ö±ê¼Ç£¬¶¨Îª¡ª¡ªÈç¹û´Ë´¦£¨Î»ÖÃ£©ÓĞÓª»ğ") {
 							for (int i = 0; i < _team.size(); i++) {
-								if (_team[i].name == "Äã") {
-									if (_renwu[0].sucai_shuzhi > 0) {//Õâ¸ö¿ÉÒÔÓÃÀ´Ôö¼Ó»ğÊÆ
+								if (_team[i]->name == "Äã") {
+									if (_renwu[0]->sucai_shuzhi > 0) {//Õâ¸ö¿ÉÒÔÓÃÀ´Ôö¼Ó»ğÊÆ
 
 									}
 								}
@@ -457,7 +456,7 @@ void daoju(string gongneng) {
 						}
 					}
 				}
-				else if (zhongji3 == 31 and _renwu[0].peifang_yinghuo > 0) {//Óª»ğ£¨Åä·½£©
+				else if (zhongji3 == 31 and _renwu[0]->peifang_yinghuo > 0) {//Óª»ğ£¨Åä·½£©
 					while (true) {
 						ChongZhi("È«¾Ö");
 						char zhongji4;
@@ -473,17 +472,17 @@ void daoju(string gongneng) {
 							int num_suishi = 0;
 							int num_shitou = 0;
 							int zhongji6 = 0;
-							zhongji6 = _renwu[0].sucai_shuzhi;
+							zhongji6 = _renwu[0]->sucai_shuzhi;
 							while (zhongji6 > 0) {
 								zhongji6--;
 								num_shuzhi++;
 							}
-							zhongji6 = _renwu[0].daoju_suishi;
+							zhongji6 = _renwu[0]->daoju_suishi;
 							while (zhongji6 > 0) {
 								zhongji6--;
 								num_suishi++;
 							}
-							zhongji6 = _renwu[0].sucai_shitou;
+							zhongji6 = _renwu[0]->sucai_shitou;
 							while (zhongji6 > 0) {
 								zhongji6--;
 								num_shitou++;
@@ -570,43 +569,43 @@ void zhandoujiemian(string leixing,string diren) {
 			if (diren == "²âÊÔÓÃNPC") {
 
 				int danmu[1][3][9][7] = {0};
+//***************************ÒÑ·Ï³ı**************************
+				////ÊôĞÔÏµÁĞ×¢ÊÍ
+				//danmu[0][0][0][0] = 0;//danmu_zheng_zijiju_daodan_wushuxing
+				//danmu[0][0][0][1] = 0;//danmu_zheng_zijiju_daodan_huo
+				//danmu[0][0][0][2] = 0;//danmu_zheng_zijiju_daodan_shui
+				//danmu[0][0][0][3] = 0;//danmu_zheng_zijiju_daodan_jin
+				//danmu[0][0][0][4] = 0;//danmu_zheng_zijiju_dandao_mu
+				//danmu[0][0][0][5] = 0;//danmu_zheng_zijiju_daodan_tu
+				//danmu[0][0][0][6] = 0;//danmu_zheng_zijiju_daodan_ri
+				//danmu[0][0][0][7] = 0;//danmu_zheng_zijiju_daodan_yue
+				//
+				////µ¯Ä»ÑùÊ½×¢ÊÍ
+				//danmu[0][0][0][1] = 0;//danmu_zheng_zijiju_daodan
+				//danmu[0][0][1][1] = 0;//danmu_zheng_zijiju_dayu
+				//danmu[0][0][2][1] = 0;//danmu_zheng_zijiju_diedan
+				//danmu[0][0][3][1] = 0;//danmu_zheng_zijiju_jiandan
+				//danmu[0][0][4][1] = 0;//danmu_zheng_zijiju_jiguangdan
+				//danmu[0][0][5][1] = 0;//danmu_zheng_zijiju_xiaomidan
+				//danmu[0][0][6][1] = 0;//danmu_zheng_zijiju_xiaoyu
+				//danmu[0][0][7][1] = 0;//danmu_zheng_zijiju_zhadan
+				//danmu[0][0][8][1] = 0;//danmu_zheng_zijiju_zhongyu
+				//danmu[0][0][9][1] = 0;//danmu_zheng_zijiju_lindan
 
-				//ÊôĞÔÏµÁĞ×¢ÊÍ
-				danmu[0][0][0][0] = 0;//danmu_zheng_zijiju_daodan_wushuxing
-				danmu[0][0][0][1] = 0;//danmu_zheng_zijiju_daodan_huo
-				danmu[0][0][0][2] = 0;//danmu_zheng_zijiju_daodan_shui
-				danmu[0][0][0][3] = 0;//danmu_zheng_zijiju_daodan_jin
-				danmu[0][0][0][4] = 0;//danmu_zheng_zijiju_dandao_mu
-				danmu[0][0][0][5] = 0;//danmu_zheng_zijiju_daodan_tu
-				danmu[0][0][0][6] = 0;//danmu_zheng_zijiju_daodan_ri
-				danmu[0][0][0][7] = 0;//danmu_zheng_zijiju_daodan_yue
-				
-				//µ¯Ä»ÑùÊ½×¢ÊÍ
-				danmu[0][0][0][1] = 0;//danmu_zheng_zijiju_daodan
-				danmu[0][0][1][1] = 0;//danmu_zheng_zijiju_dayu
-				danmu[0][0][2][1] = 0;//danmu_zheng_zijiju_diedan
-				danmu[0][0][3][1] = 0;//danmu_zheng_zijiju_jiandan
-				danmu[0][0][4][1] = 0;//danmu_zheng_zijiju_jiguangdan
-				danmu[0][0][5][1] = 0;//danmu_zheng_zijiju_xiaomidan
-				danmu[0][0][6][1] = 0;//danmu_zheng_zijiju_xiaoyu
-				danmu[0][0][7][1] = 0;//danmu_zheng_zijiju_zhadan
-				danmu[0][0][8][1] = 0;//danmu_zheng_zijiju_zhongyu
-				danmu[0][0][9][1] = 0;//danmu_zheng_zijiju_lindan
+				////µ¯Ä»ÀàĞÍ×¢ÊÍ
+				//danmu[0][0][0][2] = 0;//danmu_zheng_zijiju
+				//danmu[0][1][0][2] = 0;//danmu_zheng_pianxiangju
+				//danmu[0][2][0][2] = 0;//danmu_zheng_suijidan
+				//danmu[0][3][0][2] = 0;//danmu_zheng_xianweidan
 
-				//µ¯Ä»ÀàĞÍ×¢ÊÍ
-				danmu[0][0][0][2] = 0;//danmu_zheng_zijiju
-				danmu[0][1][0][2] = 0;//danmu_zheng_pianxiangju
-				danmu[0][2][0][2] = 0;//danmu_zheng_suijidan
-				danmu[0][3][0][2] = 0;//danmu_zheng_xianweidan
-
-				//¶ÓÎé×¢ÊÍ
-				danmu[0][0][0][3] = 0;//danmu_zheng
-				danmu[1][0][0][3] = 0;//danmu_fu
+				////¶ÓÎé×¢ÊÍ
+				//danmu[0][0][0][3] = 0;//danmu_zheng
+				//danmu[1][0][0][3] = 0;//danmu_fu
 
 				for (int i = 0; i < _team.size(); i++) {
-					totalblood_zheng = totalblood_zheng + _team[i].tiLi_D;
-					powerzhi_zheng_G = powerzhi_zheng_G + _team[i].zhiLi_D;
-					xingdongzhi_zheng_G = xingdongzhi_zheng_G + _team[i].suDu_D;
+					totalblood_zheng = totalblood_zheng + _team[i]->tiLi_D;
+					powerzhi_zheng_G = powerzhi_zheng_G + _team[i]->zhiLi_D;
+					xingdongzhi_zheng_G = xingdongzhi_zheng_G + _team[i]->suDu_D;
 				}
 				struct _renwushuju NPC_1 = {"NPC_1", 0,1000,1000,1000,1000,0,20,20,10,10,10,10,10,10,5,5,10,10,100,100,50,50,0,"½»½Óµã","É½½Å","Èë¿Ú","Èë¿Ú",3};
 				struct _renwushuju NPC_2 = {"NPC_2", 0,1000,1000,1000,1000,0,20,20,10,10,10,10,10,10,5,5,10,10,100,100,50,50,0,"½»½Óµã","É½½Å","Èë¿Ú","Èë¿Ú",3};
@@ -626,11 +625,11 @@ void zhandoujiemian(string leixing,string diren) {
 					cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 					for (int i = 0; i < _team.size(); i++) {
 						color(12);
-						cout << _team[i].name << ":" << endl;
+						cout << _team[i]->name << ":" << endl;
 						color(7);
-						cout << "ÌåÁ¦£º¡¾" << _team[i].tiLi_D << "/" << _team[i].tiLi_G << "¡¿";
-						for (int o = 0; o < _team[i].zhuangtai.size(); o++) {
-							cout << _team[i].zhuangtai[o] << " ";
+						cout << "ÌåÁ¦£º¡¾" << _team[i]->tiLi_D << "/" << _team[i]->tiLi_G << "¡¿";
+						for (int o = 0; o < _team[i]->zhuangtai.size(); o++) {
+							cout << _team[i]->zhuangtai[o] << " ";
 						}
 						cout << endl;
 					}
@@ -972,7 +971,7 @@ void zhandoujiemian(string leixing,string diren) {
 					cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 					cout << "ÇëÏÈÑ¡ÔñÈËÎï¶ÔÏó»òÕßÆäËûµÄ¹¦ÄÜÑ¡Ïî¡£" << endl;
 					for (int i = 0; i < _team.size(); i++) {
-						cout << i + 1 << "[" << _team[i].name << "]  ";
+						cout << i + 1 << "[" << _team[i]->name << "]  ";
 					}
 					for (int i = 0; i < team_fu.size(); i++) {
 						cout << _team.size() + i + 1 << "[" << team_fu[i].name << "]  ";
@@ -983,14 +982,14 @@ void zhandoujiemian(string leixing,string diren) {
 					if (zhongji1_short > 0 and zhongji1_short <= _team.size()) {
 						string zhongji2_string;
 						while (true) {
-							cout << "ÒÑÑ¡ÖĞÈËÎï£º" << _team[zhongji1_short - 1].name << endl;
+							cout << "ÒÑÑ¡ÖĞÈËÎï£º" << _team[zhongji1_short - 1]->name << endl;
 							cout << "1[¹¥»÷]  2[ÒÆ¶¯]  3[ÑÚ»¤]  4[·û¿¨]  5[²é¿´]  0[·µ»Ø]" << endl;
 							cin >> zhongji2_string;
-							if (_team[zhongji1_short - 1].name == "Äã") {
+							if (_team[zhongji1_short - 1]->name == "Äã") {
 								if (zhongji2_string == "1") {//¹¥»÷
 									bool danmuleixing_bool[4] = { 0,0,0,0 };
-									for (int i = 0; i < _team[zhongji1_short - 1].jineng.gongji.size(); i++) {
-										switch (_team[zhongji1_short - 1].jineng.gongji[i].leixing) {
+									for (int i = 0; i < _team[zhongji1_short - 1]->jineng.gongji.size(); i++) {
+										switch (_team[zhongji1_short - 1]->jineng.gongji[i].leixing) {
 										case 0:
 											danmuleixing_bool[0] = true;
 											break;
@@ -1047,7 +1046,7 @@ void zhandoujiemian(string leixing,string diren) {
 										cout << danmuleixing_xuanze.size() + 1 << "[·µ»Ø]" << endl;
 										cin >> zhongji3_int;
 										if (zhongji3_int > 0 and zhongji3_int <= danmuleixing_xuanze.size()) {
-											zhandoujiemian_xingDongZhuangZai(_team[zhongji1_short - 1].jineng.gongji[danmuleixing_xuanze[zhongji3_int - 1]],NULL_yidong,fightarrey);
+											zhandoujiemian_xingDongZhuangZai(_team[zhongji1_short - 1]->jineng.gongji[danmuleixing_xuanze[zhongji3_int - 1]],NULL_yidong,fightarrey);
 										}
 										else if (zhongji3_int == 0) {
 											break;
