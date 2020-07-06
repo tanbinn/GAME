@@ -7,14 +7,14 @@
 void ParseIn_jinengzhuangzai(_renwushuju& name, string jineng) {
 	if (jineng[0] == 'A') {
 		for (int j = 0; j < quanju_jineng.gongji.size(); j++) {
-			if (quanju_jineng.gongji[j].jiaobiao == jineng) {
+			if (quanju_jineng.gongji[j]->jiaobiao == jineng) {
 				name.jineng.gongji.push_back(quanju_jineng.gongji[j]);
 			}
 		}
 	}
 	else if (jineng[0] == 'B') {
 		for (int j = 0; j < quanju_jineng.yidong.size(); j++) {
-			if (quanju_jineng.yidong[j].jiaobiao == jineng) {
+			if (quanju_jineng.yidong[j]->jiaobiao == jineng) {
 				name.jineng.yidong.push_back(quanju_jineng.yidong[j]);
 			}
 		}
@@ -22,23 +22,52 @@ void ParseIn_jinengzhuangzai(_renwushuju& name, string jineng) {
 
 }
 
+
+void ParseIn_shuju(_renwushuju& name,ifstream& shuju,ifstream& daoju,ifstream& jineng) {
+	string kongbai;
+	string zhongji1_string;
+	shuju >> name.name >> name.panduan_duiwu >> name.tiLi_D >> name.tiLi_G >> name.jingLi_D >> name.jingLi_G >> name.jingYan
+		>> name.liLiang_D >> name.liLiang_G >> name.fangYu_D >> name.fangYu_G >> name.suDu_D >> name.suDu_G
+		>> name.faShu_D >> name.faShu_G >> name.moKang_D >> name.moKang_G >> name.zhiLi_D >> name.zhiLi_G
+		>> name.baoShiDu_D >> name.baoShiDu_G >> name.wenDu >> name.xinQing >> name.haoGan >> name.daweizhi
+		>> name.zhongweizhi >> name.xiaoweizhi >> name.weizhi;
+
+	daoju >> kongbai >> name.huobi_money >> name.sucai_shuzhi >> name.sucai_muchai >> name.sucai_gancao
+		>> name.sucai_shitou >> name.sucai_mogu >> name.sucai_yecai >> name.sucai_yegu >> name.daoju_pingguo
+		>> name.daoju_li >> name.daoju_suishi >> name.daoju_shui >> name.fuka_kongbai >> name.fuka_qiluruo_weiding
+		>> name.peifang_yinghuo;
+
+	while (jineng >> zhongji1_string) {
+		if (zhongji1_string[0] >= 'A' and zhongji1_string[0] <= 'Z') {
+			ParseIn_jinengzhuangzai(name, zhongji1_string);
+		}
+		else {
+			break;
+		}
+	}
+}
+
 void ParseIn() {//载入函数
 	//攻击：随机弹
-	quanju_jineng.gongji.push_back(suijidan_daodan_level1);
-	quanju_jineng.gongji.push_back(suijidan_xiaoyu_level1);
+	quanju_jineng.gongji.push_back(&suijidan_daodan_level1);
+	quanju_jineng.gongji.push_back(&suijidan_xiaoyu_level1);
 
 	//移动
-	quanju_jineng.yidong.push_back(weiyi_level1);
-	quanju_jineng.yidong.push_back(zhongfuyidong_level1);
-	quanju_jineng.yidong.push_back(gaosuchuanxing_level1);
-	quanju_jineng.yidong.push_back(ceshi_yidongsheji);
+	quanju_jineng.yidong.push_back(&weiyi_level1);
+	quanju_jineng.yidong.push_back(&zhongfuyidong_level1);
+	quanju_jineng.yidong.push_back(&gaosuchuanxing_level1);
+	quanju_jineng.yidong.push_back(&ceshi_yidongsheji);
 
 	ifstream shuju("renWuShuJu_shuju");
 	ifstream daoju("renWuShuJu_daoju");
 	ifstream jineng("renWuShuJu_jineng");
 
+	string zhongji1_string;
+	string kongbai;
+	jineng >> kongbai;
+
 	//空白组
-	for (int i = 0; i < 29; i++) {
+	for (int i = 0; i < 28; i++) {
 		shuju >> kongBai_shuju[i];
 	}
 	for (int i = 0; i < 15; i++) {
@@ -47,53 +76,16 @@ void ParseIn() {//载入函数
 	for (int i = 0; i < 7; i++) {
 		jineng >> kongbai_jineng[i];
 	}
+
 	//位号0
-	shuju >> zhuRenGong.name >> zhuRenGong.panduan_duiwu >> zhuRenGong.tiLi_D >> zhuRenGong.tiLi_G >> zhuRenGong.jingLi_D >> zhuRenGong.jingLi_G >> zhuRenGong.jingYan
-		>> zhuRenGong.liLiang_D >> zhuRenGong.liLiang_G >> zhuRenGong.fangYu_D >> zhuRenGong.fangYu_G >> zhuRenGong.suDu_D >> zhuRenGong.suDu_G
-		>> zhuRenGong.faShu_D >> zhuRenGong.faShu_G >> zhuRenGong.moKang_D >> zhuRenGong.moKang_G >> zhuRenGong.zhiLi_D >> zhuRenGong.zhiLi_G
-		>> zhuRenGong.baoShiDu_D >> zhuRenGong.baoShiDu_G >> zhuRenGong.wenDu >> zhuRenGong.xinQing >> zhuRenGong.haoGan >> zhuRenGong.daweizhi
-		>> zhuRenGong.zhongweizhi >> zhuRenGong.xiaoweizhi >> zhuRenGong.weizhi >> zhuRenGong.xingdongcao_num;
-	//重要标注：有些结构体中的数据是不需要在这里载入的，就比如说状态数组可以直接在重置函数中进行重置。同类的行动槽也只是在战斗函数中用得上
-	string kongbai;
-	daoju >> kongbai >> zhuRenGong.huobi_money >> zhuRenGong.sucai_shuzhi >> zhuRenGong.sucai_muchai >> zhuRenGong.sucai_gancao
-		>> zhuRenGong.sucai_shitou >> zhuRenGong.sucai_mogu >> zhuRenGong.sucai_yecai >> zhuRenGong.sucai_yegu >> zhuRenGong.daoju_pingguo
-		>> zhuRenGong.daoju_li >> zhuRenGong.daoju_suishi >> zhuRenGong.daoju_shui >> zhuRenGong.fuka_kongbai >> zhuRenGong.fuka_qiluruo_weiding
-		>> zhuRenGong.peifang_yinghuo;
-
-	string zhongji1_string;
-
-	jineng >> kongbai;
-
-	while (jineng >> zhongji1_string) {
-		if (zhongji1_string[0] >= 'A' and zhongji1_string[0] <= 'Z') {
-			ParseIn_jinengzhuangzai(zhuRenGong, zhongji1_string);
-		}
-		else {
-			break;
-		}
-	}
-
+	ParseIn_shuju(zhuRenGong, shuju,daoju,jineng);
 	_renwu.push_back(&zhuRenGong);
 
 	//位号1
-	shuju >> siJi.name >> siJi.panduan_duiwu >> siJi.tiLi_D >> siJi.tiLi_G >> siJi.jingLi_D >> siJi.jingLi_G >> siJi.jingYan >> siJi.liLiang_D >> siJi.liLiang_G
-		>> siJi.fangYu_D >> siJi.fangYu_G >> siJi.suDu_D >> siJi.suDu_G >> siJi.faShu_D >> siJi.faShu_G >> siJi.moKang_D >> siJi.moKang_G
-		>> siJi.zhiLi_D >> siJi.zhiLi_G >> siJi.baoShiDu_D >> siJi.baoShiDu_G >> siJi.wenDu >> siJi.xinQing >> siJi.haoGan >> siJi.daweizhi
-		>> siJi.zhongweizhi >> siJi.xiaoweizhi >> siJi.weizhi >> zhuRenGong.xingdongcao_num;
-	daoju >> kongbai >> siJi.huobi_money >> siJi.sucai_shuzhi >> siJi.sucai_muchai >> siJi.sucai_gancao >> siJi.sucai_shitou >> siJi.sucai_mogu
-		>> siJi.sucai_yecai >> siJi.sucai_yegu >> siJi.daoju_pingguo >> siJi.daoju_li >> siJi.daoju_suishi >> siJi.daoju_shui >> siJi.fuka_kongbai
-		>> siJi.fuka_qiluruo_weiding >> siJi.peifang_yinghuo;
-
-	while (jineng >> zhongji1_string) {
-		if (zhongji1_string[0] >= 'A' and zhongji1_string[0] <= 'Z') {
-			ParseIn_jinengzhuangzai(siJi, zhongji1_string);
-		}
-		else {
-			break;
-		}
-	}
-
+	ParseIn_shuju(siJi, shuju, daoju, jineng);
 	_renwu.push_back(&siJi);
+
+
 	for (int i = 0; i < _renwu.size(); i++) {
 		if (_renwu[i]->panduan_duiwu == true) {
 			_team.push_back(_renwu[i]);
@@ -101,6 +93,8 @@ void ParseIn() {//载入函数
 	}
 
 	shuju.close();
+	daoju.close();
+	jineng.close();
 }
 
 void bianDui_chakan(_renwushuju& name) {
@@ -269,7 +263,7 @@ int kaiShiJieMian() {
 void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散到其他函数后最终必须返回到一般界面中去！！！！！！！！
 	while (true) {
 		ChongZhi("全局");
-		char zhongji1 = 0;
+		string zhongji1;
 		cout << "_______________________________________________________________________________________________________________________" << endl;
 		cout << "地点:" << _renwu[0]->xiaoweizhi << "   位置：" << _renwu[0]->weizhi << "   天气：" << tianqi_jiaojiedian << "   时间：" << month_quanju << "月" << day_quanju << "日 " << hour_quanju << ":" << min_quanju << endl;
 		for (int i = 0; i < _team.size(); i++) {
@@ -290,13 +284,13 @@ void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散
 		cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 		cout << "1[移动]" << "  2[队伍]" << "  3[背包]" << endl;
 		cin >> zhongji1;
-		if (zhongji1 == '1') {
+		if (zhongji1 == "1") {
 			yidong(1000);
 		}
-		else if (zhongji1 == '2') {
+		else if (zhongji1 == "2") {
 			bianDui();
 		}
-		else if (zhongji1 == '3') {
+		else if (zhongji1 == "3") {
 			daoju("背包");
 		}
 		else {
@@ -317,13 +311,13 @@ int main() {
 	cout << "那么，我们开始吧。" << endl;
 	cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 	_getch();
-	//if (kaiShiJieMian() == 1) {//等所有的界面内容设计完毕后，再开始做存档功能
-	//	cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
-	//	zhangJie = "开篇";
-	//	nandu = "普通";
-	//	//tianqi_jiaojiedian = '晴';
-	//	ZhangJie0();
-	//}
+	if (kaiShiJieMian() == 1) {//等所有的界面内容设计完毕后，再开始做存档功能
+		cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
+		zhangJie = "开篇";
+		nandu = "普通";
+		//tianqi_jiaojiedian = '晴';
+		ZhangJie0();
+	}
 	ParseIn();
 	ChongZhi("全局");
 	zhandoujiemian("弹幕战", "测试用NPC");

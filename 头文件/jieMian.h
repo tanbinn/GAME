@@ -545,11 +545,76 @@ void daoju(string gongneng) {
 }
 
 
-void zhandoujiemian_xingDongZhuangZai(zhandou_gongji& ParseIn_gongji,zhandou_yidong& ParseIn_yidong,vector <zhandoushuju_save>& fightarray) {//string name,int danmu,int beilv,short use_power,short use_xingdongzhi	名称（必须注明类型），弹幕，倍率(多用)，power值和行动值的单位消耗量
+void zhandoujiemian_xingDongZhuangZai(zhandou_gongji ParseIn_gongji,zhandou_yidong ParseIn_yidong,vector <zhandoushuju_save>& fightarray,vector <_renwushuju>& team_fu,_renwushuju& S) {//string name,int danmu,int beilv,short use_power,short use_xingdongzhi	名称（必须注明类型），弹幕，倍率(多用)，power值和行动值的单位消耗量
 	zhandoushuju_save res;
+	res.S.push_back(S.name);
 	res.save.gongji = &ParseIn_gongji;
+	res.save.yidong = &ParseIn_yidong;
 	if (ParseIn_gongji.toubiao != "空白") {
+		res.toubiao = ParseIn_gongji.toubiao;
+		res.name_global = ParseIn_gongji.name_global;
+		res.name = ParseIn_gongji.name;
+		if (ParseIn_gongji.name_global == "自机狙" or ParseIn_gongji.name_global == "偏向弹" or ParseIn_gongji.name_global == "随机弹" or ParseIn_gongji.name_global == "限位弹") {
+			vector <zhandou_gongji*> danmu_type;
+			for (short i = 0; i < S.jineng.gongji.size();i++) {
+				if (S.jineng.gongji[i]->name_global == ParseIn_gongji.name_global) {
+					danmu_type.push_back(S.jineng.gongji[i]);
+				}
+			}
+			cout << "请选择弹幕样式。" << endl;
+			for (short i = 1; i <= danmu_type.size(); i++) {
+				cout << i << "[" << danmu_type[i]->name << "]  ";
+			}
+			cout << "0[返回]" << endl;
 
+			string leixing_short;
+			cin >> leixing_short;
+
+		}
+		//			cout << "1[刀弹]  2[小玉]  3[中玉]" << endl;
+		//			cin >> mune_xuanze_string;
+		//			if (mune_xuanze_string == "1") {
+		//				cout << "请输入弹幕数量(每5枚一点power值，若不足则去掉多余的值)。		当前剩余power值：" << powerzhi_zheng_D << endl;
+		//				cin >> zhongji3_int;
+		//				if (zhongji3_int == 0) {
+		//					break;
+		//				}
+		//				zhongji3_int = zhongji3_int / 5;
+		//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
+		//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
+		//					zhongji0.danmu[2][0][0] = zhongji3_int * 5;
+		//					fightarrey.push_back(zhongji0);
+		//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
+		//					break;
+		//				}
+		//				else if (powerzhi_zheng_D < zhongji3_int) {
+		//					cout << "power值不足。" << endl;
+		//					_getch();
+		//					continue;
+		//				}
+		//				else {
+		//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
+		//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+		//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
+		//					}
+		//					cout << "	0[返回]" << endl;
+		//					short zhongji5_short;
+		//					cin >> zhongji5_short;
+		//					if (zhongji5_short == 0) {
+		//						break;
+		//					}
+		//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+		//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+		//						fightarrey.push_back(zhongji0);
+		//						break;
+		//					}
+		//					else {
+		//						cout << "请输入有效选项对应的数字。" << endl;
+		//						_getch();
+		//						continue;
+		//					}
+		//				}
+		//			}
 	}
 }
 
@@ -569,39 +634,39 @@ void zhandoujiemian(string leixing,string diren) {
 			if (diren == "测试用NPC") {
 
 				int danmu[1][3][9][7] = {0};
-//***************************已废除**************************
-				////属性系列注释
-				//danmu[0][0][0][0] = 0;//danmu_zheng_zijiju_daodan_wushuxing
-				//danmu[0][0][0][1] = 0;//danmu_zheng_zijiju_daodan_huo
-				//danmu[0][0][0][2] = 0;//danmu_zheng_zijiju_daodan_shui
-				//danmu[0][0][0][3] = 0;//danmu_zheng_zijiju_daodan_jin
-				//danmu[0][0][0][4] = 0;//danmu_zheng_zijiju_dandao_mu
-				//danmu[0][0][0][5] = 0;//danmu_zheng_zijiju_daodan_tu
-				//danmu[0][0][0][6] = 0;//danmu_zheng_zijiju_daodan_ri
-				//danmu[0][0][0][7] = 0;//danmu_zheng_zijiju_daodan_yue
-				//
-				////弹幕样式注释
-				//danmu[0][0][0][1] = 0;//danmu_zheng_zijiju_daodan
-				//danmu[0][0][1][1] = 0;//danmu_zheng_zijiju_dayu
-				//danmu[0][0][2][1] = 0;//danmu_zheng_zijiju_diedan
-				//danmu[0][0][3][1] = 0;//danmu_zheng_zijiju_jiandan
-				//danmu[0][0][4][1] = 0;//danmu_zheng_zijiju_jiguangdan
-				//danmu[0][0][5][1] = 0;//danmu_zheng_zijiju_xiaomidan
-				//danmu[0][0][6][1] = 0;//danmu_zheng_zijiju_xiaoyu
-				//danmu[0][0][7][1] = 0;//danmu_zheng_zijiju_zhadan
-				//danmu[0][0][8][1] = 0;//danmu_zheng_zijiju_zhongyu
-				//danmu[0][0][9][1] = 0;//danmu_zheng_zijiju_lindan
+/***************************已废除**************************
+				//属性系列注释
+				danmu[0][0][0][0] = 0;//danmu_zheng_zijiju_daodan_wushuxing
+				danmu[0][0][0][1] = 0;//danmu_zheng_zijiju_daodan_huo
+				danmu[0][0][0][2] = 0;//danmu_zheng_zijiju_daodan_shui
+				danmu[0][0][0][3] = 0;//danmu_zheng_zijiju_daodan_jin
+				danmu[0][0][0][4] = 0;//danmu_zheng_zijiju_dandao_mu
+				danmu[0][0][0][5] = 0;//danmu_zheng_zijiju_daodan_tu
+				danmu[0][0][0][6] = 0;//danmu_zheng_zijiju_daodan_ri
+				danmu[0][0][0][7] = 0;//danmu_zheng_zijiju_daodan_yue
+				
+				//弹幕样式注释
+				danmu[0][0][0][1] = 0;//danmu_zheng_zijiju_daodan
+				danmu[0][0][1][1] = 0;//danmu_zheng_zijiju_dayu
+				danmu[0][0][2][1] = 0;//danmu_zheng_zijiju_diedan
+				danmu[0][0][3][1] = 0;//danmu_zheng_zijiju_jiandan
+				danmu[0][0][4][1] = 0;//danmu_zheng_zijiju_jiguangdan
+				danmu[0][0][5][1] = 0;//danmu_zheng_zijiju_xiaomidan
+				danmu[0][0][6][1] = 0;//danmu_zheng_zijiju_xiaoyu
+				danmu[0][0][7][1] = 0;//danmu_zheng_zijiju_zhadan
+				danmu[0][0][8][1] = 0;//danmu_zheng_zijiju_zhongyu
+				danmu[0][0][9][1] = 0;//danmu_zheng_zijiju_lindan
 
-				////弹幕类型注释
-				//danmu[0][0][0][2] = 0;//danmu_zheng_zijiju
-				//danmu[0][1][0][2] = 0;//danmu_zheng_pianxiangju
-				//danmu[0][2][0][2] = 0;//danmu_zheng_suijidan
-				//danmu[0][3][0][2] = 0;//danmu_zheng_xianweidan
+				//弹幕类型注释
+				danmu[0][0][0][2] = 0;//danmu_zheng_zijiju
+				danmu[0][1][0][2] = 0;//danmu_zheng_pianxiangju
+				danmu[0][2][0][2] = 0;//danmu_zheng_suijidan
+				danmu[0][3][0][2] = 0;//danmu_zheng_xianweidan
 
-				////队伍注释
-				//danmu[0][0][0][3] = 0;//danmu_zheng
-				//danmu[1][0][0][3] = 0;//danmu_fu
-
+				//队伍注释
+				danmu[0][0][0][3] = 0;//danmu_zheng
+				danmu[1][0][0][3] = 0;//danmu_fu
+*/
 				for (int i = 0; i < _team.size(); i++) {
 					totalblood_zheng = totalblood_zheng + _team[i]->tiLi_D;
 					powerzhi_zheng_G = powerzhi_zheng_G + _team[i]->zhiLi_D;
@@ -978,18 +1043,18 @@ void zhandoujiemian(string leixing,string diren) {
 					}
 					cout << _team.size() + team_fu.size() + 1 << "[逃跑]（未开发）";
 					cout << endl << endl;
-					short zhongji1_short; cin >> zhongji1_short;
-					if (zhongji1_short > 0 and zhongji1_short <= _team.size()) {
-						string zhongji2_string;
+					short chrater_xuanze_short; cin >> chrater_xuanze_short;
+					if (chrater_xuanze_short > 0 and chrater_xuanze_short <= _team.size()) {
+						string mune_xuanze_string;
 						while (true) {
-							cout << "已选中人物：" << _team[zhongji1_short - 1]->name << endl;
+							cout << "已选中人物：" << _team[chrater_xuanze_short - 1]->name << endl;
 							cout << "1[攻击]  2[移动]  3[掩护]  4[符卡]  5[查看]  0[返回]" << endl;
-							cin >> zhongji2_string;
-							if (_team[zhongji1_short - 1]->name == "你") {
-								if (zhongji2_string == "1") {//攻击
-									bool danmuleixing_bool[4] = { 0,0,0,0 };
-									for (int i = 0; i < _team[zhongji1_short - 1]->jineng.gongji.size(); i++) {
-										switch (_team[zhongji1_short - 1]->jineng.gongji[i].leixing) {
+							cin >> mune_xuanze_string;
+							if (_team[chrater_xuanze_short - 1]->name == "你") {
+								if (mune_xuanze_string == "1") {//攻击
+									bool danmuleixing_bool[4] = { false };
+									for (int i = 0; i < _team[chrater_xuanze_short - 1]->jineng.gongji.size(); i++) {
+										switch (_team[chrater_xuanze_short - 1]->jineng.gongji[i]->danmu[0].leixing) {
 										case 0:
 											danmuleixing_bool[0] = true;
 											break;
@@ -1028,25 +1093,25 @@ void zhandoujiemian(string leixing,string diren) {
 									short zhongji4_short;
 									while (true) {
 										for (int i = 0; i < danmuleixing_xuanze.size(); i++) {
-											switch(danmuleixing_xuanze[i]) {
-												case 0:
-													cout << i + 1 << "[自机狙]  ";
-													break;
-												case 1:
-													cout << i + 1 << "[偏向狙]  ";
-													break;
-												case 2:
-													cout << i + 1 << "[随机弹]  ";
-													break;
-												case 3:
-													cout << i + 1 << "[限位弹]  ";
-													break;
+											switch (danmuleixing_xuanze[i]) {
+											case 0:
+												cout << i + 1 << "[自机狙]  ";
+												break;
+											case 1:
+												cout << i + 1 << "[偏向狙]  ";
+												break;
+											case 2:
+												cout << i + 1 << "[随机弹]  ";
+												break;
+											case 3:
+												cout << i + 1 << "[限位弹]  ";
+												break;
 											}
 										}
 										cout << danmuleixing_xuanze.size() + 1 << "[返回]" << endl;
 										cin >> zhongji3_int;
 										if (zhongji3_int > 0 and zhongji3_int <= danmuleixing_xuanze.size()) {
-											zhandoujiemian_xingDongZhuangZai(_team[zhongji1_short - 1]->jineng.gongji[danmuleixing_xuanze[zhongji3_int - 1]],NULL_yidong,fightarrey);
+											zhandoujiemian_xingDongZhuangZai(*_team[chrater_xuanze_short - 1]->jineng.gongji[danmuleixing_xuanze[zhongji3_int - 1]],NULL_yidong, fightarrey, team_fu,*_team[chrater_xuanze_short - 1]);
 										}
 										else if (zhongji3_int == 0) {
 											break;
@@ -1056,33 +1121,34 @@ void zhandoujiemian(string leixing,string diren) {
 											_getch();
 											continue;
 										}
-										
-								//		cout << "1[随机弹]  2[自机狙]  3[偏向狙]  0[返回]" << endl;
-								//		cin >> zhongji2_string;
-								//		if (zhongji2_string == "0") {
+									}
+								}
+								/*		cout << "1[随机弹]  2[自机狙]  3[偏向狙]  0[返回]" << endl;
+								//		cin >> mune_xuanze_string;
+								//		if (mune_xuanze_string == "0") {
 								//			break;
 								//		}
-								//		else if (zhongji2_string == "1") {
+								//		else if (mune_xuanze_string == "1") {
 								//			zhandoushuju_save zhongji0;
 								//			zhongji0.toubiao = "攻击";
 								//			zhongji0.name = "随机弹";
-								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+								//			zhongji0.S.push_back(_team[chrater_xuanze_short - 1].name);
 								//			zhongji0.left = 1;
 								//			cout << "请选择弹幕样式。" << endl;
 								//			cout << "1[刀弹]  2[小玉]  3[中玉]" << endl;
-								//			cin >> zhongji2_string;
-								//			if (zhongji2_string == "1") {
+								//			cin >> mune_xuanze_string;
+								//			if (mune_xuanze_string == "1") {
 								//				cout << "请输入弹幕数量(每5枚一点power值，若不足则去掉多余的值)。		当前剩余power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 5;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[2][0][0] = zhongji3_int * 5;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1092,8 +1158,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1101,8 +1167,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1113,18 +1179,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//				}
 								//			}
-								//			else if (zhongji2_string == "2") {
+								//			else if (mune_xuanze_string == "2") {
 								//				cout << "请输入弹幕数量（每4枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 4;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[2][6][0] = zhongji3_int * 4;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1134,8 +1200,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1143,8 +1209,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1155,18 +1221,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//				}
 								//			}
-								//			else if (zhongji2_string == "3") {
+								//			else if (mune_xuanze_string == "3") {
 								//				cout << "请输入弹幕数量（每3枚一点power值，若不足则去掉多余的值）。";
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 3;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[2][8][0] = zhongji3_int * 3;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1176,8 +1242,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1185,8 +1251,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1198,11 +1264,11 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//			}
 								//		}
-								//		else if (zhongji2_string == "2") {
+								//		else if (mune_xuanze_string == "2") {
 								//			zhandoushuju_save zhongji0;
 								//			zhongji0.toubiao = "攻击";
 								//			zhongji0.name = "自机狙";
-								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+								//			zhongji0.S.push_back(_team[chrater_xuanze_short - 1].name);
 								//			zhongji0.left = 1;
 								//			if (team_fu.size() > 1) {
 								//				cout << "请选择锁定的对象：";
@@ -1228,19 +1294,19 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//			cout << "请选择弹幕样式。" << endl;
 								//			cout << "1[刀弹]  2[小玉]  3[中玉]  4[激光弹]" << endl;
-								//			cin >> zhongji2_string;
-								//			if (zhongji2_string == "1") {
+								//			cin >> mune_xuanze_string;
+								//			if (mune_xuanze_string == "1") {
 								//				cout << "请输入弹幕数量(每5枚一点power值，若不足则去掉多余的值)。		当前剩余power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 5;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[0][0][0] = zhongji3_int * 5;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1250,8 +1316,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1259,8 +1325,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1271,18 +1337,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//				}
 								//			}
-								//			else if (zhongji2_string == "2") {
+								//			else if (mune_xuanze_string == "2") {
 								//				cout << "请输入弹幕数量（每4枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 4;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[0][6][0] = zhongji3_int * 4;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1292,8 +1358,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1301,8 +1367,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1313,18 +1379,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//				}
 								//			}
-								//			else if (zhongji2_string == "3") {
+								//			else if (mune_xuanze_string == "3") {
 								//				cout << "请输入弹幕数量（每3枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 3;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[0][8][0] = zhongji3_int * 3;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1334,8 +1400,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1343,8 +1409,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1355,18 +1421,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//				}
 								//			}
-								//			else if (zhongji2_string == "4") {
+								//			else if (mune_xuanze_string == "4") {
 								//				cout << "请输入弹幕数量（每2枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 2;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[0][4][0] = zhongji3_int * 2;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1376,8 +1442,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1385,8 +1451,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1398,11 +1464,11 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//			}
 								//		}
-								//		else if (zhongji2_string == "3") {
+								//		else if (mune_xuanze_string == "3") {
 								//			zhandoushuju_save zhongji0;
 								//			zhongji0.toubiao = "攻击";
 								//			zhongji0.name = "偏向狙";
-								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+								//			zhongji0.S.push_back(_team[chrater_xuanze_short - 1].name);
 								//			zhongji0.left = 1;
 								//			if (team_fu.size() > 1) {
 								//				cout << "请选择锁定的对象：";
@@ -1428,19 +1494,19 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//			cout << "请选择弹幕样式。" << endl;
 								//			cout << "1[刀弹]  2[鳞弹]  3[小米弹]" << endl;
-								//			cin >> zhongji2_string;
-								//			if (zhongji2_string == "1") {
+								//			cin >> mune_xuanze_string;
+								//			if (mune_xuanze_string == "1") {
 								//				cout << "请输入弹幕数量(每5枚一点power值，若不足则去掉多余的值)。		当前剩余power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 5;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[1][0][0] = zhongji3_int * 5;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1450,8 +1516,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1459,8 +1525,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1472,18 +1538,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 
 								//			}
-								//			else if (zhongji2_string == "2") {
+								//			else if (mune_xuanze_string == "2") {
 								//				cout << "请输入弹幕数量（每5枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 5;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[1][9][0] = zhongji3_int * 5;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1493,8 +1559,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1502,8 +1568,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1515,18 +1581,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 
 								//			}
-								//			else if (zhongji2_string == "3") {
+								//			else if (mune_xuanze_string == "3") {
 								//				cout << "请输入弹幕数量（每8枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 8;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[1][5][0] = zhongji3_int * 8;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -1536,8 +1602,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -1545,8 +1611,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -1561,31 +1627,31 @@ void zhandoujiemian(string leixing,string diren) {
 								//		}
 									}
 								}
-								//else if (zhongji2_string == "2") {//移动
+								//else if (mune_xuanze_string == "2") {//移动
 								//	while (true) {
-								//		cout << "已选中人物：" << _team[zhongji1_short - 1].name << endl;
+								//		cout << "已选中人物：" << _team[chrater_xuanze_short - 1].name << endl;
 								//		cout << "1[微移]  2[中幅移动]  3[高速穿行]  0[返回]" << endl;
-								//		cin >> zhongji2_string;
-								//		if (zhongji2_string == "0") {
+								//		cin >> mune_xuanze_string;
+								//		if (mune_xuanze_string == "0") {
 								//			break;
 								//		}
-								//		else if (zhongji2_string == "1") {
+								//		else if (mune_xuanze_string == "1") {
 								//			zhandoushuju_save zhongji0;
 								//			zhongji0.toubiao = "移动";
 								//			zhongji0.name = "微移";
 								//			zhongji0.left = 1;
-								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+								//			zhongji0.S.push_back(_team[chrater_xuanze_short - 1].name);
 								//			cout << "请输入移动强度（3点行动值为一段）。		当前剩余的行动值：" << xingdongzhi_zheng_D << endl;
 								//			short zhongji3_short;
 								//			cin >> zhongji3_short;
 								//			if (zhongji3_short == 0) {
 								//				break;
 								//			}
-								//			if (xingdongzhi_zheng_D >= zhongji3_short * 3 and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//			if (xingdongzhi_zheng_D >= zhongji3_short * 3 and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//				xingdongzhi_zheng_D = xingdongzhi_zheng_D - zhongji3_short * 3;
 								//				zhongji0.danmu[0][0][0] = zhongji3_short;
 								//				fightarrey.push_back(zhongji0);
-								//				_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//				_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//				break;
 								//			}
 								//			else if (xingdongzhi_zheng_D < zhongji3_short * 3) {
@@ -1595,8 +1661,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//			else {
 								//				cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//				for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//					cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//				for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//					cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//				}
 								//				cout << "	0[返回]" << endl;
 								//				short zhongji4_short;
@@ -1604,8 +1670,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				if (zhongji4_short == 0) {
 								//					break;
 								//				}
-								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//					_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//					_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//					fightarrey.push_back(zhongji0);
 								//					break;
 								//				}
@@ -1616,23 +1682,23 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//			}
 								//		}
-								//		else if (zhongji2_string == "2") {
+								//		else if (mune_xuanze_string == "2") {
 								//			zhandoushuju_save zhongji0;
 								//			zhongji0.toubiao = "闪避";
 								//			zhongji0.name = "中幅移动";
 								//			zhongji0.left = 1;
-								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+								//			zhongji0.S.push_back(_team[chrater_xuanze_short - 1].name);
 								//			cout << "请输入移动强度（5点行动值为一段）。		当前剩余的行动值：" << xingdongzhi_zheng_D << endl;
 								//			short zhongji3_short;
 								//			cin >> zhongji3_short;
 								//			if (zhongji3_short == 0) {
 								//				break;
 								//			}
-								//			if (xingdongzhi_zheng_D >= zhongji3_short * 5 and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//			if (xingdongzhi_zheng_D >= zhongji3_short * 5 and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//				xingdongzhi_zheng_D = xingdongzhi_zheng_D - zhongji3_short * 5;
 								//				zhongji0.danmu[0][0][0] = zhongji3_short;
 								//				fightarrey.push_back(zhongji0);
-								//				_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//				_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//				break;
 								//			}
 								//			else if (xingdongzhi_zheng_D < zhongji3_short * 5) {
@@ -1642,8 +1708,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//			else {
 								//				cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//				for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//					cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//				for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//					cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//				}
 								//				cout << "	0[返回]" << endl;
 								//				short zhongji4_short;
@@ -1651,8 +1717,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				if (zhongji4_short == 0) {
 								//					break;
 								//				}
-								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//					_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//					_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//					fightarrey.push_back(zhongji0);
 								//					break;
 								//				}
@@ -1663,23 +1729,23 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//			}
 								//		}
-								//		else if (zhongji2_string == "3") {
+								//		else if (mune_xuanze_string == "3") {
 								//			zhandoushuju_save zhongji0;
 								//			zhongji0.toubiao = "闪避";
 								//			zhongji0.name = "高速穿行";
 								//			zhongji0.left = 1;
-								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+								//			zhongji0.S.push_back(_team[chrater_xuanze_short - 1].name);
 								//			cout << "请输入移动强度（7点行动值为一段）。		当前剩余的行动值：" << xingdongzhi_zheng_D << endl;
 								//			short zhongji3_short;
 								//			cin >> zhongji3_short;
 								//			if (zhongji3_short == 0) {
 								//				break;
 								//			}
-								//			if (xingdongzhi_zheng_D >= zhongji3_short * 7 and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//			if (xingdongzhi_zheng_D >= zhongji3_short * 7 and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//				xingdongzhi_zheng_D = xingdongzhi_zheng_D - zhongji3_short * 7;
 								//				zhongji0.danmu[0][0][0] = zhongji3_short;
 								//				fightarrey.push_back(zhongji0);
-								//				_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//				_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//				break;
 								//			}
 								//			else if (xingdongzhi_zheng_D < zhongji3_short * 7) {
@@ -1689,8 +1755,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//			else {
 								//				cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//				for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//					cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//				for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//					cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//				}
 								//				cout << "	0[返回]" << endl;
 								//				short zhongji4_short;
@@ -1698,8 +1764,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				if (zhongji4_short == 0) {
 								//					break;
 								//				}
-								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//					_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//					_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//					fightarrey.push_back(zhongji0);
 								//					break;
 								//				}
@@ -1712,21 +1778,21 @@ void zhandoujiemian(string leixing,string diren) {
 								//		}
 								//	}
 								//}
-								//else if (zhongji2_string == "3") {
+								//else if (mune_xuanze_string == "3") {
 								//	while (true) {
-								//		cout << "已选中人物：" << _team[zhongji1_short - 1].name << endl;
+								//		cout << "已选中人物：" << _team[chrater_xuanze_short - 1].name << endl;
 								//		cout << "1[防御]  2[弹幕防御]  3[弹幕干扰]  4[弹幕限位]  0[返回]" << endl;
-								//		cin >> zhongji2_string;
+								//		cin >> mune_xuanze_string;
 								//		int zhongji3_int;
-								//		if (zhongji2_string == "0") {
+								//		if (mune_xuanze_string == "0") {
 								//			break;
 								//		}
-								//		else if (zhongji2_string == "1") {
+								//		else if (mune_xuanze_string == "1") {
 								//			zhandoushuju_save zhongji0;
 								//			zhongji0.toubiao = "掩护";
 								//			zhongji0.name = "防御";
 								//			zhongji0.left = 1;
-								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+								//			zhongji0.S.push_back(_team[chrater_xuanze_short - 1].name);
 								//			short zhongji4_short;
 								//			if (_team.size() > 1) {
 								//				cout << "请选择掩护的对象：对己消耗3点行动值，对他消耗5点行动值。		当前剩余的行动值：" << xingdongzhi_zheng_D << endl;
@@ -1737,16 +1803,16 @@ void zhandoujiemian(string leixing,string diren) {
 								//				cin >> zhongji4_short;
 								//				if (zhongji4_short <= _team.size() and zhongji4_short >= 1) {
 								//					zhongji0.M.push_back(_team[zhongji4_short - 1].name);
-								//					if (_team[zhongji4_short - 1].name == _team[zhongji1_short - 1].name) {
+								//					if (_team[zhongji4_short - 1].name == _team[chrater_xuanze_short - 1].name) {
 								//						if (xingdongzhi_zheng_D < 5) {
 								//							cout << "行动值不足。" << endl;
 								//							_getch();
 								//							continue;
 								//						}
-								//						else if(_team[zhongji1_short - 1].xingdongcao.size() >= _team[zhongji1_short - 1].xingdongcao_num){
+								//						else if(_team[chrater_xuanze_short - 1].xingdongcao.size() >= _team[chrater_xuanze_short - 1].xingdongcao_num){
 								//							cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//							for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//								cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//							for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//								cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//							}
 								//							cout << "	0[返回]" << endl;
 								//							short zhongji4_short;
@@ -1754,8 +1820,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//							if (zhongji4_short == 0) {
 								//								break;
 								//							}
-								//							else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//								_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//							else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//								_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//								fightarrey.push_back(zhongji0);
 								//								break;
 								//							}
@@ -1768,7 +1834,7 @@ void zhandoujiemian(string leixing,string diren) {
 								//						else {
 								//							xingdongzhi_zheng_D = xingdongzhi_zheng_D - 5;
 								//							fightarrey.push_back(zhongji0);
-								//							_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//							_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//							break;
 								//						}
 								//					}
@@ -1778,10 +1844,10 @@ void zhandoujiemian(string leixing,string diren) {
 								//							_getch();
 								//							continue;
 								//						}
-								//						else if (_team[zhongji1_short - 1].xingdongcao.size() >= _team[zhongji1_short - 1].xingdongcao_num) {
+								//						else if (_team[chrater_xuanze_short - 1].xingdongcao.size() >= _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//							cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//							for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//								cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//							for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//								cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//							}
 								//							cout << "	0[返回]" << endl;
 								//							short zhongji4_short;
@@ -1789,8 +1855,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//							if (zhongji4_short == 0) {
 								//								break;
 								//							}
-								//							else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//								_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//							else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//								_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//								fightarrey.push_back(zhongji0);
 								//								break;
 								//							}
@@ -1803,7 +1869,7 @@ void zhandoujiemian(string leixing,string diren) {
 								//						else {
 								//							xingdongzhi_zheng_D = xingdongzhi_zheng_D - 3;
 								//							fightarrey.push_back(zhongji0);
-								//							_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//							_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//							break;
 								//						}
 								//					}
@@ -1823,10 +1889,10 @@ void zhandoujiemian(string leixing,string diren) {
 								//				cin >> zhongji4_short;
 								//				if (zhongji4_short != 0) {
 								//					zhongji0.M.push_back(_team[0].name);
-								//					if (_team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num and xingdongzhi_zheng_D >= 3) {
+								//					if (_team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num and xingdongzhi_zheng_D >= 3) {
 								//						xingdongzhi_zheng_D = xingdongzhi_zheng_D - 3;
 								//						fightarrey.push_back(zhongji0);
-								//						_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//						_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//						break;
 								//					}
 								//					else if (xingdongzhi_zheng_D < 3) {
@@ -1836,8 +1902,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//					else {
 								//						cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//						for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//							cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//						for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//							cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//						}
 								//						cout << "	0[返回]" << endl;
 								//						short zhongji4_short;
@@ -1845,8 +1911,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//						if (zhongji4_short == 0) {
 								//							break;
 								//						}
-								//						else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//							_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//						else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//							_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//							fightarrey.push_back(zhongji0);
 								//							break;
 								//						}
@@ -1867,15 +1933,15 @@ void zhandoujiemian(string leixing,string diren) {
 								//			if (zhongji3_string == "0") {
 								//				break;
 								//			}
-								//			if (_team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//			if (_team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//				fightarrey.push_back(zhongji0);
-								//				_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//				_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//				break;
 								//			}
 								//			else {
 								//				cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//				for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//					cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//				for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//					cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//				}
 								//				cout << "	0[返回]" << endl;
 								//				short zhongji4_short;
@@ -1883,8 +1949,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				if (zhongji4_short == 0) {
 								//					break;
 								//				}
-								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//					_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//					_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//					fightarrey.push_back(zhongji0);
 								//					break;
 								//				}
@@ -1895,12 +1961,12 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//			}
 								//		}
-								//		else if (zhongji2_string == "2") {//写到的位置
+								//		else if (mune_xuanze_string == "2") {//写到的位置
 								//			zhandoushuju_save zhongji0;
 								//			zhongji0.toubiao = "掩护";
 								//			zhongji0.name = "弹幕防御";
 								//			zhongji0.left = 1;
-								//			zhongji0.S.push_back(_team[zhongji1_short - 1].name);
+								//			zhongji0.S.push_back(_team[chrater_xuanze_short - 1].name);
 								//			short zhongji4_short;
 								//			if (_team.size() > 1) {
 								//				cout << "请选择掩护的对象：对己消耗3点行动值，对他消耗5点行动值。		当前剩余的行动值：" << xingdongzhi_zheng_D << endl;
@@ -1911,16 +1977,16 @@ void zhandoujiemian(string leixing,string diren) {
 								//				cin >> zhongji4_short;
 								//				if (zhongji4_short <= _team.size() and zhongji4_short >= 1) {
 								//					zhongji0.M.push_back(_team[zhongji4_short - 1].name);
-								//					if (_team[zhongji4_short - 1].name == _team[zhongji1_short - 1].name) {
+								//					if (_team[zhongji4_short - 1].name == _team[chrater_xuanze_short - 1].name) {
 								//						if (xingdongzhi_zheng_D < 5) {
 								//							cout << "行动值不足。" << endl;
 								//							_getch();
 								//							continue;
 								//						}
-								//						else if (_team[zhongji1_short - 1].xingdongcao.size() >= _team[zhongji1_short - 1].xingdongcao_num) {
+								//						else if (_team[chrater_xuanze_short - 1].xingdongcao.size() >= _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//							cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//							for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//								cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//							for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//								cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//							}
 								//							cout << "	0[返回]" << endl;
 								//							short zhongji4_short;
@@ -1928,8 +1994,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//							if (zhongji4_short == 0) {
 								//								break;
 								//							}
-								//							else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//								_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//							else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//								_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//								fightarrey.push_back(zhongji0);
 								//								break;
 								//							}
@@ -1942,7 +2008,7 @@ void zhandoujiemian(string leixing,string diren) {
 								//						else {
 								//							xingdongzhi_zheng_D = xingdongzhi_zheng_D - 5;
 								//							fightarrey.push_back(zhongji0);
-								//							_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//							_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//						}
 								//					}
 								//					else {
@@ -1951,10 +2017,10 @@ void zhandoujiemian(string leixing,string diren) {
 								//							_getch();
 								//							continue;
 								//						}
-								//						else if (_team[zhongji1_short - 1].xingdongcao.size() >= _team[zhongji1_short - 1].xingdongcao_num) {
+								//						else if (_team[chrater_xuanze_short - 1].xingdongcao.size() >= _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//							cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//							for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//								cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//							for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//								cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//							}
 								//							cout << "	0[返回]" << endl;
 								//							short zhongji4_short;
@@ -1962,8 +2028,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//							if (zhongji4_short == 0) {
 								//								break;
 								//							}
-								//							else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//								_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//							else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//								_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//								fightarrey.push_back(zhongji0);
 								//								break;
 								//							}
@@ -1976,7 +2042,7 @@ void zhandoujiemian(string leixing,string diren) {
 								//						else {
 								//							xingdongzhi_zheng_D = xingdongzhi_zheng_D - 3;
 								//							fightarrey.push_back(zhongji0);
-								//							_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//							_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//						}
 								//					}
 								//				}
@@ -1995,10 +2061,10 @@ void zhandoujiemian(string leixing,string diren) {
 								//				cin >> zhongji4_short;
 								//				if (zhongji4_short != 0) {
 								//					zhongji0.M.push_back(_team[0].name);
-								//					if (_team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num and xingdongzhi_zheng_D >= 3) {
+								//					if (_team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num and xingdongzhi_zheng_D >= 3) {
 								//						xingdongzhi_zheng_D = xingdongzhi_zheng_D - 3;
 								//						fightarrey.push_back(zhongji0);
-								//						_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//						_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//						break;
 								//					}
 								//					else if (xingdongzhi_zheng_D < 3) {
@@ -2008,8 +2074,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//					else {
 								//						cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//						for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//							cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//						for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//							cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//						}
 								//						cout << "	0[返回]" << endl;
 								//						short zhongji4_short;
@@ -2017,8 +2083,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//						if (zhongji4_short == 0) {
 								//							break;
 								//						}
-								//						else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//							_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//						else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//							_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//							fightarrey.push_back(zhongji0);
 								//							break;
 								//						}
@@ -2039,15 +2105,15 @@ void zhandoujiemian(string leixing,string diren) {
 								//			if (zhongji3_string == "0") {
 								//				break;
 								//			}
-								//			if (_team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//			if (_team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//				fightarrey.push_back(zhongji0);
-								//				_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//				_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//				break;
 								//			}
 								//			else {
 								//				cout << "行动槽已满，请替换其中的内容或者返回。" << endl;
-								//				for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//					cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//				for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//					cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//				}
 								//				cout << "	0[返回]" << endl;
 								//				short zhongji4_short;
@@ -2055,8 +2121,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				if (zhongji4_short == 0) {
 								//					break;
 								//				}
-								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//					_team[zhongji1_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
+								//				else if (zhongji4_short >= 1 and zhongji4_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//					_team[chrater_xuanze_short - 1].xingdongcao[zhongji4_short - 1] = zhongji0;
 								//					fightarrey.push_back(zhongji0);
 								//					break;
 								//				}
@@ -2068,19 +2134,19 @@ void zhandoujiemian(string leixing,string diren) {
 								//			}
 								//			cout << "请选择弹幕样式。" << endl;
 								//			cout << "1[小玉]  2[小米弹]  3[激光弹]" << endl;
-								//			cin >> zhongji2_string;
-								//			if (zhongji2_string == "1") {
+								//			cin >> mune_xuanze_string;
+								//			if (mune_xuanze_string == "1") {
 								//				cout << "请输入弹幕数量（每2枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 4;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[0][6][0] = zhongji3_int * 4;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -2090,8 +2156,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -2099,8 +2165,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -2111,18 +2177,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//				}
 								//			}
-								//			else if (zhongji2_string == "2") {
+								//			else if (mune_xuanze_string == "2") {
 								//				cout << "请输入弹幕数量（每3枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 3;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[0][8][0] = zhongji3_int * 3;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -2132,8 +2198,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -2141,8 +2207,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -2153,18 +2219,18 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//				}
 								//			}
-								//			else if (zhongji2_string == "3") {
+								//			else if (mune_xuanze_string == "3") {
 								//				cout << "请输入弹幕数量（每2枚一点power值，若不足则去掉多余的值）。		当前剩余的power值：" << powerzhi_zheng_D << endl;
 								//				cin >> zhongji3_int;
 								//				if (zhongji3_int == 0) {
 								//					break;
 								//				}
 								//				zhongji3_int = zhongji3_int / 2;
-								//				if (powerzhi_zheng_D >= zhongji3_int and _team[zhongji1_short - 1].xingdongcao.size() < _team[zhongji1_short - 1].xingdongcao_num) {
+								//				if (powerzhi_zheng_D >= zhongji3_int and _team[chrater_xuanze_short - 1].xingdongcao.size() < _team[chrater_xuanze_short - 1].xingdongcao_num) {
 								//					powerzhi_zheng_D = powerzhi_zheng_D - zhongji3_int;
 								//					zhongji0.danmu[0][4][0] = zhongji3_int * 2;
 								//					fightarrey.push_back(zhongji0);
-								//					_team[zhongji1_short - 1].xingdongcao.push_back(zhongji0);
+								//					_team[chrater_xuanze_short - 1].xingdongcao.push_back(zhongji0);
 								//					break;
 								//				}
 								//				else if (powerzhi_zheng_D < zhongji3_int) {
@@ -2174,8 +2240,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//				}
 								//				else {
 								//					cout << "行动槽已满，请替换已有的内容或者返回。" << endl;
-								//					for (int i = 0; i < _team[zhongji1_short - 1].xingdongcao_num; i++) {
-								//						cout << "	" << i + 1 << "[" << _team[zhongji1_short - 1].xingdongcao[i].name << "]";
+								//					for (int i = 0; i < _team[chrater_xuanze_short - 1].xingdongcao_num; i++) {
+								//						cout << "	" << i + 1 << "[" << _team[chrater_xuanze_short - 1].xingdongcao[i].name << "]";
 								//					}
 								//					cout << "	0[返回]" << endl;
 								//					short zhongji5_short;
@@ -2183,8 +2249,8 @@ void zhandoujiemian(string leixing,string diren) {
 								//					if (zhongji5_short == 0) {
 								//						break;
 								//					}
-								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[zhongji1_short - 1].xingdongcao_num) {
-								//						_team[zhongji1_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
+								//					else if (zhongji5_short >= 1 and zhongji5_short <= _team[chrater_xuanze_short - 1].xingdongcao_num) {
+								//						_team[chrater_xuanze_short - 1].xingdongcao[zhongji5_short - 1] = zhongji0;
 								//						fightarrey.push_back(zhongji0);
 								//						break;
 								//					}
@@ -2195,10 +2261,9 @@ void zhandoujiemian(string leixing,string diren) {
 								//					}
 								//				}
 								//			}
-								/*		}
-									}
-								}*/
-								else if (zhongji2_string == "0") {
+										}
+									}*/
+								else if (mune_xuanze_string == "0") {
 									break;
 								}
 								else {

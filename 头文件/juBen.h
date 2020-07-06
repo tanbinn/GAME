@@ -72,28 +72,36 @@ void color(short x)	//自定义函根据参数改变颜色
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
-struct zhandou_gongji {//测试功能，主要是想利用结构体来给每种弹幕定义倍率和消耗量
-	//内容可以从头写起，比如随机弹中囊括多种弹幕样式，那你可以针对每种弹幕样式写一个升级树，然后通过弹幕类型结构体进行指针形式的调用
-	string toubiao;//头标
-	string name_global;//概括式名称
-	string name;//名称
+struct zhandoushuju_danmu {
+	unsigned short type;//类型： 0:自机狙  1：偏向狙  2：随机弹  3：限位弹
+	unsigned short object;//样式： 0:刀弹  1：札弹  2：蝶弹  3：箭弹  4：鳞弹  5：激光弹  6：小米弹  7：小玉  8：中玉  9：大玉
+	unsigned short attribute;//属性： 0：无属性  1：火  2：水  3：金  4：木  5：土  6：日  7：月
 	short leixing;//弹幕类型
 	short yangshi;//弹幕样式		//实际要调用的只是样式这一层，但定义弹幕类型和头标是方便遍历（反正多写几个量又不会有多大事）
 	short shuxing;//弹幕属性
 	short xiaohao_power;//单位弹幕所需的power值
 	short xiaohao_xingdongzhi;//单位弹幕所需要的行动值
-	short shanghai_beilv;//（换算人物攻击值的）伤害倍率
+	short shanghai_pohuaili;//（换算人物攻击值的）破坏力
 	int shanghai_shuzhi;//(技能本身自带的)基础伤害
+	int rendu;//弹幕（攻击）韧度，用来计算弹幕之间的破坏率
 	short sudu;//基础弹速
+};
+
+struct zhandou_gongji {//测试功能，主要是想利用结构体来给每种弹幕定义倍率和消耗量
+	//内容可以从头写起，比如随机弹中囊括多种弹幕样式，那你可以针对每种弹幕样式写一个升级树，然后通过弹幕类型结构体进行指针形式的调用
+	string toubiao;//头标
+	string name_global;//一级名称
+	string name;//二级名称
+	zhandoushuju_danmu danmu[5];
 	short level;//等级（不直接代入计算，仅做标记）
 	string jiaobiao;//脚标
 	vector <string> beizhu;
 };
 
 //因为要用文件流进行数据存储和调用，所以需要给每个技能定义一个头标和脚标，格式参照人物数据的读入方式
-zhandou_gongji NULL_gongji = { "空白","","",0,0,0,0,0,0,0,0,0,"" };//A-1
-zhandou_gongji suijidan_daodan_level1 = { "攻击","随机弹","刀弹",2,0,0,5,0,10,10,0,1,"A0l1" };//A0l1
-zhandou_gongji suijidan_xiaoyu_level1 = { "攻击","随机弹","小玉",2,6,0,4,0,10,8,0,1,"A1l1" };//A1l1
+zhandou_gongji NULL_gongji = { "空白","","",{{0,0,0,0,0,0,0,0,0,0,0,0}},0,"" };//A-1
+zhandou_gongji suijidan_daodan_level1 = { "攻击","随机弹","刀弹",{{2,0,0,2,0,0,5,0,10,0,5,0}},1,"A0l1" };//A0l1
+zhandou_gongji suijidan_xiaoyu_level1 = { "攻击","随机弹","小玉",{{2,7,0,2,6,0,4,0,10,0,5,0}},1,"A1l1" };//A1l1
 
 struct zhandou_yidong {
 	string toubiao;//头标
@@ -105,16 +113,15 @@ struct zhandou_yidong {
 	zhandou_gongji* danmu;//少数的移动形式可以边闪避边进行弹幕输出，这里是有备无患(当然，指针形式可能会出错，到时候注意一下)
 	string jiaobiao;//脚标
 };
-//记住，技能的定义相当于常量定义，不要随便在调用时进行改动（因为套不上指针，原理和人物数据的覆盖分组是一样的）
 zhandou_yidong NULL_yidong = { "空白","",0,0,0,0,NULL,"" };//B-1
 zhandou_yidong weiyi_level1 = { "移动","微移",0,3,2,1,NULL,"B0l1"};//B0l1
-zhandou_yidong zhongfuyidong_level1 = { "移动","中幅移动",0,5,4,1,NULL,"B1l1"};//B1	l1
+zhandou_yidong zhongfuyidong_level1 = { "移动","中幅移动",0,5,4,1,NULL,"B1l1"};//B1l1
 zhandou_yidong gaosuchuanxing_level1 = { "移动","高速穿行",0,7,6,1,NULL,"B2l1"};//B2l1
 zhandou_yidong ceshi_yidongsheji = { "移动","测试——移动射击",5,5,3,1,&suijidan_daodan_level1,"B1000" };//B1000	记得到时候把这个指针删掉（我只是为了调试一下移动时发射弹幕的功能）
 
 struct quanju_jineng_dingyi {
-	vector <zhandou_yidong> yidong;//这是一个用于存储全局的弹幕攻击类型的动态数组，载入数据需要在parsein函数中进行（对应的移动类型也是）
-	vector <zhandou_gongji> gongji;//用于全局存储移动技能信息的数组
+	vector <zhandou_yidong*> yidong;//这是一个用于存储全局的弹幕攻击类型的动态数组，载入数据需要在parsein函数中进行（对应的移动类型也是）
+	vector <zhandou_gongji*> gongji;//用于全局存储移动技能信息的数组
 };
 quanju_jineng_dingyi quanju_jineng;//谨慎调用及修改，里边可不是指针
 
@@ -123,19 +130,12 @@ struct zhanoushuju_save_beifen {
 	zhandou_yidong* yidong = NULL;
 };
 
-struct zhandoushuju_danmu {
-	unsigned short team;//立场： 0：己方  1：为敌方
-	unsigned short type;//类型： 0:自机狙  1：偏向狙  2：随机弹  3：限位弹
-	unsigned short object;//样式： 0:刀弹  1：札弹  2：蝶弹  3：箭弹  4：鳞弹  5：激光弹  6：小米弹  7：小玉  8：中玉  9：大玉
-	unsigned short attribute;//属性： 0：无属性  1：火  2：水  3：金  4：木  5：土  6：日  7：月
-
-};
-
 struct zhandoushuju_save {
 	string toubiao;
+	string name_global;
 	string name;
 	vector <string> S;
-	vector <int> danmu[3][8][6];
+	vector <string> M;
 	short left = 1;
 	zhanoushuju_save_beifen save;//直接导入技能的数据
 };
@@ -172,7 +172,6 @@ struct _renwushuju {//用于定义人物数据的结构体
 	string weizhi;
 	int zhuangtai_num;
 	vector <string> zhuangtai;
-	int xingdongcao_num;
 	vector <zhandoushuju_save> xingdongcao;
 
 	//——————————————————————————————————————
@@ -214,7 +213,7 @@ int year_tianqi = 0; int hour_tianqi = 9; int min_tianqi = 30; int day_tianqi = 
 
 string tianqi_jiaojiedian;
 
-string kongBai_shuju[30];
+string kongBai_shuju[29];
 string kongbai_daoju[16];
 string kongbai_jineng[7];
 vector <_renwushuju*> _renwu;
