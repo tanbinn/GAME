@@ -76,15 +76,12 @@ struct zhandoushuju_danmu {
 	unsigned short type;//ÀàĞÍ£º 0:×Ô»ú¾Ñ  1£ºÆ«Ïò¾Ñ  2£ºËæ»úµ¯  3£ºÏŞÎ»µ¯
 	unsigned short object;//ÑùÊ½£º 0:µ¶µ¯  1£ºÔıµ¯  2£ºµûµ¯  3£º¼ıµ¯  4£ºÁÛµ¯  5£º¼¤¹âµ¯  6£ºĞ¡Ã×µ¯  7£ºĞ¡Óñ  8£ºÖĞÓñ  9£º´óÓñ
 	unsigned short attribute;//ÊôĞÔ£º 0£ºÎŞÊôĞÔ  1£º»ğ  2£ºË®  3£º½ğ  4£ºÄ¾  5£ºÍÁ  6£ºÈÕ  7£ºÔÂ
-	short leixing;//µ¯Ä»ÀàĞÍ
-	short yangshi;//µ¯Ä»ÑùÊ½		//Êµ¼ÊÒªµ÷ÓÃµÄÖ»ÊÇÑùÊ½ÕâÒ»²ã£¬µ«¶¨Òåµ¯Ä»ÀàĞÍºÍÍ·±êÊÇ·½±ã±éÀú£¨·´Õı¶àĞ´¼¸¸öÁ¿ÓÖ²»»áÓĞ¶à´óÊÂ£©
-	short shuxing;//µ¯Ä»ÊôĞÔ
 	short xiaohao_power;//µ¥Î»µ¯Ä»ËùĞèµÄpowerÖµ
 	short xiaohao_xingdongzhi;//µ¥Î»µ¯Ä»ËùĞèÒªµÄĞĞ¶¯Öµ
 	short shanghai_pohuaili;//£¨»»ËãÈËÎï¹¥»÷ÖµµÄ£©ÆÆ»µÁ¦
 	int shanghai_shuzhi;//(¼¼ÄÜ±¾Éí×Ô´øµÄ)»ù´¡ÉËº¦
 	int rendu;//µ¯Ä»£¨¹¥»÷£©ÈÍ¶È£¬ÓÃÀ´¼ÆËãµ¯Ä»Ö®¼äµÄÆÆ»µÂÊ
-	short sudu;//»ù´¡µ¯ËÙ
+	short sudu = 0;//»ù´¡µ¯ËÙ
 };
 
 struct zhandou_gongji {//²âÊÔ¹¦ÄÜ£¬Ö÷ÒªÊÇÏëÀûÓÃ½á¹¹ÌåÀ´¸øÃ¿ÖÖµ¯Ä»¶¨Òå±¶ÂÊºÍÏûºÄÁ¿
@@ -92,6 +89,7 @@ struct zhandou_gongji {//²âÊÔ¹¦ÄÜ£¬Ö÷ÒªÊÇÏëÀûÓÃ½á¹¹ÌåÀ´¸øÃ¿ÖÖµ¯Ä»¶¨Òå±¶ÂÊºÍÏûºÄÁ
 	string toubiao;//Í·±ê
 	string name_global;//Ò»¼¶Ãû³Æ
 	string name;//¶ş¼¶Ãû³Æ
+	short left;
 	zhandoushuju_danmu danmu[5];
 	short level;//µÈ¼¶£¨²»Ö±½Ó´úÈë¼ÆËã£¬½ö×ö±ê¼Ç£©
 	string jiaobiao;//½Å±ê
@@ -99,25 +97,28 @@ struct zhandou_gongji {//²âÊÔ¹¦ÄÜ£¬Ö÷ÒªÊÇÏëÀûÓÃ½á¹¹ÌåÀ´¸øÃ¿ÖÖµ¯Ä»¶¨Òå±¶ÂÊºÍÏûºÄÁ
 };
 
 //ÒòÎªÒªÓÃÎÄ¼şÁ÷½øĞĞÊı¾İ´æ´¢ºÍµ÷ÓÃ£¬ËùÒÔĞèÒª¸øÃ¿¸ö¼¼ÄÜ¶¨ÒåÒ»¸öÍ·±êºÍ½Å±ê£¬¸ñÊ½²ÎÕÕÈËÎïÊı¾İµÄ¶ÁÈë·½Ê½
-zhandou_gongji NULL_gongji = { "¿Õ°×","","",{{0,0,0,0,0,0,0,0,0,0,0,0}},0,"" };//A-1
-zhandou_gongji suijidan_daodan_level1 = { "¹¥»÷","Ëæ»úµ¯","µ¶µ¯",{{2,0,0,2,0,0,5,0,10,0,5,0}},1,"A0l1" };//A0l1
-zhandou_gongji suijidan_xiaoyu_level1 = { "¹¥»÷","Ëæ»úµ¯","Ğ¡Óñ",{{2,7,0,2,6,0,4,0,10,0,5,0}},1,"A1l1" };//A1l1
+zhandou_gongji NULL_gongji = { "¿Õ°×","","",1,{{0,0,0,0,0,0,0,0,0},{}},0,"" };//A-1
+zhandou_gongji suijidan_daodan_level1 = { "¹¥»÷","Ëæ»úµ¯","µ¶µ¯",1,{{2,0,0,5,0,10,0,5,2},{}},1,"A0l1" };//A0l1
+zhandou_gongji suijidan_xiaoyu_level1 = { "¹¥»÷","Ëæ»úµ¯","Ğ¡Óñ",1,{{2,7,0,4,0,10,0,5,2},{}},1,"A1l1" };//A1l1
 
 struct zhandou_yidong {
 	string toubiao;//Í·±ê
-	string name;//Ãû³Æ
+	string name_global;//Ò»¼¶Ãû³Æ
+	string name;//¶ş¼¶Ãû³Æ
+	short left;
 	short xiaohao_power;//ËùĞèµÄpowerÖµ
 	short xiaohao_xingdongzhi;//ËùĞèµÄĞĞ¶¯Öµ
 	short sudu;//ÒÆ¶¯Ç¿¶È
 	short level;//µÈ¼¶
 	zhandou_gongji* danmu;//ÉÙÊıµÄÒÆ¶¯ĞÎÊ½¿ÉÒÔ±ßÉÁ±Ü±ß½øĞĞµ¯Ä»Êä³ö£¬ÕâÀïÊÇÓĞ±¸ÎŞ»¼(µ±È»£¬Ö¸ÕëĞÎÊ½¿ÉÄÜ»á³ö´í£¬µ½Ê±ºò×¢ÒâÒ»ÏÂ)
 	string jiaobiao;//½Å±ê
+	vector <string> beizhu;
 };
-zhandou_yidong NULL_yidong = { "¿Õ°×","",0,0,0,0,NULL,"" };//B-1
-zhandou_yidong weiyi_level1 = { "ÒÆ¶¯","Î¢ÒÆ",0,3,2,1,NULL,"B0l1"};//B0l1
-zhandou_yidong zhongfuyidong_level1 = { "ÒÆ¶¯","ÖĞ·ùÒÆ¶¯",0,5,4,1,NULL,"B1l1"};//B1l1
-zhandou_yidong gaosuchuanxing_level1 = { "ÒÆ¶¯","¸ßËÙ´©ĞĞ",0,7,6,1,NULL,"B2l1"};//B2l1
-zhandou_yidong ceshi_yidongsheji = { "ÒÆ¶¯","²âÊÔ¡ª¡ªÒÆ¶¯Éä»÷",5,5,3,1,&suijidan_daodan_level1,"B1000" };//B1000	¼ÇµÃµ½Ê±ºò°ÑÕâ¸öÖ¸ÕëÉ¾µô£¨ÎÒÖ»ÊÇÎªÁËµ÷ÊÔÒ»ÏÂÒÆ¶¯Ê±·¢Éäµ¯Ä»µÄ¹¦ÄÜ£©
+zhandou_yidong NULL_yidong = { "¿Õ°×","¿Õ°×","¿Õ°×",0,0,0,0,0,NULL,""};//B-1
+zhandou_yidong weiyi_level1 = { "ÒÆ¶¯","ÉÁ±Ü","Î¢ÒÆ",0,0,3,2,1,NULL,"B0l1"};//B0l1
+zhandou_yidong zhongfuyidong_level1 = { "ÒÆ¶¯","ÉÁ±Ü","ÖĞ·ùÒÆ¶¯",0,0,5,4,1,NULL,"B1l1"};//B1l1
+zhandou_yidong gaosuchuanxing_level1 = { "ÒÆ¶¯","ÉÁ±Ü","¸ßËÙ´©ĞĞ",0,0,7,6,1,NULL,"B2l1"};//B2l1
+zhandou_yidong ceshi_yidongsheji = { "ÒÆ¶¯","ÉÁ±Ü","²âÊÔ¡ª¡ªÒÆ¶¯Éä»÷",0,5,5,3,1,&suijidan_daodan_level1,"B1000" };//B1000	¼ÇµÃµ½Ê±ºò°ÑÕâ¸öÖ¸ÕëÉ¾µô£¨ÎÒÖ»ÊÇÎªÁËµ÷ÊÔÒ»ÏÂÒÆ¶¯Ê±·¢Éäµ¯Ä»µÄ¹¦ÄÜ£©
 
 struct quanju_jineng_dingyi {
 	vector <zhandou_yidong*> yidong;//ÕâÊÇÒ»¸öÓÃÓÚ´æ´¢È«¾ÖµÄµ¯Ä»¹¥»÷ÀàĞÍµÄ¶¯Ì¬Êı×é£¬ÔØÈëÊı¾İĞèÒªÔÚparseinº¯ÊıÖĞ½øĞĞ£¨¶ÔÓ¦µÄÒÆ¶¯ÀàĞÍÒ²ÊÇ£©
@@ -130,15 +131,6 @@ struct zhanoushuju_save_beifen {
 	zhandou_yidong* yidong = NULL;
 };
 
-struct zhandoushuju_save {
-	string toubiao;
-	string name_global;
-	string name;
-	vector <string> S;
-	vector <string> M;
-	short left = 1;
-	zhanoushuju_save_beifen save;//Ö±½Óµ¼Èë¼¼ÄÜµÄÊı¾İ
-};
 
 struct _renwushuju {//ÓÃÓÚ¶¨ÒåÈËÎïÊı¾İµÄ½á¹¹Ìå
 //ÈËÎïÊı¾İ
@@ -163,6 +155,9 @@ struct _renwushuju {//ÓÃÓÚ¶¨ÒåÈËÎïÊı¾İµÄ½á¹¹Ìå
 	int zhiLi_G;
 	int baoShiDu_D;
 	int baoShiDu_G;
+	int power_D = 0;
+	int power_G = 0;
+	int xingodngzhi_D = 0;//×î´óÖµËã·¨ÔÚ¸Ã½á¹¹ÌåµÄ×îµ×ÏÂ
 	int wenDu;
 	int xinQing;
 	int haoGan;
@@ -172,7 +167,6 @@ struct _renwushuju {//ÓÃÓÚ¶¨ÒåÈËÎïÊı¾İµÄ½á¹¹Ìå
 	string weizhi;
 	int zhuangtai_num;
 	vector <string> zhuangtai;
-	vector <zhandoushuju_save> xingdongcao;
 
 	//¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 	//µÀ¾ß»¹ÊÇ·ÖÕâ¼¸ÖÖ°É£ºÇ®±Ò£¨·ºÖ¸ÓÃÓÚ½»Ò×µÄ»õ±Ò£©¡¢ËØ²ÄºÍµÀ¾ß£¨Á½ÕßÃ»ÓĞÃ÷ÏÔ½ç¶¨£¬µÀ¾ß±¾ÉíÒ²¿ÉÒÔ³ÉÎªËØ²Ä£¬Ö÷ÒªÊÇ°Ñ»ù´¡ËØ²ÄÇø·Ö³öÀ´£©¡¢·û¿¨¡¢Åä·½
@@ -203,6 +197,22 @@ struct _renwushuju {//ÓÃÓÚ¶¨ÒåÈËÎïÊı¾İµÄ½á¹¹Ìå
 
 
 	quanju_jineng_dingyi jineng;
+
+	int* zhizhen_jingYan = &jingYan;
+	int level = sqrt(*zhizhen_jingYan);//¼ÇµÃµ½Ê±ºòÔÙÍêÉÆÒÔÏÂ¹«Ê½
+
+	int* zhizhen_level = &level;
+	int xingdongzhi_G = 2 * (*zhizhen_level);
+};
+
+struct zhandoushuju_save {
+	string toubiao;
+	string name_global;
+	string name;
+	vector <_renwushuju*> S;
+	vector <_renwushuju*> M;
+	short left = 1;
+	zhanoushuju_save_beifen save;//Ö±½Óµ¼Èë¼¼ÄÜµÄÊı¾İ
 };
 
 string zhangJie;
@@ -213,7 +223,7 @@ int year_tianqi = 0; int hour_tianqi = 9; int min_tianqi = 30; int day_tianqi = 
 
 string tianqi_jiaojiedian;
 
-string kongBai_shuju[29];
+string kongBai_shuju[31];
 string kongbai_daoju[16];
 string kongbai_jineng[7];
 vector <_renwushuju*> _renwu;

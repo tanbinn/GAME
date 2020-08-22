@@ -29,7 +29,7 @@ void ParseIn_shuju(_renwushuju& name,ifstream& shuju,ifstream& daoju,ifstream& j
 	shuju >> name.name >> name.panduan_duiwu >> name.tiLi_D >> name.tiLi_G >> name.jingLi_D >> name.jingLi_G >> name.jingYan
 		>> name.liLiang_D >> name.liLiang_G >> name.fangYu_D >> name.fangYu_G >> name.suDu_D >> name.suDu_G
 		>> name.faShu_D >> name.faShu_G >> name.moKang_D >> name.moKang_G >> name.zhiLi_D >> name.zhiLi_G
-		>> name.baoShiDu_D >> name.baoShiDu_G >> name.wenDu >> name.xinQing >> name.haoGan >> name.daweizhi
+		>> name.baoShiDu_D >> name.baoShiDu_G >> name.power_D >> name.power_G >> name.wenDu >> name.xinQing >> name.haoGan >> name.daweizhi
 		>> name.zhongweizhi >> name.xiaoweizhi >> name.weizhi;
 
 	daoju >> kongbai >> name.huobi_money >> name.sucai_shuzhi >> name.sucai_muchai >> name.sucai_gancao
@@ -48,6 +48,9 @@ void ParseIn_shuju(_renwushuju& name,ifstream& shuju,ifstream& daoju,ifstream& j
 }
 
 void ParseIn() {//载入函数
+	zhuRenGong.xingodngzhi_D = zhuRenGong.xingdongzhi_G;
+	siJi.xingodngzhi_D = siJi.xingdongzhi_G;
+
 	//攻击：随机弹
 	quanju_jineng.gongji.push_back(&suijidan_daodan_level1);
 	quanju_jineng.gongji.push_back(&suijidan_xiaoyu_level1);
@@ -57,7 +60,7 @@ void ParseIn() {//载入函数
 	quanju_jineng.yidong.push_back(&zhongfuyidong_level1);
 	quanju_jineng.yidong.push_back(&gaosuchuanxing_level1);
 	quanju_jineng.yidong.push_back(&ceshi_yidongsheji);
-
+	
 	ifstream shuju("renWuShuJu_shuju");
 	ifstream daoju("renWuShuJu_daoju");
 	ifstream jineng("renWuShuJu_jineng");
@@ -67,7 +70,7 @@ void ParseIn() {//载入函数
 	jineng >> kongbai;
 
 	//空白组
-	for (int i = 0; i < 28; i++) {
+	for (int i = 0; i < 30; i++) {
 		shuju >> kongBai_shuju[i];
 	}
 	for (int i = 0; i < 15; i++) {
