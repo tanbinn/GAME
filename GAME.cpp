@@ -52,6 +52,10 @@ void ParseIn() {//载入函数
 	siJi.xingodngzhi_D = siJi.xingdongzhi_G;
 
 	//攻击：随机弹
+	vector <string> beizhu;
+	beizhu.push_back("全场");
+	suijidan_daodan_level1.beizhu = beizhu;
+	suijidan_xiaoyu_level1.beizhu = beizhu;
 	quanju_jineng.gongji.push_back(&suijidan_daodan_level1);
 	quanju_jineng.gongji.push_back(&suijidan_xiaoyu_level1);
 
@@ -105,11 +109,11 @@ void bianDui_chakan(_renwushuju& name) {
 	color(3);
 	cout << "姓名：" << name.name << endl;
 	color(1);
-	cout << setw_quanjiao("体力值：" + banjiao_quanjiao(name.tiLi_D), zhongji_setw) << setw_quanjiao("体力值线：" + banjiao_quanjiao(name.tiLi_G), zhongji_setw) << setw_quanjiao("精力：" + banjiao_quanjiao(name.jingLi_D), zhongji_setw) << setw_quanjiao("精力值线：" + banjiao_quanjiao(name.jingLi_G), zhongji_setw) << endl;
-	cout << setw_quanjiao("等级：未定，暂存", zhongji_setw) << setw_quanjiao("力量值：" + banjiao_quanjiao(name.liLiang_D), zhongji_setw) << setw_quanjiao("力量值线：" + banjiao_quanjiao(name.liLiang_G), zhongji_setw) << setw_quanjiao("防御值：" + banjiao_quanjiao(name.fangYu_D), zhongji_setw) << endl;
-	cout << setw_quanjiao("防御值线：" + banjiao_quanjiao(name.fangYu_G), zhongji_setw) << setw_quanjiao("速度：" + banjiao_quanjiao(name.suDu_D), zhongji_setw) << setw_quanjiao("速度线：" + banjiao_quanjiao(name.suDu_G), zhongji_setw) << setw_quanjiao("法术：" + banjiao_quanjiao(name.faShu_D), zhongji_setw) << endl;
-	cout << setw_quanjiao("法术线：" + banjiao_quanjiao(name.faShu_G),zhongji_setw) << setw_quanjiao("魔抗：" + banjiao_quanjiao(name.moKang_D),zhongji_setw) << setw_quanjiao("魔抗线：" + banjiao_quanjiao(name.moKang_G),zhongji_setw) << setw_quanjiao("智力：" + banjiao_quanjiao(name.zhiLi_D),zhongji_setw) << endl;
-	cout << setw_quanjiao("智力线：" + banjiao_quanjiao(name.zhiLi_G),zhongji_setw) << setw_quanjiao("饱食度：" + banjiao_quanjiao(name.baoShiDu_D),zhongji_setw) << setw_quanjiao("饱食度线：" + banjiao_quanjiao(name.baoShiDu_G),zhongji_setw) << setw_quanjiao("温度：" + banjiao_quanjiao(name.wenDu),zhongji_setw) << endl;
+	cout << setw_quanjiao("体力值：" + banjiao_quanjiao_num(name.tiLi_D), zhongji_setw) << setw_quanjiao("体力值线：" + banjiao_quanjiao_num(name.tiLi_G), zhongji_setw) << setw_quanjiao("精力：" + banjiao_quanjiao_num(name.jingLi_D), zhongji_setw) << setw_quanjiao("精力值线：" + banjiao_quanjiao_num(name.jingLi_G), zhongji_setw) << endl;
+	cout << setw_quanjiao("等级：未定，暂存", zhongji_setw) << setw_quanjiao("力量值：" + banjiao_quanjiao_num(name.liLiang_D), zhongji_setw) << setw_quanjiao("力量值线：" + banjiao_quanjiao_num(name.liLiang_G), zhongji_setw) << setw_quanjiao("防御值：" + banjiao_quanjiao_num(name.fangYu_D), zhongji_setw) << endl;
+	cout << setw_quanjiao("防御值线：" + banjiao_quanjiao_num(name.fangYu_G), zhongji_setw) << setw_quanjiao("速度：" + banjiao_quanjiao_num(name.suDu_D), zhongji_setw) << setw_quanjiao("速度线：" + banjiao_quanjiao_num(name.suDu_G), zhongji_setw) << setw_quanjiao("法术：" + banjiao_quanjiao_num(name.faShu_D), zhongji_setw) << endl;
+	cout << setw_quanjiao("法术线：" + banjiao_quanjiao_num(name.faShu_G),zhongji_setw) << setw_quanjiao("魔抗：" + banjiao_quanjiao_num(name.moKang_D),zhongji_setw) << setw_quanjiao("魔抗线：" + banjiao_quanjiao_num(name.moKang_G),zhongji_setw) << setw_quanjiao("智力：" + banjiao_quanjiao_num(name.zhiLi_D),zhongji_setw) << endl;
+	cout << setw_quanjiao("智力线：" + banjiao_quanjiao_num(name.zhiLi_G),zhongji_setw) << setw_quanjiao("饱食度：" + banjiao_quanjiao_num(name.baoShiDu_D),zhongji_setw) << setw_quanjiao("饱食度线：" + banjiao_quanjiao_num(name.baoShiDu_G),zhongji_setw) << setw_quanjiao("温度：" + banjiao_quanjiao_num(name.wenDu),zhongji_setw) << endl;
 	cout << "状态：";
 	for (int i = 0; i < name.zhuangtai.size(); i++) {
 		cout << name.zhuangtai[i] << setw(16) << " ";
@@ -306,6 +310,25 @@ void yiBanJieMian() {//谨防无限套娃！！以一般界面为中心，分散
 
 
 int main() {
+/*------------text------------------*/
+	Map_parsein();
+	for (short i = 0;i < map_jiaojiedian_shanjiao.map.size(); i++) {
+		for (short j = 0; j < map_jiaojiedian_shanjiao.limit_y; j++) {
+			cout << map_jiaojiedian_shanjiao.map[i][j];
+		}
+		cout << endl;
+	}
+
+
+/*------------text------------------*/
+
+
+
+
+
+
+
+
 	cout << "试作品，很多功能日后加以完善" << endl;
 	cout << "你好啊" << endl;
 	_getch();
@@ -323,8 +346,8 @@ int main() {
 	}
 	ParseIn();
 	ChongZhi("全局");
-	zhandoujiemian("弹幕战", "测试用NPC");
 	yiBanJieMian();
+	zhandoujiemian("弹幕战", "测试用NPC");
 	return 0;
 }
 

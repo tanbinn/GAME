@@ -26,7 +26,42 @@ string setw_quanjiao(string cnt,short length) {
 	return res;
 }
 
-std::string banjiao_quanjiao(int num)//¸ÄÔì¹ı£¬ÓÃÀ´°ÑÊı×Ö×ª»»³ÉÈ«½ÇµÄ×Ö·û´®ĞÎÊ½
+std::string banjiao_quanjiao_str(string str)
+{
+	std::string result = "";
+	unsigned char tmp; unsigned char tmp1;
+	for (unsigned int i = 0; i < str.length(); i++)
+	{
+		tmp = str[i];
+		tmp1 = str[i + 1];
+		//cout << "uchar:" << (int) tmp << endl;   
+		if (tmp > 32 && tmp < 128)
+		{//ÊÇ°ë½Ç×Ö·û
+			result += 163;//µÚÒ»¸ö×Ö½ÚÉèÖÃÎª163
+			result += (unsigned char)str[i] + 128;//µÚ¶ş¸ö×Ö½Ú+128;   
+		}
+		else if (tmp >= 163)
+		{//ÊÇÈ«½Ç×Ö·û   
+			result += str.substr(i, 2);
+			i++;
+			continue;
+		}
+		else if (tmp == 32)
+		{//´¦Àí°ë½Ç¿Õ¸ñ   
+			result += 161;
+			result += 161;
+		}
+		else
+		{
+			result += str.substr(i, 2);
+			i++;
+		}
+	}
+	return result;
+}
+
+
+std::string banjiao_quanjiao_num(int num)//¸ÄÔì¹ı£¬ÓÃÀ´°ÑÊı×Ö×ª»»³ÉÈ«½ÇµÄ×Ö·û´®ĞÎÊ½
 {
 	stringstream ss;
 	ss << num;
@@ -93,12 +128,12 @@ struct zhandou_gongji {//²âÊÔ¹¦ÄÜ£¬Ö÷ÒªÊÇÏëÀûÓÃ½á¹¹ÌåÀ´¸øÃ¿ÖÖµ¯Ä»¶¨Òå±¶ÂÊºÍÏûºÄÁ
 	zhandoushuju_danmu danmu[5];
 	short level;//µÈ¼¶£¨²»Ö±½Ó´úÈë¼ÆËã£¬½ö×ö±ê¼Ç£©
 	string jiaobiao;//½Å±ê
-	vector <string> beizhu;
+	vector <string> beizhu;//±¸×¢µÄ×¢ÈëÖ»ÄÜÔÚÔØÈëº¯ÊıÖĞ½øĞĞ
 };
 
 //ÒòÎªÒªÓÃÎÄ¼şÁ÷½øĞĞÊı¾İ´æ´¢ºÍµ÷ÓÃ£¬ËùÒÔĞèÒª¸øÃ¿¸ö¼¼ÄÜ¶¨ÒåÒ»¸öÍ·±êºÍ½Å±ê£¬¸ñÊ½²ÎÕÕÈËÎïÊı¾İµÄ¶ÁÈë·½Ê½
 zhandou_gongji NULL_gongji = { "¿Õ°×","","",1,{{0,0,0,0,0,0,0,0,0},{}},0,"" };//A-1
-zhandou_gongji suijidan_daodan_level1 = { "¹¥»÷","Ëæ»úµ¯","µ¶µ¯",1,{{2,0,0,5,0,10,0,5,2},{}},1,"A0l1" };//A0l1
+zhandou_gongji suijidan_daodan_level1 = { "¹¥»÷","Ëæ»úµ¯","µ¶µ¯",1,{{2,0,0,5,0,10,0,5,2},{}},1,"A0l1",};//A0l1
 zhandou_gongji suijidan_xiaoyu_level1 = { "¹¥»÷","Ëæ»úµ¯","Ğ¡Óñ",1,{{2,7,0,4,0,10,0,5,2},{}},1,"A1l1" };//A1l1
 
 struct zhandou_yidong {

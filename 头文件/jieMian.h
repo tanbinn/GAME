@@ -545,7 +545,7 @@ void daoju(string gongneng) {
 }
 
 
-void zhandoujiemian_xingDongZhuangZai(zhandou_gongji* ParseIn_gongji,zhandou_yidong* ParseIn_yidong,vector <zhandoushuju_save>& fightarray,vector <_renwushuju*> team_fu,_renwushuju* S) {//string name,int danmu,int beilv,short use_power,short use_xingdongzhi	名称（必须注明类型），弹幕，倍率(多用)，power值和行动值的单位消耗量
+void zhandoujiemian_xingDongZhuangZai(zhandou_gongji* ParseIn_gongji,zhandou_yidong* ParseIn_yidong,vector <zhandoushuju_save>& fightarray,vector <_renwushuju*>& team_fu,_renwushuju* S) {//string name,int danmu,int beilv,short use_power,short use_xingdongzhi	名称（必须注明类型），弹幕，倍率(多用)，power值和行动值的单位消耗量
 	zhandoushuju_save res;
 	res.S.push_back(S);//日后可能还会加入组合技这种机制，所以先备注一下
 	res.save.gongji = ParseIn_gongji;
@@ -561,10 +561,6 @@ void zhandoujiemian_xingDongZhuangZai(zhandou_gongji* ParseIn_gongji,zhandou_yid
 				if (S->jineng.gongji[i]->name_global == ParseIn_gongji->name_global) {
 					danmu_type.push_back(S->jineng.gongji[i]);
 				}
-			}
-
-			for (short i = 0; i < team_fu.size(); i++) {
-				res.M.push_back(team_fu[i]);//随机弹对全部敌人有效（如果是特殊攻击需在此补充）
 			}
 
 			//记得加一个while循环
@@ -882,12 +878,10 @@ void zhandoujiemian(string leixing,string diren) {
 				}
 				while (totalblood_zheng >= 0 or totalblood_fu >= 0) {
 					ChongZhi("全局");
-					xingdongzhi_zheng_D = xingdongzhi_zheng_G;
-					xingdongzhi_fu_D = xingdongzhi_fu_G;
 					cout << "========================================================================================================================" << endl;
 					cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 					for (int i = 0; i < _team.size(); i++) {
-						color(12);
+						color(11);
 						cout << _team[i]->name << ":" << endl;
 						color(7);
 						cout << "体力：【" << _team[i]->tiLi_D << "/" << _team[i]->tiLi_G << "】";
@@ -895,8 +889,24 @@ void zhandoujiemian(string leixing,string diren) {
 							cout << _team[i]->zhuangtai[o] << " ";
 						}
 						cout << endl;
+						short num = 0;
+						for (short o = 0; o < fightarrey.size(); o++) {
+							if (binary_search(fightarrey[o].S.begin(), fightarrey[o].S.end(), _team[i])) {
+								num++;
+								cout << "  " << num << ": <" << fightarrey[o].name_global << "> " << fightarrey[o].name;
+								if (fightarrey[o].M.size() > 0) {
+									if (binary_search(fightarrey[o].save.yidong->beizhu.begin(), fightarrey[o].save.yidong->beizhu.end(), "全场") or binary_search(fightarrey[o].save.gongji->beizhu.begin(), fightarrey[o].save.gongji->beizhu.end(), "全场") ){
+										cout << "(全场)";
+									}
+									else {
+										//for(short j = 0;j < )
+									}
+								}
+							}
+						}
 					}
 					cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
+
 					for (int i = 0; i < team_fu.size(); i++) {//临时从状态重置函数中搬过来的东西，记得到时候在修改那个函数的时候在这里也补一下。
 						team_fu[i]->zhuangtai.clear();
 					}
@@ -939,6 +949,7 @@ void zhandoujiemian(string leixing,string diren) {
 						}
 						team_fu[i]->zhuangtai_num = team_fu[i]->zhuangtai.size();
 					}
+
 					for (int i = 0; i < team_fu.size(); i++) {
 						color(12);
 						cout << team_fu[i]->name << ":" << endl;
@@ -946,287 +957,6 @@ void zhandoujiemian(string leixing,string diren) {
 						cout << "体力：【" << team_fu[i]->tiLi_D << "/" << team_fu[i]->tiLi_G << "】";
 						for (int o = 0; o < team_fu[i]->zhuangtai.size(); o++) {
 							cout << team_fu[i]->zhuangtai[o] << " ";
-						}
-						cout << endl;
-					}
-					for (short q = 0; q < 1; q++) {
-						if (q == 0) {
-							cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
-							color(12); cout << "我方:" << endl; color(7);
-						}
-						else if (q == 1) {
-							cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
-							color(12); cout << "对方:" << endl; color(7);
-
-						}
-						for (short p = 0; p < 3; p++) {
-							if (p == 0) {
-								cout << "  自机狙：";
-							}
-							else if (p == 1) {
-								cout << "  偏向狙：";
-							}
-							else if (p == 2) {
-								cout << "  随机弹:";
-							}
-							else if (p == 3) {
-								cout << "  限位弹:";
-							}
-							for (short i = 0; i < 8; i++) {
-								for (short o = 0; o < 7; o++) {
-									if (danmu[q][p][i][o] > 0 and i == 0) {
-										cout << "  刀弹";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-									}
-									if (danmu[q][p][i][o] > 0 and i == 1) {
-										cout << "  大玉";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-									}
-									if (danmu[q][p][i][o] > 0 and i == 2) {
-										cout << "  蝶弹";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-
-
-									}
-									if (danmu[q][p][i][o] > 0 and i == 3) {
-										cout << "  箭弹";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-
-									}
-									if (danmu[q][p][i][o] > 0 and i == 4) {
-										cout << "  激光弹";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-
-									}
-									if (danmu[q][p][i][o] > 0 and i == 5) {
-										cout << "  小米弹";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-
-									}
-									if (danmu[q][p][i][o] > 0 and i == 6) {
-										cout << "  小玉";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-
-									}
-									if (danmu[q][p][i][o] > 0 and i == 7) {
-										cout << "  札弹";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-
-									}
-									if (danmu[q][p][i][o] > 0 and i == 8) {
-										cout << "  中玉";
-										if (o == 0) {
-											cout << "：" << danmu[q][p][i][o];
-										}
-										else if (o == 1) {
-											cout << "(火属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 2) {
-											cout << "(水属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 3) {
-											cout << "(金属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 4) {
-											cout << "(木属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 5) {
-											cout << "(土属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 6) {
-											cout << "(日属性)：" << danmu[q][p][i][o];
-										}
-										else if (o == 7) {
-											cout << "(月属性)：" << danmu[q][p][i][o];
-										}
-									}
-								}
-							}
-							cout << endl;
 						}
 						cout << endl;
 					}

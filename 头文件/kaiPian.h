@@ -2,6 +2,103 @@
 #define _KAIPIAN_H_
 #include"jieMian.h"
 
+//构造十字链表
+struct Arc_log {
+	string mes;
+	struct place {
+		short x;
+		short y;
+	};
+	place tvex, hvex;
+	Arc_log* hlink, * tlink;
+};
+
+struct Vex_log {
+	struct place {
+		short x;
+		short y;
+	};
+	struct mes_log {
+		string name;
+		short rank;
+		place loc;
+	};
+	mes_log date;
+	Arc_log* firstin, * firstout;
+};
+
+struct Map_log {
+	Map_log* hmap, * tmap;//子母地图
+	vector <Vex_log> Vlist;
+	short anum, vnum;
+	vector <vector <char> > map;
+	short limit_x,limit_y;
+};
+
+Map_log map_jiaojiedian;
+Map_log map_jiaojiedian_shanjiao;
+
+void paint(Map_log &m, string zhuru){
+	vector <char> zhongji_char;
+	string zhongji_zhuru = banjiao_quanjiao_str(zhuru);
+	char zhongji_kongge = banjiao_quanjiao_str(" ")[0];
+	for (unsigned short i = 0; i < m.limit_y; i++) {
+		if (i < zhuru.size()) {
+			zhongji_char.push_back(zhongji_zhuru[i]);
+		}
+		else {
+			zhongji_char.push_back(zhongji_kongge);
+		}
+	}
+	m.map.push_back(zhongji_char);
+	/*
+		 　　｜　　　　　　　　｜　　　　／／／／／／／／／／　　　　（　＇＇＇＇＇！<42>
+
+	*/
+}
+
+void Map_parsein(){
+	Arc_log A;
+	Vex_log V;
+	short anum;
+//--------------{交接点}------------
+	//[母图]
+	
+		//[子图]
+			//<山脚>
+				//(入口)
+	paint(map_jiaojiedian_shanjiao, "		///////////////////////////////////////////////////////////////////////////////////////");
+	paint(map_jiaojiedian_shanjiao, "	   ////////////////////////////////////////////////////// ________ ////////////////////");
+	paint(map_jiaojiedian_shanjiao, "	   ///////////////////////////////////////////////////// |******  | ////////////////");
+	paint(map_jiaojiedian_shanjiao, "	 /////////////////////////////////////////////////////// |________|///////////////");
+	paint(map_jiaojiedian_shanjiao, "		_________________________________________________________||____________");
+	paint(map_jiaojiedian_shanjiao, "	   |");
+	paint(map_jiaojiedian_shanjiao, "	   |                                 [2]岔口              [3]木牌          [5]小路 ————>{小路1}");
+	paint(map_jiaojiedian_shanjiao, "	   |");
+	paint(map_jiaojiedian_shanjiao, "	   |        _____________________    ((''''))  ____________________________");
+	paint(map_jiaojiedian_shanjiao, "	   |        |                   |  ( '''''''' )|");
+	paint(map_jiaojiedian_shanjiao, "	   |        |                   |( '*'''*''''''')");
+	paint(map_jiaojiedian_shanjiao, "	   |        |    //////////    ( ''''''*'''''*''' )   //////////////////////");
+	paint(map_jiaojiedian_shanjiao, "	   |        |     /////////    ( '''*''''*''''''' )   ////'/////////////////");
+	paint(map_jiaojiedian_shanjiao, "	   |        | //////////////    |(''''''*''*''' )     //////////////////////");
+	paint(map_jiaojiedian_shanjiao, "	   |        |    ////////       |  ( ''''''' ) |      /////'//////'/////////");
+	paint(map_jiaojiedian_shanjiao, "	   |        |    ////////       |    (||||||)  |      /////////'////////////");
+	paint(map_jiaojiedian_shanjiao, "	 //|        |\   ///////////    |     ||||||   |     //////////////////////");
+	paint(map_jiaojiedian_shanjiao, "	///|1[入口] |\\  //////////     |     ||||||   |     //////////////////////");
+	paint(map_jiaojiedian_shanjiao, "   ////|        |\\\//////////      |4[树]||||||   |     //////////////////////");
+	paint(map_jiaojiedian_shanjiao, "  /////|        |\\\\               |    //||||\\  |");
+	paint(map_jiaojiedian_shanjiao, "																										  welcome^_^");
+	map_jiaojiedian_shanjiao.limit_y = 200;
+	V.date.name = "入口";
+	V.date.rank = 1;
+	V.date.loc.x = 10;
+	V.date.loc.y = 2;
+	V.firstin = NULL; V.firstout = NULL;
+	map_jiaojiedian_shanjiao.Vlist.push_back(V);
+}
+
+
+
 int jiaojiedian_shanjiao2 = 0; int jiaojiedian_shanjiao3 = 0; int jiaojiedian_shanjiao4 = 0; int jiaojiedian_shanjiao6 = 0; int jiaojiedian_shanjiao7 = 0; int jiaojiedian_shanjiao5 = 0;
 int jiaojiedian_shanjiao_ruko4 = 0;//隐藏地点的判定点
 
