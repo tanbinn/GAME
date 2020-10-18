@@ -545,7 +545,7 @@ void daoju(string gongneng) {
 }
 
 
-void zhandoujiemian_xingDongZhuangZai(zhandou_gongji* ParseIn_gongji,zhandou_yidong* ParseIn_yidong,vector <zhandoushuju_save>& fightarray,vector <_renwushuju*>& team_fu,_renwushuju* S) {//string name,int danmu,int beilv,short use_power,short use_xingdongzhi	名称（必须注明类型），弹幕，倍率(多用)，power值和行动值的单位消耗量
+void zhandoujiemian_xingDongZhuangZai(zhandou_gongji* ParseIn_gongji,zhandou_yidong* ParseIn_yidong,vector <zhandoushuju_save>& fightarray,vector <_renwushuju*> & team_fu,_renwushuju* S) {//string name,int danmu,int beilv,short use_power,short use_xingdongzhi	名称（必须注明类型），弹幕，倍率(多用)，power值和行动值的单位消耗量
 	zhandoushuju_save res;
 	res.S.push_back(S);//日后可能还会加入组合技这种机制，所以先备注一下
 	res.save.gongji = ParseIn_gongji;
